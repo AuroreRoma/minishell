@@ -72,7 +72,7 @@ int	quote(char *str, t_lexer *lexer)
 		if (quote == '\"' && str[len] == '$')
 		{
 			create_token(str, len, QUOTE, lexer);
-			str += len + dollar(str + len, lexer);
+			str += len + dollar(str + len, lexer, VAR_QUOTE);
 //			len_var = size_var(str + len, quote);
 //			create_token(str, len, VAR, lexer);
 //			str += len + len_var;
@@ -88,7 +88,7 @@ int	quote(char *str, t_lexer *lexer)
 	return ((str + len + 1) - start);
 }
 
-int	dollar(char *str, t_lexer *lexer)
+int	dollar(char *str, t_lexer *lexer, t_type type)
 {
 	int		len_var;
 	char	*start;
@@ -100,11 +100,11 @@ int	dollar(char *str, t_lexer *lexer)
 	if (*str == '{' && str++)
 	{
 		len_var = size_var(str, '}');
-		create_token(str, len_var, VAR, lexer);
+		create_token(str, len_var, type, lexer);
 		return ((str + len_var + 1) - start);
 	}
 	len_var = size_var(str, 0);
-	create_token(str, len_var, VAR, lexer);
+	create_token(str, len_var, type, lexer);
 	return ((str + len_var) - start);
 }
 /*
@@ -159,6 +159,20 @@ int	operator(char *str, t_lexer *lexer)
 	return (ret);
 }
 
+int	is_number(char *str, int len)
+{
+	int	i;
+
+	i = 0;
+	while (i != len)
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	word(char *str, t_lexer *lexer)
 {
 	int		len;
@@ -169,8 +183,10 @@ int	word(char *str, t_lexer *lexer)
 	while (str[len] && !is_operator(str[len]) && str[len] != '\'' && \
 			str[len] != '\"' && str[len] != ' ' && str[len] != '$')
 		len++;
-	if (len)
+	if (len && !is_number(str, len))
 		create_token(str, len, WORD, lexer);
+	else if (len)
+		create_token(str, len, NBR, lexer);
 	return (len);
 }
 

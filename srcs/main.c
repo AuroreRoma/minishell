@@ -31,30 +31,28 @@ void	destroy_tokens(t_lexer *lexer, t_token *tokens)
 	free(tokens);
 }
 
-void	*tokenizer(char *str)
+void	*tokenizer(t_lexer *lexer, char *str)
 {
-	t_lexer		lexer;
-
-	lexer.error = no_error;
-	lexer.index = 0;
-	lexer.buf_size = TOK_BUFFER_SIZE;
-	lexer.tokens = (t_token *)calloc(TOK_BUFFER_SIZE, sizeof(t_token));
-	if (!lexer.tokens)
+	lexer->error = no_error;
+	lexer->index = 0;
+	lexer->buf_size = TOK_BUFFER_SIZE;
+	lexer->tokens = (t_token *)calloc(TOK_BUFFER_SIZE, sizeof(t_token));
+	if (!lexer->tokens)
 		return (NULL);
-	while (str && *str && !lexer.error)
+	while (str && *str && !lexer->error)
 	{
-		str += quote(str, &lexer);
-		str += dollar(str, &lexer);
-		str += operator(str, &lexer);
-		str += skip_space(str, &lexer);
-		str += word(str, &lexer);
-		str += comment(str, &lexer);
+		str += quote(str, lexer);
+		str += dollar(str, lexer, VAR);
+		str += operator(str, lexer);
+		str += skip_space(str, lexer);
+		str += word(str, lexer);
+		str += comment(str, lexer);
 	}
-	if (lexer.error)
+	if (lexer->error)
 		printf("Error : invalid characters\n");
 	else
-		dump_tokens(&lexer);
-	destroy_tokens(&lexer, lexer.tokens);
+		dump_tokens(lexer);
+//	destroy_tokens(lexer, lexer->tokens);
 	return (NULL);
 }
 
@@ -77,6 +75,8 @@ int	main(int ac, char **av, char **env)
 {
 	bool	break_flag;
 	char	*line;
+	t_lexer	lexer;
+	t_shell	shell;
 
 	break_flag = true;
 	(void)ac;
@@ -87,7 +87,9 @@ int	main(int ac, char **av, char **env)
 		line = read_line();
 		if (strstr(line, "exit"))
 			break ;
-		tokenizer(line);
+		tokenizer(&lexer, line);
+		parser(&lexer, &shell);
+		destroy_tokens(&lexer, lexer.tokens);
 	}
 	rl_clear_history();
 }

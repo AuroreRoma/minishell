@@ -12,7 +12,9 @@ SRCS_DIR  := srcs
 BUILD_DIR := build
 
 SRCS := \
-	main.c
+	main.c \
+	lexer.c \
+	parser.c
 
 _SRC =	$(addprefix $(SRCS_DIR)/, $(SRCS))
 OBJS =	$(patsubst $(SRCS_DIR)%.c, $(BUILD_DIR)/%.o, $(_SRC))
