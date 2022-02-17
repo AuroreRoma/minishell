@@ -92,4 +92,6 @@ int		skip_space(char *str, t_lexer *lexer);
 int		word(char *str, t_lexer *lexer);
 int		comment(char *str, t_lexer *lexer);
 
+void	handle_redirection(t_lexer *lexer, t_cmd **current, int *index);
+
 #endif

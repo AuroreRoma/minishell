@@ -1,6 +1,11 @@
 #include "shell.h"
 
 /*
+ *	TODO: norm
+ *
+ */
+
+/*
  *
  *	count number of pipes for number of cmd
  *	cmd = pipe + 1
@@ -14,11 +19,10 @@ t_cmd	*get_last_cmd(t_cmd *cmd)
 	return (cmd);
 }
 
-
 void	destroy_cmd(t_cmd *cmd)
 {
 	t_cmd	*next;
-	int i;
+	int		i;
 
 	i = 0;
 	next = cmd;
@@ -36,8 +40,8 @@ void	destroy_cmd(t_cmd *cmd)
 
 void	create_cmd(t_cmd **cmd)
 {
-	t_cmd *new;
-	t_cmd *last;
+	t_cmd	*new;
+	t_cmd	*last;
 
 	new = (t_cmd *)calloc(1, sizeof(t_cmd));
 	if (!new)
@@ -45,6 +49,8 @@ void	create_cmd(t_cmd **cmd)
 		printf("Error malloc\n");
 		exit(1);
 	}
+	new->cmd_name = NULL;
+	new->cmd_args = NULL;
 	if (!*cmd)
 		*cmd = new;
 	else
@@ -75,6 +81,18 @@ int	get_nbr_cmds(t_lexer *lexer)
 	return (ret);
 }
 
+void	dump_cmds(t_cmd *cmd)
+{
+	while (cmd)
+	{
+		printf(cmd->cmd_name ? "%s\n" : "%p\n", cmd->cmd_name);
+		printf("%i\n", cmd->fd_in);
+		printf("%i\n", cmd->fd_out);
+		cmd = cmd->next;
+	}
+}
+
+/*
 void	parse_token(t_lexer *lexer, t_shell *shell)
 {
 	int		i;
@@ -104,13 +122,16 @@ void	parse_token(t_lexer *lexer, t_shell *shell)
 			handle_quote();
 		if (lexer->tokens[i].type == VAR)
 			handle_var();
+		if (lexer->tokens[i].type == PIPE)
+			current = current->next;
 		i++;
 	}
 }
-
+*/
 void	parser(t_lexer *lexer, t_shell *shell)
 {
 	int		nbr_of_cmds;
+	t_cmd	*current;
 
 	shell->first_cmd = NULL;
 	printf("Number of tokens : %i\n", lexer->index);
@@ -120,6 +141,10 @@ void	parser(t_lexer *lexer, t_shell *shell)
 	printf("Number of commands : %i\n", nbr_of_cmds);
 	while (nbr_of_cmds--)
 		create_cmd(&shell->first_cmd);
+	int i = 0;
+	current = shell->first_cmd;
+	handle_redirection(lexer, &current, &i);
+	dump_cmds(current);
 //	parse_token(lexer, shell);
 	destroy_cmd(shell->first_cmd);
 }

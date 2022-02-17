@@ -82,13 +82,14 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	(void)env;
+	(void)shell;
 	while (break_flag)
 	{
 		line = read_line();
 		if (strstr(line, "exit"))
 			break ;
 		tokenizer(&lexer, line);
-		parser(&lexer, &shell);
+//		parser(&lexer, &shell);
 		destroy_tokens(&lexer, lexer.tokens);
 	}
 	rl_clear_history();
