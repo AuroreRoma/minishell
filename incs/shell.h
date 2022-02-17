@@ -31,7 +31,9 @@ struct s_cmd
 	char	*cmd_name;
 	char	**cmd_args;
 	int		fd_in;
+	bool	to_close_in;
 	int		fd_out;
+	bool	to_close_out;
 	t_cmd	*next;
 };
 

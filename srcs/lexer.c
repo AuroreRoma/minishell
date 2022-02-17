@@ -84,7 +84,10 @@ int	quote(char *str, t_lexer *lexer)
 	if (str[len] == quote)
 		create_token(str, len, QUOTE, lexer);
 	else
+	{
 		lexer->error = error_quote;
+		return (0);
+	}
 	return ((str + len + 1) - start);
 }
 
@@ -94,7 +97,7 @@ int	dollar(char *str, t_lexer *lexer, t_type type)
 	char	*start;
 
 	start = str;
-	if (!((*str) == '$'))
+	if ((*str) != '$')
 		return (0);
 	str++;
 	if (*str == '{' && str++)
