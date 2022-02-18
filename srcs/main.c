@@ -89,7 +89,7 @@ int	main(int ac, char **av, char **env)
 		if (strstr(line, "exit"))
 			break ;
 		tokenizer(&lexer, line);
-//		parser(&lexer, &shell);
+		parser(&lexer, &shell);
 		destroy_tokens(&lexer, lexer.tokens);
 	}
 	rl_clear_history();

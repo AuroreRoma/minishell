@@ -69,9 +69,10 @@ int	quote(char *str, t_lexer *lexer)
 	quote_helper(&start, &str, &quote, &len);
 	while (str[len] && str[len] != quote)
 	{
-		if (quote == '\"' && str[len] == '$')
+/*		if (quote == '\"' && str[len] == '$')
 		{
-			create_token(str, len, QUOTE, lexer);
+			if (len)
+				create_token(str, len, QUOTE, lexer);
 			str += len + dollar(str + len, lexer, VAR_QUOTE);
 //			len_var = size_var(str + len, quote);
 //			create_token(str, len, VAR, lexer);
@@ -79,11 +80,11 @@ int	quote(char *str, t_lexer *lexer)
 			len = 0;
 		}
 		else
-			len++;
+*/			len++;
 	}
-	if (str[len] == quote)
+	if (len && str[len] == quote)
 		create_token(str, len, QUOTE, lexer);
-	else
+	else if (str[len] != quote)
 	{
 		lexer->error = error_quote;
 		return (0);

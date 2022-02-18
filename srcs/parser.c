@@ -1,6 +1,9 @@
 #include "shell.h"
 
 /*
+ *	TODO: var
+ *	TODO: quote
+ *	TODO: heredoc
  *	TODO: norm
  *
  */
@@ -23,16 +26,25 @@ void	destroy_cmd(t_cmd *cmd)
 {
 	t_cmd	*next;
 	int		i;
+	int		j;
 
 	i = 0;
 	next = cmd;
 	while (next)
 	{
 		i++;
+		j = 0;
 		next = cmd->next;
-		/*
-		 *	free bunch of stuff;
-		 */
+		free(cmd->cmd_name);
+		while (cmd->cmd_args && cmd->cmd_args[j])
+		{
+			free(cmd->cmd_args[j]);
+			j++;
+		}
+		free(cmd->filename_in);
+		free(cmd->filename_out);
+		free(cmd->heredoc_end);
+		free(cmd->cmd_args);
 		free(cmd);
 		cmd = next;
 	}
@@ -49,8 +61,7 @@ void	create_cmd(t_cmd **cmd)
 		printf("Error malloc\n");
 		exit(1);
 	}
-	new->cmd_name = NULL;
-	new->cmd_args = NULL;
+	new->buffer_args = ARG_BUFFER_SIZE;
 	if (!*cmd)
 		*cmd = new;
 	else
@@ -83,16 +94,31 @@ int	get_nbr_cmds(t_lexer *lexer)
 
 void	dump_cmds(t_cmd *cmd)
 {
+	int	i;
+
 	while (cmd)
 	{
+		i = 0;
+		printf("------------------New command-----------------\n");
 		printf(cmd->cmd_name ? "%s\n" : "%p\n", cmd->cmd_name);
-		printf("%i\n", cmd->fd_in);
-		printf("%i\n", cmd->fd_out);
+		while (cmd->cmd_args && cmd->cmd_args[i])
+		{
+			printf("[%s]", cmd->cmd_args[i]);
+			i++;
+		}
+		if (cmd->cmd_args)
+			printf("\n");
+		printf(cmd->filename_in ? "%s%s\n" : "\n%s%p\n", "filename_in  : ", cmd->filename_in);
+		printf(cmd->filename_out ? "%s%s\n" : "%s%p\n", "filename_out : ", cmd->filename_out);
+		printf(cmd->heredoc_end ? "%s%s\n" : "%s%p\n", "heredoc_end  : ", cmd->heredoc_end);
+		printf("fd_in : %i\n", cmd->fd_in);
+		printf("fd_out : %i\n", cmd->fd_out);
 		cmd = cmd->next;
 	}
+	printf("----------------------------------------------\n");
 }
 
-/*
+
 void	parse_token(t_lexer *lexer, t_shell *shell)
 {
 	int		i;
@@ -103,31 +129,34 @@ void	parse_token(t_lexer *lexer, t_shell *shell)
 	while (i < lexer->index)
 	{
 		if (lexer->tokens[i].type == WORD)
-			handle_word();
+			handle_word(lexer, current, &i);
 		if (lexer->tokens[i].type == NBR)
 		{
 			if (lexer->tokens[i + 1].type == LESS || \
 					lexer->tokens[i + 1].type == DLESS || \
 					lexer->tokens[i + 1].type == GREAT || \
 					lexer->tokens[i + 1].type == DGREAT)
-				handle_redirections();
+				handle_redirection(lexer, current, &i);
 			else
-				handle_word();
+				handle_word(lexer, current, &i);
 		}
 		if (lexer->tokens[i].type == LESS || lexer->tokens[i].type == DLESS || \
 			lexer->tokens[i].type == GREAT || lexer->tokens[i].type == DGREAT)
-			handle_redirections();
+			handle_redirection(lexer, current, &i);
 		if (lexer->tokens[i].type == QUOTE || \
 			lexer->tokens[i].type == VAR_QUOTE)
-			handle_quote();
+			i++;
+//			handle_quote(lexer, current, &i);
 		if (lexer->tokens[i].type == VAR)
-			handle_var();
+			i++;
+//			handle_var();
 		if (lexer->tokens[i].type == PIPE)
 			current = current->next;
-		i++;
+		if (lexer->tokens[i].type == PIPE)
+			i++;
 	}
 }
-*/
+
 void	parser(t_lexer *lexer, t_shell *shell)
 {
 	int		nbr_of_cmds;
@@ -141,10 +170,10 @@ void	parser(t_lexer *lexer, t_shell *shell)
 	printf("Number of commands : %i\n", nbr_of_cmds);
 	while (nbr_of_cmds--)
 		create_cmd(&shell->first_cmd);
-	int i = 0;
+//	int i = 0;
 	current = shell->first_cmd;
-	handle_redirection(lexer, &current, &i);
+//	handle_redirection(lexer, &current, &i);
+	parse_token(lexer, shell);
 	dump_cmds(current);
-//	parse_token(lexer, shell);
 	destroy_cmd(shell->first_cmd);
 }

@@ -9,6 +9,7 @@
 # include <readline/history.h>
 
 # define TOK_BUFFER_SIZE 64
+# define ARG_BUFFER_SIZE 32
 
 typedef struct s_shell	t_shell;
 typedef struct s_cmd	t_cmd;
@@ -30,10 +31,12 @@ struct s_cmd
 {
 	char	*cmd_name;
 	char	**cmd_args;
+	int		buffer_args;
 	int		fd_in;
-	bool	to_close_in;
+	char	*filename_in;
 	int		fd_out;
-	bool	to_close_out;
+	char	*filename_out;
+	char	*heredoc_end;
 	t_cmd	*next;
 };
 
@@ -57,9 +60,9 @@ enum e_type
 	NBR,
 	PIPE,
 	LESS,
-	DLESS,
+	DLESS,	// <<
 	GREAT,
-	DGREAT,
+	DGREAT,	// >>
 	QUOTE,
 	VAR,
 	VAR_QUOTE
@@ -94,6 +97,8 @@ int		skip_space(char *str, t_lexer *lexer);
 int		word(char *str, t_lexer *lexer);
 int		comment(char *str, t_lexer *lexer);
 
-void	handle_redirection(t_lexer *lexer, t_cmd **current, int *index);
+void	handle_quote(t_lexer *lexer, t_cmd *current, int *index);
+void	handle_redirection(t_lexer *lexer, t_cmd *current, int *index);
+void	handle_word(t_lexer *lexer, t_cmd *current, int *index);
 
 #endif

@@ -14,7 +14,8 @@ BUILD_DIR := build
 SRCS := \
 	main.c \
 	lexer.c \
-	parser.c
+	parser.c \
+	parser_handler.c
 
 _SRC =	$(addprefix $(SRCS_DIR)/, $(SRCS))
 OBJS =	$(patsubst $(SRCS_DIR)%.c, $(BUILD_DIR)/%.o, $(_SRC))
@@ -30,7 +31,7 @@ CYA	=	\e[36m
 END	=	\e[0m
 
 $(NAME):	$(OBJS)
-	@$(CC) $(OBJS) -o $@ $(CFLAGS) $(IFLAGS) $(LFLAGS)
+	@$(CC) $(CFLAGS) $(IFLAGS) $(OBJS) -o $@ $(LFLAGS)
 	@printf "\t$(PPL)$(NAME) created\n$(END)"
 
 $(BUILD_DIR)/%.o: $(SRCS_DIR)/%.c
