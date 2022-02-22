@@ -52,9 +52,9 @@ void	*tokenizer(t_lexer *lexer, char *str)
 		printf("Error : invalid characters\n");
 	else
 		dump_tokens(lexer);
-//	destroy_tokens(lexer, lexer->tokens);
 	return (NULL);
 }
+//	destroy_tokens(lexer, lexer->tokens);
 
 char	*read_line(void)
 {

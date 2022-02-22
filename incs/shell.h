@@ -90,16 +90,28 @@ struct	s_lexer
 	t_token	*tokens;
 };
 
-void	dump_tokens(t_lexer *lexer);
 int		quote(char *str, t_lexer *lexer);
 int		dollar(char *str, t_lexer *lexer, t_type type);
 int		operator(char *str, t_lexer *lexer);
-int		skip_space(char *str, t_lexer *lexer);
 int		word(char *str, t_lexer *lexer);
+
 int		comment(char *str, t_lexer *lexer);
+int		skip_space(char *str, t_lexer *lexer);
+int		is_number(char *str, int len);
+int		size_var(char *str, char tmp);
+int		is_operator(char c);
 
 void	handle_quote(t_lexer *lexer, t_cmd *current, int *index);
 void	handle_redirection(t_lexer *lexer, t_cmd *current, int *index);
 void	handle_word(t_lexer *lexer, t_cmd *current, int *index);
+
+void	destroy_cmd(t_cmd *cmd);
+void	create_cmd(t_cmd **cmd);
+int		get_nbr_cmds(t_lexer *lexer);
+void	dump_cmds(t_cmd *cmd);
+
+
+void	create_token(char *str, int len, t_type type, t_lexer *lexer);
+void	dump_tokens(t_lexer *lexer);
 
 #endif

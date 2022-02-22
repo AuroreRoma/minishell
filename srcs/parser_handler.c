@@ -1,8 +1,8 @@
 #include "shell.h"
 
 /*
- *	TODO: handle_word check variable assignation
- *	TODO: handle_quote check variable expansion
+ *	TODO: handle_word check variable assignation // exec
+ *	TODO: handle_quote check variable expansion // done
  *
  */
 
@@ -117,14 +117,12 @@ char	*str_insert(char *str, int start_insert, int size_insert, char *insert)
 	if (!new)
 		return (NULL);
 	i = 0;
-//	printf("DEBUG : [%i][%i]\n", start_insert, size_insert);
 	while (i < start_insert)
 	{
 		new[i] = *str;
 		str++;
 		i++;
 	}
-//	printf("DEBUG : [%i][%i]\n", len_str + len_insert + 1, i);
 	while (*insert)
 	{
 		new[i] = *insert;
@@ -132,7 +130,6 @@ char	*str_insert(char *str, int start_insert, int size_insert, char *insert)
 		i++;
 	}
 	str += size_insert;
-//	printf("DEBUG : [%i][%i]\n", len_str + len_insert + 1, i);
 	while (*str)
 	{
 		new[i] = *str;
@@ -194,7 +191,6 @@ void	handle_quote(t_lexer *lexer, t_cmd *current, int *index)
 	if (lexer->tokens[*index].type == DQUOTE)
 	{
 		start_insert = check_var(lexer->tokens[*index].data);
-//		printf("DEBUG : %i\n", start_insert);
 		tmp = lexer->tokens[*index].data;
 		tmp2 = NULL;
 		while (start_insert != -1)
@@ -219,7 +215,6 @@ void	handle_quote(t_lexer *lexer, t_cmd *current, int *index)
 	(*index)++;
 	free(tmp);
 	return ;
-	// expand VAR_QUOTE
 }
 
 /*
