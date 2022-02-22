@@ -64,6 +64,7 @@ enum e_type
 	GREAT,
 	DGREAT,	// >>
 	QUOTE,
+	DQUOTE,
 	VAR,
 	VAR_QUOTE
 };

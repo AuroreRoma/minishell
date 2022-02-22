@@ -144,16 +144,18 @@ void	parse_token(t_lexer *lexer, t_shell *shell)
 			lexer->tokens[i].type == GREAT || lexer->tokens[i].type == DGREAT)
 			handle_redirection(lexer, current, &i);
 		if (lexer->tokens[i].type == QUOTE || \
-			lexer->tokens[i].type == VAR_QUOTE)
-			i++;
-//			handle_quote(lexer, current, &i);
+			lexer->tokens[i].type == DQUOTE)
+//			i++;
+			handle_quote(lexer, current, &i);
 		if (lexer->tokens[i].type == VAR)
-			i++;
+//			i++;
+			handle_word(lexer, current, &i);
 //			handle_var();
 		if (lexer->tokens[i].type == PIPE)
+		{
 			current = current->next;
-		if (lexer->tokens[i].type == PIPE)
 			i++;
+		}
 	}
 }
 

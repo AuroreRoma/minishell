@@ -83,7 +83,12 @@ int	quote(char *str, t_lexer *lexer)
 */			len++;
 	}
 	if (len && str[len] == quote)
-		create_token(str, len, QUOTE, lexer);
+	{
+		if (quote == '\'')
+			create_token(str, len, QUOTE, lexer);
+		else
+			create_token(str, len, DQUOTE, lexer);
+	}
 	else if (str[len] != quote)
 	{
 		lexer->error = error_quote;

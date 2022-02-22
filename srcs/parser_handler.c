@@ -104,7 +104,7 @@ void	handle_redirection(t_lexer *lexer, t_cmd *current, int *index)
  *
  */
 
-char	*str_insert(char *str, int start_insert, int end_insert, char *insert)
+char	*str_insert(char *str, int start_insert, int size_insert, char *insert)
 {
 	char	*new;
 	int		i;
@@ -113,29 +113,33 @@ char	*str_insert(char *str, int start_insert, int end_insert, char *insert)
 
 	len_str = strlen(str);
 	len_insert = strlen(insert);
-	new = (char *)malloc(sizeof(char) * (len_str + len_insert));
+	new = (char *)malloc(sizeof(char) * (len_str + len_insert) + 1);
 	if (!new)
 		return (NULL);
 	i = 0;
+//	printf("DEBUG : [%i][%i]\n", start_insert, size_insert);
 	while (i < start_insert)
 	{
 		new[i] = *str;
 		str++;
 		i++;
 	}
+//	printf("DEBUG : [%i][%i]\n", len_str + len_insert + 1, i);
 	while (*insert)
 	{
 		new[i] = *insert;
 		insert++;
 		i++;
 	}
-	str += end_insert - start_insert + 1;
+	str += size_insert;
+//	printf("DEBUG : [%i][%i]\n", len_str + len_insert + 1, i);
 	while (*str)
 	{
 		new[i] = *str;
 		str++;
 		i++;
 	}
+	new[i] = '\0';
 	return (new);
 }
 
@@ -144,43 +148,87 @@ int	check_var(char *str)
 	int	i;
 
 	i = 0;
+	printf("%s\n", str);
 	while (*str && *str != '$')
 	{
 		str++;
 		i++;
 	}
+	if (*str == '$')
+		return (i);
+	return (-1);
+}
+/*
+   int main(void)
+   {
+   char str[] = "Hello $VAR World";
+   char rep[] = "42 21";
+
+   printf("%i\n", check_var(str));
+   printf("%s\n", str_insert(str, 6, 9, rep));
+   }
+   */
+
+int	get_end(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i] && str[i] != ' ')
+		i++;
 	return (i);
 }
 
-int main(void)
+char	*get_env_var(void)
 {
-	char str[] = "Hello $VAR World";
-	char rep[] = "42 21";
-
-	printf("%i\n", check_var(str));
-	printf("%s\n", str_insert(str, 6, 9, rep));
+	return ("PLACEHOLDER");
 }
 
 void	handle_quote(t_lexer *lexer, t_cmd *current, int *index)
 {
 	int		start_insert;
 	char	*tmp;
+	char	*tmp2;
 
-	start_insert = check_var(lexer->tokens[*index].data);
-	if (start_insert)
-		tmp = 
-	if (lexer->tokens[*index].type == QUOTE)
+	tmp = NULL;
+	if (lexer->tokens[*index].type == DQUOTE)
 	{
-		if (!current->cmd_name)
+		start_insert = check_var(lexer->tokens[*index].data);
+//		printf("DEBUG : %i\n", start_insert);
+		tmp = lexer->tokens[*index].data;
+		tmp2 = NULL;
+		while (start_insert != -1)
 		{
-			current->cmd_name = strdup(lexer->tokens[*index].data);
-			if (!current->cmd_name)
-				printf("Error malloc\n");
+			tmp = str_insert(tmp, start_insert, \
+					get_end(tmp + start_insert), \
+					get_env_var());
+			if (tmp2)
+				free(tmp2);
+			start_insert = check_var(tmp);
+			tmp2 = tmp;
 		}
-		if (append_cmd_args(lexer->tokens[*index].data, current))
-			exit(1);
-		(*index)++;
-		return ;
 	}
+	if (!current->cmd_name)
+	{
+		current->cmd_name = strdup(tmp ? tmp : lexer->tokens[*index].data);
+		if (!current->cmd_name)
+			printf("Error malloc\n");
+	}
+	if (append_cmd_args(tmp ? tmp : lexer->tokens[*index].data, current))
+		exit(1);
+	(*index)++;
+	free(tmp);
+	return ;
 	// expand VAR_QUOTE
 }
+
+/*
+
+   if (DQUOTE)
+   while (check ($))
+   if $
+   expand
+   else
+   break
+   append
+   */
