@@ -90,7 +90,7 @@ static void	dump_cmds_(t_cmd *cmd)
 	if (cmd->filename_in)
 		printf("%s%s\n", "filename_out : ", cmd->filename_out);
 	else
-		printf("%s%p\n", "filename_out : ", cmd->filename_out);
+		printf("%s%s\n", "filename_out : ", cmd->filename_out);
 	if (cmd->heredoc_end)
 		printf("%s%s\n", "heredoc_end  : ", cmd->heredoc_end);
 	else

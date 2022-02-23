@@ -89,13 +89,13 @@ int	main(int ac, char **av, char **env)
 		if (strstr(line, "exit"))
 			break ;
 		tokenizer(&lexer, line);
-		if (!lexer.error)
+		if (!lexer.error && lexer.index)
 		{
 			printf("Tokens done\n");
 			parser(&lexer, &shell);
 			printf("Parser done\n");
-			destroy_tokens(&lexer, lexer.tokens);
 		}
+		destroy_tokens(&lexer, lexer.tokens);
 	}
 	rl_clear_history();
 }
