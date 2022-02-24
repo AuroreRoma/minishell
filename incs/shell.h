@@ -11,6 +11,8 @@
 # define TOK_BUFFER_SIZE 64
 # define ARG_BUFFER_SIZE 32
 
+# define SHELL_NAME "minishell"
+
 typedef struct s_shell	t_shell;
 typedef struct s_cmd	t_cmd;
 
@@ -56,7 +58,8 @@ void	parser(t_lexer *lexer, t_shell *shell);
 
 enum e_type
 {
-	WORD = 1,
+	ERROR = 0,
+	WORD,
 	NBR,
 	PIPE,
 	LESS,
@@ -73,7 +76,9 @@ enum e_error
 {
 	no_error = 0,
 	error_operator,
-	error_quote
+	error_quote,
+	error_redirection,
+	error_pipe
 };
 
 struct s_token
@@ -117,5 +122,7 @@ void	create_token(char *str, int len, t_type type, t_lexer *lexer);
 void	dump_tokens(t_lexer *lexer);
 
 char	*str_insert(char *str, int start_insert, int size_insert, char *insert);
+
+int		is_redirection(t_type type);
 
 #endif

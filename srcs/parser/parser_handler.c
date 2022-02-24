@@ -83,9 +83,9 @@ void	handle_redirection(t_lexer *lexer, t_cmd *current, int *index)
 	(*index) += 1;
 	if (lexer->tokens[*index].type == WORD)
 		handle_redirection_2(lexer, current, index);
-	else
-		printf("\x1B[31mshell: parse error near `%s'\x1B[0m\n", \
-				lexer->tokens[*index].data);
+//	else
+//		printf("\x1B[31mshell: parse error near `%s'\x1B[0m\n", 
+//				lexer->tokens[*index].data);
 	(*index) += 1;
 }
 

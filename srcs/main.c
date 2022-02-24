@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "error.h"
 
 /*
  *	TODO: | " ' < << > >> $ $?
@@ -48,13 +49,8 @@ void	*tokenizer(t_lexer *lexer, char *str)
 		str += word(str, lexer);
 		str += comment(str, lexer);
 	}
-	if (lexer->error)
-		printf("Error : invalid characters\n");
-	else
-		dump_tokens(lexer);
 	return (NULL);
 }
-//	destroy_tokens(lexer, lexer->tokens);
 
 char	*read_line(void)
 {
@@ -89,12 +85,9 @@ int	main(int ac, char **av, char **env)
 		if (strstr(line, "exit"))
 			break ;
 		tokenizer(&lexer, line);
+		error_lexer(&lexer);
 		if (!lexer.error && lexer.index)
-		{
-			printf("Tokens done\n");
 			parser(&lexer, &shell);
-			printf("Parser done\n");
-		}
 		destroy_tokens(&lexer, lexer.tokens);
 	}
 	rl_clear_history();
