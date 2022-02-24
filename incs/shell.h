@@ -60,9 +60,9 @@ enum e_type
 	NBR,
 	PIPE,
 	LESS,
-	DLESS,	// <<
+	DLESS,
 	GREAT,
-	DGREAT,	// >>
+	DGREAT,
 	QUOTE,
 	DQUOTE,
 	VAR,
@@ -104,6 +104,7 @@ int		is_operator(char c);
 void	handle_quote(t_lexer *lexer, t_cmd *current, int *index);
 void	handle_redirection(t_lexer *lexer, t_cmd *current, int *index);
 void	handle_word(t_lexer *lexer, t_cmd *current, int *index);
+void	handle_pipe(t_cmd **current, int *index);
 
 void	destroy_cmd(t_cmd *cmd);
 void	create_cmd(t_cmd **cmd);
@@ -115,6 +116,6 @@ int		append_cmd_args(char *str, t_cmd *cmd);
 void	create_token(char *str, int len, t_type type, t_lexer *lexer);
 void	dump_tokens(t_lexer *lexer);
 
-char    *str_insert(char *str, int start_insert, int size_insert, char *insert);
+char	*str_insert(char *str, int start_insert, int size_insert, char *insert);
 
 #endif

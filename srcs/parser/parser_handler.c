@@ -11,6 +11,12 @@
  *
  */
 
+void	handle_pipe(t_cmd **current, int *index)
+{
+	(*current) = (*current)->next;
+	(*index)++;
+}
+
 void	handle_word(t_lexer *lexer, t_cmd *current, int *index)
 {
 	if (!current->cmd_name)
@@ -24,48 +30,62 @@ void	handle_word(t_lexer *lexer, t_cmd *current, int *index)
 	(*index)++;
 }
 
-
 /*
  *	([NBR]) [REDIREC] [WORD]
  *
  */
 
+static int	check_condition(t_type type, char flag)
+{
+	if (flag == '<')
+	{
+		if (type == LESS || type == DLESS)
+			return (1);
+		else
+			return (0);
+	}
+	else if (flag == '>')
+	{
+		if (type == GREAT || type == DGREAT)
+			return (1);
+		else
+			return (0);
+	}
+	return (0);
+}
+
+static void	handle_redirection_2(t_lexer *lexer, t_cmd *current, int *index)
+{
+	if (check_condition(lexer->tokens[*index - 1].type, '>'))
+		current->filename_out = strdup(lexer->tokens[*index].data);
+	else if (check_condition(lexer->tokens[*index - 1].type, '<'))
+		current->filename_in = strdup(lexer->tokens[*index].data);
+	else
+		current->heredoc_end = strdup(lexer->tokens[*index].data);
+}
 
 void	handle_redirection(t_lexer *lexer, t_cmd *current, int *index)
 {
 	if (lexer->tokens[*index].type == NBR && \
-			(lexer->tokens[*index + 1].type == LESS || \
-			 lexer->tokens[*index + 1].type == DLESS))
+			check_condition(lexer->tokens[*index + 1].type, '<'))
 		current->fd_out = atoi(lexer->tokens[*index].data);
 	if (lexer->tokens[*index].type == NBR && \
-			(lexer->tokens[*index + 1].type == GREAT || \
-			 lexer->tokens[*index + 1].type == DGREAT))
+			check_condition(lexer->tokens[*index + 1].type, '>'))
 		current->fd_in = atoi(lexer->tokens[*index].data);
 	if (lexer->tokens[*index].type == NBR)
 		(*index) += 1;
-	else if (lexer->tokens[*index].type == LESS || \
-			lexer->tokens[*index].type == DLESS)
+	else if (check_condition(lexer->tokens[*index].type, '<'))
 		current->fd_out = 1;
-	else if (lexer->tokens[*index].type == GREAT || \
-			lexer->tokens[*index].type == DGREAT)
+	else if (check_condition(lexer->tokens[*index].type, '>'))
 		current->fd_in = 0;
 	else
 		printf("Error\n");
 	(*index) += 1;
 	if (lexer->tokens[*index].type == WORD)
-	{
-		if (lexer->tokens[*index - 1].type == GREAT || \
-				lexer->tokens[*index - 1].type == DGREAT)
-			current->filename_out = strdup(lexer->tokens[*index].data);
-		else if (lexer->tokens[*index - 1].type == LESS)
-			current->filename_in = strdup(lexer->tokens[*index].data);
-		else
-			current->heredoc_end = strdup(lexer->tokens[*index].data);
-	}
+		handle_redirection_2(lexer, current, index);
 	else
 		printf("\x1B[31mshell: parse error near `%s'\x1B[0m\n", \
 				lexer->tokens[*index].data);
-	// raise error
 	(*index) += 1;
 }
 

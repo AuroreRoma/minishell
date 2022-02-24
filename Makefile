@@ -13,15 +13,15 @@ BUILD_DIR := build
 
 SRCS := \
 	main.c \
-	cmd_utils.c \
-	cmd_utils_2.c \
-	lexer.c \
-	lexer_utils.c \
-	parser.c \
-	parser_handler.c \
-	handle_quote.c \
-	tokens.c \
-	utils.c
+	lexer/lexer.c \
+	lexer/lexer_utils.c \
+	lexer/tokens.c \
+	parser/handle_quote.c \
+	parser/parser.c \
+	parser/parser_handler.c \
+	utils/cmd_utils.c \
+	utils/cmd_utils_2.c \
+	utils/str_insert.c
 
 _SRC =	$(addprefix $(SRCS_DIR)/, $(SRCS))
 OBJS =	$(patsubst $(SRCS_DIR)%.c, $(BUILD_DIR)/%.o, $(_SRC))
