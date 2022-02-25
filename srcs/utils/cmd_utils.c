@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/24 20:13:50 by pblagoje          #+#    #+#             */
+/*   Updated: 2022/02/24 20:23:35 by pblagoje         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
 void	destroy_cmd(t_cmd *cmd)
@@ -27,15 +39,6 @@ void	destroy_cmd(t_cmd *cmd)
 		cmd = next;
 	}
 }
-
-/*
-t_cmd	*get_last_cmd(t_cmd *cmd)
-{
-	while (cmd->next)
-		cmd = cmd->next;
-	return (cmd);
-}
-*/
 
 void	create_cmd(t_cmd **cmd)
 {

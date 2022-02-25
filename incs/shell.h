@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shell.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
+/*   Updated: 2022/02/25 01:06:38 by pblagoje         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SHELL_H
 # define SHELL_H
 
@@ -11,48 +23,12 @@
 # define TOK_BUFFER_SIZE 64
 # define ARG_BUFFER_SIZE 32
 
-typedef struct s_shell	t_shell;
-typedef struct s_cmd	t_cmd;
+/*		LEXER		*/
 
-/*		Lexer.c	typedef		*/
-
-typedef struct s_token	t_token;
-typedef struct s_lexer	t_lexer;
 typedef enum e_type		t_type;
 typedef enum e_error	t_error;
-
-/*
- *
- *
- *
- */
-
-struct s_cmd
-{
-	char	*cmd_name;
-	char	**cmd_args;
-	int		buffer_args;
-	int		fd_in;
-	char	*filename_in;
-	int		fd_out;
-	char	*filename_out;
-	char	*heredoc_end;
-	t_cmd	*next;
-};
-
-struct s_shell
-{
-	t_cmd	*first_cmd;
-	int		return_status;
-};
-
-void	parser(t_lexer *lexer, t_shell *shell);
-
-/*
- *
- *	Lexer.c
- *
- */
+typedef struct s_token	t_token;
+typedef struct s_lexer	t_lexer;
 
 enum e_type
 {
@@ -90,6 +66,62 @@ struct	s_lexer
 	t_token	*tokens;
 };
 
+/********************/
+
+/*		PARSER		*/
+
+typedef struct s_cmd	t_cmd;
+
+struct s_cmd
+{
+	char	*cmd_name;
+	char	**cmd_args;
+	int		buffer_args;
+	int		fd_in;
+	char	*filename_in;
+	int		fd_out;
+	char	*filename_out;
+	char	*heredoc_end;
+	t_cmd	*next;
+};
+
+/********************/
+
+/*		ENV VAR		*/
+
+typedef struct s_env	t_env;
+
+struct s_env
+{
+	char	*envv_full;
+	char	*envv_key;
+	char	*envv_value;
+	t_env	*next;
+};
+
+/********************/
+
+/*		SHELL		*/
+
+typedef struct s_shell	t_shell;
+
+struct s_shell
+{
+	t_cmd	*first_cmd;
+	t_env	*envv;
+	int		return_status;
+};
+
+/********************/
+
+/*		ENV VAR		*/
+
+void	parse_env(char **envp, t_shell *shell);
+
+/********************/
+
+void	parser(t_lexer *lexer, t_shell *shell);
+
 int		quote(char *str, t_lexer *lexer);
 int		dollar(char *str, t_lexer *lexer, t_type type);
 int		operator(char *str, t_lexer *lexer);
@@ -116,6 +148,13 @@ int		append_cmd_args(char *str, t_cmd *cmd);
 void	create_token(char *str, int len, t_type type, t_lexer *lexer);
 void	dump_tokens(t_lexer *lexer);
 
+/*		UTILS		*/
+
 char	*str_insert(char *str, int start_insert, int size_insert, char *insert);
+size_t	ft_strlen(const char *s);
+int		ft_strcmp(const char *s1, const char *s2);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+void	*ft_calloc(size_t count, size_t size);
+void	ft_lstadd_back(t_env **alst, t_env *new);
 
 #endif

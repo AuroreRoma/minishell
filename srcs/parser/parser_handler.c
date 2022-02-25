@@ -1,15 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_handler.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/24 20:15:04 by pblagoje          #+#    #+#             */
+/*   Updated: 2022/02/24 20:22:16 by pblagoje         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
-
-/*
- *	TODO: handle_word check variable assignation // exec
- *	TODO: handle_quote check variable expansion // done
- *
- */
-
-/*
- *	handle_var search for the var and expand it i guess ?
- *
- */
 
 void	handle_pipe(t_cmd **current, int *index)
 {
@@ -29,11 +30,6 @@ void	handle_word(t_lexer *lexer, t_cmd *current, int *index)
 		exit(1);
 	(*index)++;
 }
-
-/*
- *	([NBR]) [REDIREC] [WORD]
- *
- */
 
 static int	check_condition(t_type type, char flag)
 {
@@ -88,14 +84,3 @@ void	handle_redirection(t_lexer *lexer, t_cmd *current, int *index)
 				lexer->tokens[*index].data);
 	(*index) += 1;
 }
-
-/*
-
-   if (DQUOTE)
-   while (check ($))
-   if $
-   expand
-   else
-   break
-   append
-   */

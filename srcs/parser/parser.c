@@ -1,19 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/24 20:14:56 by pblagoje          #+#    #+#             */
+/*   Updated: 2022/02/24 20:21:22 by pblagoje         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
-
-/*
- *	TODO: var
- *	TODO: quote		// done
- *	TODO: heredoc
- *	TODO: norm
- *
- */
-
-/*
- *
- *	count number of pipes for number of cmd
- *	cmd = pipe + 1
- *
- */
 
 int	is_redirection(t_type type)
 {

@@ -1,4 +1,4 @@
-NAME := prototype_shell
+NAME := minishell
 
 MAKEFLAGS := --no-print-directory
 
@@ -13,6 +13,7 @@ BUILD_DIR := build
 
 SRCS := \
 	main.c \
+	env/parse_env.c \
 	lexer/lexer.c \
 	lexer/lexer_utils.c \
 	lexer/tokens.c \
@@ -21,7 +22,12 @@ SRCS := \
 	parser/parser_handler.c \
 	utils/cmd_utils.c \
 	utils/cmd_utils_2.c \
-	utils/str_insert.c
+	utils/str_insert.c \
+	utils/ft_calloc.c \
+	utils/ft_strlen.c \
+	utils/ft_strcmp.c \
+	utils/ft_substr.c \
+	utils/ft_lstadd_back.c
 
 _SRC =	$(addprefix $(SRCS_DIR)/, $(SRCS))
 OBJS =	$(patsubst $(SRCS_DIR)%.c, $(BUILD_DIR)/%.o, $(_SRC))

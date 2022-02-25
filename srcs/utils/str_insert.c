@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   str_insert.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/24 20:14:06 by pblagoje          #+#    #+#             */
+/*   Updated: 2022/02/24 20:24:20 by pblagoje         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
 char	*ft_strncpy(char *dest, char *src, unsigned int n)
@@ -10,29 +22,6 @@ char	*ft_strncpy(char *dest, char *src, unsigned int n)
 	dest[i] = '\0';
 	return (dest);
 }
-
-//
-//	while (i < start_insert)
-//	{
-//		new[i] = *str;
-//		str++;
-//		i++;
-//	}
-//	while (*insert)
-//	{
-//		new[i] = *insert;
-//		insert++;
-//		i++;
-//	}
-//	str += size_insert;
-//	while (*str)
-//	{
-//		new[i] = *str;
-//		str++;
-//		i++;
-//	}
-//	new[i] = '\0';
-//
 
 char	*str_insert(char *str, int start_insert, int size_insert, char *insert)
 {
