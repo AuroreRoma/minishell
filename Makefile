@@ -6,7 +6,7 @@ CC = gcc
 FSAN := -fsanitize=address
 CFLAGS := -Wall -Wextra -Werror $(FSAN) -g
 IFLAGS := -I./incs -MMD -MP
-LFLAGS := -lreadline
+LFLAGS := -lreadline libft/libft.a
 
 SRCS_DIR  := srcs
 BUILD_DIR := build
@@ -42,9 +42,12 @@ PPL	=	\e[35m
 CYA	=	\e[36m
 END	=	\e[0m
 
-$(NAME):	$(OBJS)
+$(NAME):	$(OBJS) libft
 	@$(CC) $(CFLAGS) $(IFLAGS) $(OBJS) -o $@ $(LFLAGS)
 	@printf "\t$(PPL)$(NAME) created\n$(END)"
+
+libft:
+	@$(MAKE) -C libft all
 
 $(BUILD_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(dir $@)
@@ -56,6 +59,7 @@ $(BUILD_DIR)/%.o: $(SRCS_DIR)/%.c
 all:	$(NAME)
 
 clean:
+	@$(MAKE) -C libft clean
 	@if [ -d $(BUILD_DIR) ]; \
 		then \
 		printf "\t$(YLW)$(BUILD_DIR) successfully deleted\n$(END)"; \
@@ -63,6 +67,7 @@ clean:
 		fi;
 
 fclean:	clean
+	@$(MAKE) -C libft fclean
 	@if [ -e $(NAME) ]; \
 		then \
 		printf "\t$(YLW)$(NAME) successfully deleted\n$(END)"; \
@@ -70,6 +75,7 @@ fclean:	clean
 		fi;
 
 re:		fclean
+	@$(MAKE) -C libft re
 	@$(MAKE) $(NAME)
 
 -include $(DEPS)

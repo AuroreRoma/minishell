@@ -6,7 +6,7 @@
 #    By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/15 14:39:35 by pblagoje          #+#    #+#              #
-#    Updated: 2022/02/24 20:53:23 by pblagoje         ###   ########.fr        #
+#    Updated: 2022/02/25 17:05:35 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ CFLAGS	= -Wall -Wextra -Werror
 RM		= rm -f
 
 %.o: %.c
-			$(CC) $(CFLAGS) -c $< -o $@
+			@$(CC) $(CFLAGS) -c $< -o $@
 
 bonus:		all $(OBJS_B)
 			$(AR) $(NAME) $(OBJS_B)
@@ -37,13 +37,13 @@ bonus:		all $(OBJS_B)
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-			$(AR) $@ $^
+			@$(AR) $@ $^
 
 clean:
-			$(RM) $(OBJS) $(OBJS_B)
+			@$(RM) $(OBJS) $(OBJS_B)
 
 fclean:		clean
-			$(RM) $(NAME)
+			@$(RM) $(NAME)
 
 re:			fclean all
 
