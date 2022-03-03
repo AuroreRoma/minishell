@@ -6,11 +6,12 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 21:42:33 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/02/25 01:08:22 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/03 17:03:15 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "libft.h"
 
 void	add_env(char *var_line, t_shell *shell)
 {

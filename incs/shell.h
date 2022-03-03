@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/03 14:59:29 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/03 17:04:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 # define TOK_BUFFER_SIZE 64
 # define ARG_BUFFER_SIZE 32
+# define RED_BUFFER_SIZE 16
 
 # define SHELL_NAME "minishell"
 
@@ -77,17 +78,33 @@ struct	s_lexer
 /*		PARSER		*/
 
 typedef struct s_cmd	t_cmd;
+typedef struct s_red	t_red;
+typedef	enum e_redt		t_redt;
+
+enum	e_redt
+{
+	redir_nbr = 1,
+	redir_append,
+	redir_write,
+	redir_read,
+	redir_heredoc
+};
+
+struct s_red
+{
+	t_redt	type;
+	int		fd_in;
+	int		fd_out;
+	char	*data;
+	t_red	*next;
+};
 
 struct s_cmd
 {
 	char	*cmd_name;
 	char	**cmd_args;
 	int		buffer_args;
-	int		fd_in;
-	char	*filename_in;
-	int		fd_out;
-	char	*filename_out;
-	char	*heredoc_end;
+	t_red	*redirection;
 	t_cmd	*next;
 };
 
