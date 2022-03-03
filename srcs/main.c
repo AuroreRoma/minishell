@@ -6,11 +6,12 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/03 15:01:07 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/03 15:04:17 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "error.h"
 
 void	destroy_tokens(t_lexer *lexer, t_token *tokens)
 {
@@ -86,7 +87,7 @@ int	main(int ac, char **av, char **envp)
 		tokenizer(&lexer, line);
 		error_lexer(&lexer);
 		if (!lexer.error && lexer.index)
-			parser(&lexer, &shell);
+			parser(&lexer, shell);
 		destroy_tokens(&lexer, lexer.tokens);
 	}
 	rl_clear_history();

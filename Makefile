@@ -7,6 +7,7 @@ FSAN := -fsanitize=address
 CFLAGS := -Wall -Wextra -Werror $(FSAN) -g
 IFLAGS := -I./incs -MMD -MP
 LFLAGS := -lreadline libft/libft.a
+LIBFT := libft/libft.a
 
 SRCS_DIR  := srcs
 BUILD_DIR := build
@@ -43,12 +44,13 @@ PPL	=	\e[35m
 CYA	=	\e[36m
 END	=	\e[0m
 
-$(NAME):	$(OBJS) libft
+$(NAME):	$(LIBFT) $(OBJS)
 	@$(CC) $(CFLAGS) $(IFLAGS) $(OBJS) -o $@ $(LFLAGS)
 	@printf "\t$(PPL)$(NAME) created\n$(END)"
 
-libft:
+$(LIBFT):
 	@$(MAKE) -C libft all
+	@printf "\t$(PPL)libft.a compiled\n$(END)"
 
 $(BUILD_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(dir $@)
@@ -76,7 +78,7 @@ fclean:	clean
 		fi;
 
 re:		fclean
-	@$(MAKE) -C libft re
+	@$(MAKE) -C libft fclean
 	@$(MAKE) $(NAME)
 
 -include $(DEPS)
