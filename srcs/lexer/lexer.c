@@ -51,6 +51,11 @@ int	dollar(char *str, t_lexer *lexer, t_type type)
 		return ((str + len_var + 1) - start);
 	}
 	len_var = size_var(str, 0);
+	if (!len_var)
+	{
+		create_token("$", 1, WORD, lexer);
+		return (1);
+	}
 	create_token(str, len_var, type, lexer);
 	return ((str + len_var) - start);
 }
@@ -88,7 +93,7 @@ int	word(char *str, t_lexer *lexer)
 	if (str[len] == '#')
 		return (0);
 	while (str[len] && !is_operator(str[len]) && str[len] != '\'' && \
-			str[len] != '\"' && str[len] != ' ' && str[len] != '$')
+			str[len] != '\"' && str[len] != ' ')
 		len++;
 	if (len && !is_number(str, len))
 		create_token(str, len, WORD, lexer);
