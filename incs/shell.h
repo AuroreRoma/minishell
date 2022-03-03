@@ -119,7 +119,6 @@ void	dump_cmds(t_cmd *cmd);
 int		append_cmd_args(char *str, t_cmd *cmd);
 
 void	create_token(char *str, int len, t_type type, t_lexer *lexer);
-void	destroy_tokens(t_lexer *lexer, t_token *tokens);
 void	dump_tokens(t_lexer *lexer);
 
 char	*str_insert(char *str, int start_insert, int size_insert, char *insert);

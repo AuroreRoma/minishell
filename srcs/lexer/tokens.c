@@ -19,16 +19,6 @@ void	create_token(char *str, int len, t_type type, t_lexer *lexer)
 	lexer->index++;
 }
 
-void	destroy_tokens(t_lexer *lexer, t_token *tokens)
-{
-	int	i;
-
-	i = -1;
-	while (++i != lexer->index)
-		free(tokens[i].data);
-	free(tokens);
-}
-
 void	dump_tokens(t_lexer *lexer)
 {
 	int	i;

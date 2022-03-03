@@ -22,6 +22,16 @@
  *	9. new word
  */
 
+void	destroy_tokens(t_lexer *lexer, t_token *tokens)
+{
+	int	i;
+
+	i = -1;
+	while (++i != lexer->index)
+		free(tokens[i].data);
+	free(tokens);
+}
+
 void	*tokenizer(t_lexer *lexer, char *str)
 {
 	lexer->error = no_error;
