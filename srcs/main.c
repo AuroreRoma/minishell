@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/03 15:04:17 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/03 15:20:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,12 @@ int	main(int ac, char **av, char **envp)
 		tokenizer(&lexer, line);
 		error_lexer(&lexer);
 		if (!lexer.error && lexer.index)
+		{
 			parser(&lexer, shell);
+			dump_cmds(shell->first_cmd);
+		}
 		destroy_tokens(&lexer, lexer.tokens);
+		destroy_cmd(shell->first_cmd);
 	}
 	rl_clear_history();
 }
