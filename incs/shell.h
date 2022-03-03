@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/03 14:59:29 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/03 18:12:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ struct s_shell
 /*		ENV VAR		*/
 
 void	parse_env(char **envp, t_shell *shell);
+void	destroy_env(t_env *head);
+void	print_env(t_shell *shell);
 
 /********************/
 
