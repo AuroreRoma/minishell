@@ -17,6 +17,7 @@ SRCS := \
 	lexer/lexer.c \
 	lexer/lexer_utils.c \
 	lexer/tokens.c \
+	lexer/check_error.c \
 	parser/handle_quote.c \
 	parser/parser.c \
 	parser/parser_handler.c \

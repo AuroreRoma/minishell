@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:13:21 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/02/24 20:19:48 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/03 14:59:51 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	quote(char *str, t_lexer *lexer)
 	}
 	else if (str[len] != quote)
 	{
+		create_token(&quote, 1, ERROR, lexer);
 		lexer->error = error_quote;
 		return (0);
 	}
@@ -84,7 +85,10 @@ int	operator(char *str, t_lexer *lexer)
 	else if (*str == '>' && *(str + 1) != '>')
 		create_token(str, 1, GREAT, lexer);
 	else if (is_operator(*(str + 1)))
+	{
+		create_token(str, 2, ERROR, lexer);
 		lexer->error = error_operator;
+	}
 	return (ret);
 }
 

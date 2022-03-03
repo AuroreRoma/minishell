@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/02/25 01:06:38 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/03 14:59:29 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@
 # define TOK_BUFFER_SIZE 64
 # define ARG_BUFFER_SIZE 32
 
-/*		LEXER		*/
+# define SHELL_NAME "minishell"
+
+typedef struct s_shell	t_shell;
+typedef struct s_cmd	t_cmd;
 
 typedef enum e_type		t_type;
 typedef enum e_error	t_error;
@@ -32,7 +35,8 @@ typedef struct s_lexer	t_lexer;
 
 enum e_type
 {
-	WORD = 1,
+	ERROR = 0,
+	WORD,
 	NBR,
 	PIPE,
 	LESS,
@@ -49,7 +53,9 @@ enum e_error
 {
 	no_error = 0,
 	error_operator,
-	error_quote
+	error_quote,
+	error_redirection,
+	error_pipe
 };
 
 struct s_token
@@ -156,5 +162,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	*ft_calloc(size_t count, size_t size);
 void	ft_lstadd_back(t_env **alst, t_env *new);
+
+int		is_redirection(t_type type);
 
 #endif

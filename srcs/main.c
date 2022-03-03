@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/02/25 01:28:57 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/03 15:01:07 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,6 @@ void	*tokenizer(t_lexer *lexer, char *str)
 		str += word(str, lexer);
 		str += comment(str, lexer);
 	}
-	if (lexer->error)
-		printf("Error : invalid characters\n");
-	else
-		dump_tokens(lexer);
 	return (NULL);
 }
 
@@ -88,12 +84,9 @@ int	main(int ac, char **av, char **envp)
 		if (strstr(line, "exit"))
 			break ;
 		tokenizer(&lexer, line);
+		error_lexer(&lexer);
 		if (!lexer.error && lexer.index)
-		{
-			printf("Tokens done\n");
-			parser(&lexer, shell);
-			printf("Parser done\n");
-		}
+			parser(&lexer, &shell);
 		destroy_tokens(&lexer, lexer.tokens);
 	}
 	rl_clear_history();
