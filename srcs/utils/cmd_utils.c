@@ -6,11 +6,30 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:13:50 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/02/24 20:23:35 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/03 17:58:25 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+void	__ft_lstclear(t_red **lst)
+{
+	t_red	*next;
+	t_red	*rem;
+
+	if (lst == NULL)
+		return ;
+	next = *lst;
+	rem = NULL;
+	while (next)
+	{
+		rem = next;
+		next = next->next;
+		free(rem->data);
+		free(rem);
+	}
+	*lst = NULL;
+}
 
 void	destroy_cmd(t_cmd *cmd)
 {
@@ -31,9 +50,7 @@ void	destroy_cmd(t_cmd *cmd)
 			free(cmd->cmd_args[j]);
 			j++;
 		}
-		free(cmd->filename_in);
-		free(cmd->filename_out);
-		free(cmd->heredoc_end);
+		__ft_lstclear(&cmd->redirection);
 		free(cmd->cmd_args);
 		free(cmd);
 		cmd = next;
@@ -84,27 +101,10 @@ int	get_nbr_cmds(t_lexer *lexer)
 	return (ret);
 }
 
-static void	dump_cmds_(t_cmd *cmd)
-{
-	if (cmd->filename_in)
-		printf("\n%s%s\n", "filename_in  : ", cmd->filename_in);
-	else
-		printf("\n%s%p\n", "filename_in  : ", cmd->filename_in);
-	if (cmd->filename_in)
-		printf("%s%s\n", "filename_out : ", cmd->filename_out);
-	else
-		printf("%s%s\n", "filename_out : ", cmd->filename_out);
-	if (cmd->heredoc_end)
-		printf("%s%s\n", "heredoc_end  : ", cmd->heredoc_end);
-	else
-		printf("%s%p\n", "heredoc_end  : ", cmd->heredoc_end);
-	printf("fd_in : %i\n", cmd->fd_in);
-	printf("fd_out : %i\n", cmd->fd_out);
-}
-
 void	dump_cmds(t_cmd *cmd)
 {
 	int		i;
+	t_red	*next;
 
 	while (cmd)
 	{
@@ -121,7 +121,14 @@ void	dump_cmds(t_cmd *cmd)
 		}
 		if (cmd->cmd_args)
 			printf("\n");
-		dump_cmds_(cmd);
+		i = 0;
+		next = cmd->redirection;
+		while (next)
+		{
+			printf("Redirection %i : type %i : %s\n", i, next->type, next->data);
+			next = next->next;
+			i++;
+		}
 		cmd = cmd->next;
 	}
 	printf("----------------------------------------------\n");

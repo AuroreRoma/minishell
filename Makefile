@@ -21,6 +21,7 @@ SRCS := \
 	lexer/tokens.c \
 	lexer/check_error.c \
 	parser/handle_quote.c \
+	parser/handle_redirection.c \
 	parser/parser.c \
 	parser/parser_handler.c \
 	utils/cmd_utils.c \
