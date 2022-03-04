@@ -15,6 +15,7 @@ BUILD_DIR := build
 SRCS := \
 	main.c \
 	env/parse_env.c \
+	env/destroy_env.c \
 	lexer/lexer.c \
 	lexer/lexer_utils.c \
 	lexer/tokens.c \
