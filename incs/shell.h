@@ -6,13 +6,14 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/03 17:04:06 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/04 18:53:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
 
+# include <fcntl.h>
 # include <string.h>
 # include <stdbool.h>
 # include <stdlib.h>
@@ -79,7 +80,7 @@ struct	s_lexer
 
 typedef struct s_cmd	t_cmd;
 typedef struct s_red	t_red;
-typedef	enum e_redt		t_redt;
+typedef enum e_redt		t_redt;
 
 enum	e_redt
 {
@@ -90,9 +91,15 @@ enum	e_redt
 	redir_heredoc
 };
 
+/*
+ *	the flag variable is for heredoc
+ *	if set variable expansion is not activated.
+ */
+
 struct s_red
 {
 	t_redt	type;
+	int		flag;
 	int		fd_in;
 	int		fd_out;
 	char	*data;

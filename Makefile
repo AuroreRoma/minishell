@@ -30,7 +30,8 @@ SRCS := \
 	utils/ft_strlen.c \
 	utils/ft_strcmp.c \
 	utils/ft_substr.c \
-	utils/ft_lstadd_back.c
+	utils/ft_lstadd_back.c \
+	utils/gnl.c
 
 _SRC =	$(addprefix $(SRCS_DIR)/, $(SRCS))
 OBJS =	$(patsubst $(SRCS_DIR)%.c, $(BUILD_DIR)/%.o, $(_SRC))
