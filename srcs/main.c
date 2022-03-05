@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/04 17:18:59 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/05 16:02:06 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int	main(int ac, char **av, char **envp)
 	shell = (t_shell *)ft_calloc(1, sizeof(t_shell));
 	init_shell(shell);
 	parse_env(envp, shell);
-//	print_env(shell);
 	while (break_flag)
 	{
 		line = read_line();
@@ -93,6 +92,7 @@ int	main(int ac, char **av, char **envp)
 			parser(&lexer, shell);
 			dump_cmds(shell->first_cmd);
 		}
+		executor(shell);
 		destroy_tokens(&lexer, lexer.tokens);
 		destroy_cmd(shell->first_cmd);
 	}

@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/04 16:24:45 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/05 16:51:46 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+
+# include "../libft/libft.h"
 
 # define TOK_BUFFER_SIZE 64
 # define ARG_BUFFER_SIZE 32
@@ -140,8 +144,8 @@ struct s_shell
 /*		ENV VAR		*/
 
 void	parse_env(char **envp, t_shell *shell);
+char	**env_to_str(t_shell *shell);
 void	destroy_env(t_env *head);
-void	print_env(t_shell *shell);
 
 /********************/
 
@@ -184,4 +188,6 @@ void	ft_lstadd_back(t_env **alst, t_env *new);
 
 int		is_redirection(t_type type);
 
+void	executor(t_shell *shell);
+char	**env_to_str(t_shell *shell);
 #endif

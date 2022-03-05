@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 21:42:33 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/04 16:24:28 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/05 15:12:13 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	add_env(char *var_line, t_shell *shell)
 	ft_lstadd_back(&shell->envv, new);
 }
 
-void	print_env(t_shell *shell)
+/*void	print_env(t_shell *shell)
 {
 	t_env	*tmp;
 
@@ -50,11 +50,11 @@ void	print_env(t_shell *shell)
 		printf("Key: %s\nValue: %s\n\n", tmp->envv_key, tmp->envv_value);
 		tmp = tmp->next;
 	}
-}
+}*/
 
 void	parse_env(char **envp, t_shell *shell)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (envp[i])
