@@ -6,11 +6,12 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:14:01 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/02/24 20:14:02 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/05 16:33:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "libft.h"
 
 int	append_cmd_args(char *str, t_cmd *cmd)
 {
@@ -20,19 +21,19 @@ int	append_cmd_args(char *str, t_cmd *cmd)
 
 	i = 0;
 	if (!cmd->cmd_args)
-		cmd->cmd_args = (char **)calloc(cmd->buffer_args, sizeof(char *));
+		cmd->cmd_args = (char **)ft_calloc(cmd->buffer_size, sizeof(char *));
 	if (!cmd->cmd_args)
 		return ((printf("Error malloc\n"), 1));
 	while (cmd->cmd_args[i])
 		i++;
-	if (i > cmd->buffer_args)
+	if (i >= cmd->buffer_size)
 	{
-		old_buffer = cmd->buffer_args;
-		cmd->buffer_args += ARG_BUFFER_SIZE;
-		cmd->cmd_args = (char **)calloc(cmd->buffer_args, sizeof(char *));
+		old_buffer = cmd->buffer_size;
+		cmd->buffer_size += ARG_BUFFER_SIZE;
+		cmd->cmd_args = (char **)ft_calloc(cmd->buffer_size, sizeof(char *));
 		if (!cmd->cmd_args)
 			return ((printf("Error malloc\n"), 1));
-		memset(cmd->cmd_args + old_buffer, 0, ARG_BUFFER_SIZE);
+		ft_memset(cmd->cmd_args + old_buffer, 0, ARG_BUFFER_SIZE);
 	}
 	new = strdup(str);
 	if (!new)

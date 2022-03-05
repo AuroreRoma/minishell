@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/04 18:53:44 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/05 16:49:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ struct s_cmd
 {
 	char	*cmd_name;
 	char	**cmd_args;
-	int		buffer_args;
+	int		buffer_size;
 	t_red	*redirection;
 	t_cmd	*next;
 };
@@ -147,6 +147,8 @@ struct s_shell
 /*		ENV VAR		*/
 
 void	parse_env(char **envp, t_shell *shell);
+char	*get_env_var(t_shell *shell, char *str);
+void	var_expansion(t_shell *shell);
 
 /********************/
 
@@ -163,7 +165,7 @@ int		is_number(char *str, int len);
 int		size_var(char *str, char tmp);
 int		is_operator(char c);
 
-void	handle_quote(t_lexer *lexer, t_cmd *current, int *index);
+void	handle_quote(t_shell *shell, t_lexer *lexer, t_cmd *current, int *index);
 void	handle_redirection(t_lexer *lexer, t_cmd *current, int *index);
 void	handle_word(t_lexer *lexer, t_cmd *current, int *index);
 void	handle_pipe(t_cmd **current, int *index);
