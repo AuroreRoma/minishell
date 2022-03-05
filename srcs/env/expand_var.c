@@ -6,12 +6,13 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 14:51:51 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/05 17:33:02 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/05 19:35:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "libft.h"
+#include "gnl.h"
 
 /*
 
@@ -95,10 +96,51 @@ void	var_expansion_cmd_args(t_shell *shell, t_cmd *cmd, char **cmd_args)
 	}
 }
 
-
-void	var_expansion_heredoc()
+void	search_and_replace_var(t_shell *shell, char **line)
 {
-	;
+	int		start_insert;
+	int		size_var;
+	char	*var;
+	char	*var_value;
+	char	*old_line;
+
+	start_insert = check_var(*line);
+	while (start_insert != -1)
+	{
+		size_var = get_end((*line) + start_insert);
+		var = ft_substr((*line) + start_insert, 0, size_var);
+		var_value = get_env_var(shell, var);
+		old_line = *line;
+		(*line) = str_insert(old_line, start_insert, size_var, var_value);
+		free(var);
+		free(old_line);
+		free(var_value);
+		start_insert = check_var(*line);
+	}
+}
+
+void	var_expansion_heredoc(t_shell *shell, t_red *current)
+{
+	int		gnl;
+	int		old_fd;
+	int		new_fd;
+	char	*line;
+
+	old_fd = open(current->data, O_RDONLY);
+	new_fd = open(HERE2FILE, O_CREAT | O_TRUNC | O_WRONLY | O_APPEND, 0777);
+	gnl = get_next_line(old_fd, &line);
+	while (gnl == 1)
+	{
+		search_and_replace_var(shell, &line);
+		write(new_fd, line, ft_strlen(line));
+		free(line);
+		gnl = get_next_line(old_fd, &line);
+	}
+	free(current->data);
+	close(old_fd);
+	close(new_fd);
+	// delete(current->data);
+	current->data = ft_strdup(HERE2FILE);
 }
 
 void	var_expansion_redirection(t_shell *shell, t_red *current)
@@ -106,8 +148,8 @@ void	var_expansion_redirection(t_shell *shell, t_red *current)
 	while (current)
 	{
 		placeholder_function_name(shell, &current->data);
-		if (current->type == redir_heredoc)
-			var_expansion_heredoc();
+		if (current->type == redir_heredoc && !current->flag)
+			var_expansion_heredoc(shell, current);
 		current = current->next;
 	}
 }

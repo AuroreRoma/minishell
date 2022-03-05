@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:14:49 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/05 17:28:43 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/05 19:19:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	check_var(char *str)
 	int	i;
 
 	i = 0;
-	printf("%s\n", str);
 	while (*str && *str != '$')
 	{
 		str++;
@@ -33,7 +32,7 @@ int	get_end(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && str[i] != ' ' && str[i] != '\"')
+	while (str[i] && str[i] != ' ' && str[i] != '\"' && str[i] != '\n')
 		i++;
 	return (i);
 }
