@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:14:56 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/02/24 20:21:22 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/05 15:38:07 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	parse_token(t_lexer *lexer, t_shell *shell)
 		if (is_redirection(lexer->tokens[i].type))
 			handle_redirection(lexer, current, &i);
 		if (lexer->tokens[i].type == QUOTE || lexer->tokens[i].type == DQUOTE)
-			handle_quote(lexer, current, &i);
+			handle_quote(shell, lexer, current, &i);
 		if (lexer->tokens[i].type == VAR)
 			handle_word(lexer, current, &i);
 		if (lexer->tokens[i].type == PIPE)

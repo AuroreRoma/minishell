@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 21:42:33 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/03 17:03:15 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/05 15:39:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,5 @@ void	parse_env(char **envp, t_shell *shell)
 		add_env(envp[i], shell);
 		i++;
 	}
-	print_env(shell);
+//	print_env(shell);
 }
