@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:13:50 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/03 17:58:25 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/05 16:33:45 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	create_cmd(t_cmd **cmd)
 		printf("Error malloc\n");
 		exit(1);
 	}
-	new->buffer_args = ARG_BUFFER_SIZE;
+	new->buffer_size = ARG_BUFFER_SIZE;
 	if (!*cmd)
 		*cmd = new;
 	else

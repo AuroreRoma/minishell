@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:13:21 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/04 17:23:40 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/05 17:38:58 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ static void	quote_helper(char **start, char **str, char *quote, int *len)
 {
 	*start = *str;
 	*quote = **str;
-	(*str)++;
-	*len = 0;
+	*len = 1;
 }
 
 int	quote(char *str, t_lexer *lexer)
@@ -33,6 +32,7 @@ int	quote(char *str, t_lexer *lexer)
 		len++;
 	if (len && str[len] == quote)
 	{
+		len++;
 		if (quote == '\'')
 			create_token(str, len, QUOTE, lexer);
 		else
@@ -44,7 +44,7 @@ int	quote(char *str, t_lexer *lexer)
 		lexer->error = error_quote;
 		return (0);
 	}
-	return ((str + len + 1) - start);
+	return ((str + len) - start);
 }
 
 int	dollar(char *str, t_lexer *lexer, t_type type)
@@ -55,7 +55,6 @@ int	dollar(char *str, t_lexer *lexer, t_type type)
 	start = str;
 	if ((*str) != '$')
 		return (0);
-	str++;
 	if (*str == '{' && str++)
 	{
 		len_var = size_var(str, '}');

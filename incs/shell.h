@@ -6,13 +6,14 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/04 16:24:45 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/05 17:38:51 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
 
+# include <fcntl.h>
 # include <string.h>
 # include <stdbool.h>
 # include <stdlib.h>
@@ -79,7 +80,7 @@ struct	s_lexer
 
 typedef struct s_cmd	t_cmd;
 typedef struct s_red	t_red;
-typedef	enum e_redt		t_redt;
+typedef enum e_redt		t_redt;
 
 enum	e_redt
 {
@@ -90,9 +91,15 @@ enum	e_redt
 	redir_heredoc
 };
 
+/*
+ *	the flag variable is for heredoc
+ *	if set variable expansion is not activated.
+ */
+
 struct s_red
 {
 	t_redt	type;
+	int		flag;
 	int		fd_in;
 	int		fd_out;
 	char	*data;
@@ -103,7 +110,7 @@ struct s_cmd
 {
 	char	*cmd_name;
 	char	**cmd_args;
-	int		buffer_args;
+	int		buffer_size;
 	t_red	*redirection;
 	t_cmd	*next;
 };
@@ -142,6 +149,8 @@ struct s_shell
 void	parse_env(char **envp, t_shell *shell);
 void	destroy_env(t_env *head);
 void	print_env(t_shell *shell);
+char	*get_env_var(t_shell *shell, char *str);
+void	var_expansion(t_shell *shell);
 
 /********************/
 
@@ -158,7 +167,7 @@ int		is_number(char *str, int len);
 int		size_var(char *str, char tmp);
 int		is_operator(char c);
 
-void	handle_quote(t_lexer *lexer, t_cmd *current, int *index);
+void	handle_quote(t_shell *shell, t_lexer *lexer, t_cmd *current, int *index);
 void	handle_redirection(t_lexer *lexer, t_cmd *current, int *index);
 void	handle_word(t_lexer *lexer, t_cmd *current, int *index);
 void	handle_pipe(t_cmd **current, int *index);

@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/04 17:18:59 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/05 17:39:15 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	main(int ac, char **av, char **envp)
 		exit(0); // TO REPLACE WITH FT_EXIT
 	shell = (t_shell *)ft_calloc(1, sizeof(t_shell));
 	init_shell(shell);
+	(void)envp;
 	parse_env(envp, shell);
 //	print_env(shell);
 	while (break_flag)
@@ -91,7 +92,9 @@ int	main(int ac, char **av, char **envp)
 		if (!lexer.error && lexer.index)
 		{
 			parser(&lexer, shell);
+			var_expansion(shell);
 			dump_cmds(shell->first_cmd);
+			destroy_cmd(shell->first_cmd);
 		}
 		destroy_tokens(&lexer, lexer.tokens);
 		destroy_cmd(shell->first_cmd);

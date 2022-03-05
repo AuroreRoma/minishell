@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:14:49 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/03 17:52:27 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/05 17:28:43 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,29 @@ int	get_end(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && str[i] != ' ')
+	while (str[i] && str[i] != ' ' && str[i] != '\"')
 		i++;
 	return (i);
 }
 
-char	*get_env_var(void)
-{
-	return ("PLACEHOLDER");
-}
-
-static	void	handle_quote_helper(t_lexer *lexer, int *index, char **tmp)
+static	void	handle_quote_helper(\
+		t_shell *shell, t_lexer *lexer, int *index, char **tmp)
 {
 	int		start_insert;
 	char	*tmp2;
+	char	*var;
+	char	*tmp3;
 
 	start_insert = check_var(lexer->tokens[*index].data);
 	tmp2 = NULL;
 	while (start_insert != -1)
 	{
+		tmp3 = ft_substr((*tmp) + start_insert, 0, get_end((*tmp) + start_insert));
+		var = get_env_var(shell, tmp3);
+		free(tmp3);
 		(*tmp) = str_insert(*tmp, start_insert, get_end((*tmp) + start_insert), \
-				get_env_var());
+				var);
+		free(var);
 		if (tmp2)
 			free(tmp2);
 		start_insert = check_var(*tmp);
@@ -61,13 +63,13 @@ static	void	handle_quote_helper(t_lexer *lexer, int *index, char **tmp)
 	}
 }
 
-void	handle_quote(t_lexer *lexer, t_cmd *current, int *index)
+void	handle_quote(t_shell *shell, t_lexer *lexer, t_cmd *current, int *index)
 {
 	char	*tmp;
 
 	tmp = lexer->tokens[*index].data;
 	if (lexer->tokens[*index].type == DQUOTE)
-		handle_quote_helper(lexer, index, &tmp);
+		handle_quote_helper(shell, lexer, index, &tmp);
 	if (!current->cmd_name)
 	{
 		current->cmd_name = strdup(tmp);
