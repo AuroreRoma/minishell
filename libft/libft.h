@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/09 10:59:39 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/05 15:27:29 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/06 14:38:43 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void				ft_putnbr_fd(int n, int fd);
 char				**ft_split(char const *s, char c);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strdup(const char *s1);
+char				*ft_strndup(const char *s1, size_t size);
 char				*ft_strjoin(char const *s1, char const *s2);
 size_t				ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);
