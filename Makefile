@@ -19,6 +19,8 @@ SRCS := \
 	env/destroy_env.c \
 	env/expand_var.c \
 	executor/executor.c \
+	executor/cmd_launcher_absolute.c \
+	executor/cmd_launcher_relative.c \
 	lexer/lexer.c \
 	lexer/lexer_utils.c \
 	lexer/tokens.c \
