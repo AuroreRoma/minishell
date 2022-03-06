@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/05 18:30:28 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/06 13:54:29 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,9 @@ typedef struct s_env	t_env;
 
 struct s_env
 {
-	char	*envv_full;
-	char	*envv_key;
-	char	*envv_value;
+	char	*env_full;
+	char	*env_key;
+	char	*env_value;
 	t_env	*next;
 };
 
@@ -145,7 +145,7 @@ typedef struct s_shell	t_shell;
 struct s_shell
 {
 	t_cmd	*first_cmd;
-	t_env	*envv;
+	t_env	*env;
 	int		return_status;
 };
 
@@ -156,7 +156,6 @@ struct s_shell
 void	parse_env(char **envp, t_shell *shell);
 char	**env_to_str(t_shell *shell);
 void	destroy_env(t_env *head);
-void	print_env(t_shell *shell);
 char	*get_env_var(t_shell *shell, char *str);
 void	var_expansion(t_shell *shell);
 
@@ -175,7 +174,8 @@ int		is_number(char *str, int len);
 int		size_var(char *str, char tmp);
 int		is_operator(char c);
 
-void	handle_quote(t_shell *shell, t_lexer *lexer, t_cmd *current, int *index);
+void	handle_quote(t_shell *shell, t_lexer *lexer, \
+		t_cmd *current, int *index);
 int		check_var(char *str);
 int		get_end(char *str);
 
@@ -204,6 +204,8 @@ void	ft_lstadd_back(t_env **alst, t_env *new);
 
 int		is_redirection(t_type type);
 
+/*		EXECUTION		*/
+
 void	executor(t_shell *shell);
-char	**env_to_str(t_shell *shell);
+
 #endif

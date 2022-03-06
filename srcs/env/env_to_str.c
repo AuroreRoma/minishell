@@ -6,19 +6,19 @@
 /*   By: pblagoje <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 17:58:17 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/04 18:21:27 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/06 13:52:57 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static int		count_env(t_shell *shell)
+static int	count_env(t_shell *shell)
 {
 	int		i;
 	t_env	*tmp;
 
 	i = 0;
-	tmp = shell->envv;
+	tmp = shell->env;
 	while (tmp->next != NULL)
 	{
 		i++;
@@ -35,12 +35,12 @@ char	**env_to_str(t_shell *shell)
 	t_env	*tmp;
 
 	i = 0;
-	tmp = shell->envv;
-	env_number = count_env(shell); 
+	tmp = shell->env;
+	env_number = count_env(shell);
 	str = (char **)ft_calloc(env_number + 1, sizeof(char *));
 	while (i < env_number)
 	{
-		str[i] = tmp->envv_full;
+		str[i] = tmp->env_full;
 		tmp = tmp->next;
 		i++;
 	}

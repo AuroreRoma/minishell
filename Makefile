@@ -30,11 +30,6 @@ SRCS := \
 	utils/cmd_utils.c \
 	utils/cmd_utils_2.c \
 	utils/str_insert.c \
-	utils/ft_calloc.c \
-	utils/ft_strlen.c \
-	utils/ft_strcmp.c \
-	utils/ft_substr.c \
-	utils/ft_lstadd_back.c \
 	utils/gnl.c
 
 _SRC =	$(addprefix $(SRCS_DIR)/, $(SRCS))

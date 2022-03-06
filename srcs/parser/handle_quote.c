@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:14:49 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/05 19:19:08 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/06 13:53:45 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static	void	handle_quote_helper(\
 	tmp2 = NULL;
 	while (start_insert != -1)
 	{
-		tmp3 = ft_substr((*tmp) + start_insert, 0, get_end((*tmp) + start_insert));
+		tmp3 = ft_substr((*tmp) + start_insert, 0, \
+				get_end((*tmp) + start_insert));
 		var = get_env_var(shell, tmp3);
 		free(tmp3);
 		(*tmp) = str_insert(*tmp, start_insert, get_end((*tmp) + start_insert), \
@@ -71,7 +72,7 @@ void	handle_quote(t_shell *shell, t_lexer *lexer, t_cmd *current, int *index)
 		handle_quote_helper(shell, lexer, index, &tmp);
 	if (!current->cmd_name)
 	{
-		current->cmd_name = strdup(tmp);
+		current->cmd_name = ft_strdup(tmp);
 		if (!current->cmd_name)
 			printf("Error malloc\n");
 	}

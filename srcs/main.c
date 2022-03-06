@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/05 17:50:30 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/06 13:55:28 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*read_line(void)
 void	init_shell(t_shell *shell)
 {
 	shell->first_cmd = NULL;
-	shell->envv = NULL;
+	shell->env = NULL;
 	shell->return_status = 0;
 }
 
@@ -70,16 +70,15 @@ int	main(int ac, char **av, char **envp)
 	bool	break_flag;
 	char	*line;
 	t_lexer	lexer;
-	t_shell	*shell;
+	t_shell	shell;
 
 	(void)av;
 	break_flag = true;
 	if (ac != 1)
-		exit(0); // TO REPLACE WITH FT_EXIT
-	shell = (t_shell *)ft_calloc(1, sizeof(t_shell));
-	init_shell(shell);
+		exit(0);
+	init_shell(&shell);
 	(void)envp;
-	parse_env(envp, shell);
+	parse_env(envp, &shell);
 	while (break_flag)
 	{
 		line = read_line();
@@ -89,14 +88,13 @@ int	main(int ac, char **av, char **envp)
 		error_lexer(&lexer);
 		if (!lexer.error && lexer.index)
 		{
-			parser(&lexer, shell);
-			var_expansion(shell);
-			executor(shell);
-			destroy_cmd(shell->first_cmd);
+			parser(&lexer, &shell);
+			var_expansion(&shell);
+			executor(&shell);
+			destroy_cmd(shell.first_cmd);
 		}
 		destroy_tokens(&lexer, lexer.tokens);
 	}
-	destroy_env(shell->envv);
+	destroy_env(shell.env);
 	rl_clear_history();
-	free(shell);
 }

@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:13:36 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/02/24 20:13:39 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/06 12:51:43 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	create_token(char *str, int len, t_type type, t_lexer *lexer)
 	{
 		lexer->tokens = realloc(lexer->tokens, sizeof(t_token) \
 			* TOK_BUFFER_SIZE);
-		bzero(lexer->tokens + lexer->index, TOK_BUFFER_SIZE);
+		ft_bzero(lexer->tokens + lexer->index, TOK_BUFFER_SIZE);
 		lexer->buf_size += TOK_BUFFER_SIZE;
 	}
 	lexer->tokens[lexer->index].type = type;

@@ -6,7 +6,7 @@
 /*   By: pblagoje <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/05 16:52:18 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/06 14:09:04 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ char	**get_path(t_env *envv)
 	str = NULL;
 	while (tmp->next != NULL)
 	{
-		if (!ft_strcmp(tmp->envv_key, "PATH"))
+		if (!ft_strcmp(tmp->env_key, "PATH"))
 		{
-			str = ft_split(tmp->envv_value, ':');
+			str = ft_split(tmp->env_value, ':');
 			break ;
 		}
 		tmp = tmp->next;
@@ -83,7 +83,7 @@ void	cmd_launcher(t_shell *shell)
 
 	i = 0;
 	cmd = shell->first_cmd;
-	path = get_path(shell->envv);
+	path = get_path(shell->env);
 	envv = env_to_str(shell);
 	while (path && path[i])
 	{
@@ -97,6 +97,7 @@ void	cmd_launcher(t_shell *shell)
 	printf("command not found\n");
 	ft_free(path);
 	free(envv);
+	exit(0);
 }
 
 void	executor(t_shell *shell)

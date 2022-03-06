@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 14:51:51 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/05 19:35:20 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/06 13:35:15 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ char	*get_env_var(t_shell *shell, char *str)
 		var = ft_strdup(str + 1);
 	else
 		var = ft_substr(str + 2, 0, ft_strlen(str) - 3);
-	current = shell->envv;
+	current = shell->env;
 	while (current)
 	{
-		if (!ft_strcmp(current->envv_key, var))
+		if (!ft_strcmp(current->env_key, var))
 		{
-			if (current->envv_value)
+			if (current->env_value)
 			{
 				free(var);
-				return (ft_strdup(current->envv_value));
+				return (ft_strdup(current->env_value));
 			}
 			break ;
 		}

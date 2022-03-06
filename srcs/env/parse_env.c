@@ -6,12 +6,26 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 21:42:33 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/05 17:44:15 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/06 13:36:09 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-#include "libft.h"
+
+void	lstadd_back(t_env **alst, t_env *new)
+{
+	t_env	*current;
+
+	if (*alst == NULL)
+		*alst = new;
+	else
+	{
+		current = *alst;
+		while (current->next != NULL)
+			current = current->next;
+		current->next = new;
+	}
+}
 
 void	add_env(char *var_line, t_shell *shell)
 {
@@ -30,27 +44,15 @@ void	add_env(char *var_line, t_shell *shell)
 	j = ft_strlen(var_line) - (i + 1);
 	i++;
 	value = ft_substr(var_line, i, j);
-	new->envv_full = var_line;
-	new->envv_key = key;
+	new->env_full = ft_strdup(var_line);
+	new->env_key = key;
 	if (!ft_strcmp(value, ""))
-		new->envv_value = NULL;
+		new->env_value = NULL;
 	else
-		new->envv_value = value;
+		new->env_value = value;
 	new->next = NULL;
-	ft_lstadd_back(&shell->envv, new);
+	lstadd_back(&shell->env, new);
 }
-
-/*void	print_env(t_shell *shell)
-{
-	t_env	*tmp;
-
-	tmp = shell->envv;
-	while (tmp->next != NULL)
-	{
-		printf("Key: %s\nValue: %s\n\n", tmp->envv_key, tmp->envv_value);
-		tmp = tmp->next;
-	}
-}*/
 
 void	parse_env(char **envp, t_shell *shell)
 {

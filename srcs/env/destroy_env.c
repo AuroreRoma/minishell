@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 18:05:36 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/03 18:17:17 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/06 14:04:45 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ void	destroy_env(t_env *head)
 	while (next)
 	{
 		next = next->next;
-		if (head->envv_key)
-			free(head->envv_key);
-		if (head->envv_value)
-			free(head->envv_value);
+		if (head->env_full)
+			free(head->env_full);
+		if (head->env_key)
+			free(head->env_key);
+		if (head->env_value)
+			free(head->env_value);
 		free(head);
 		head = next;
 	}

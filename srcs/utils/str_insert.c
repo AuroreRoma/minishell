@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:14:06 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/02/24 20:24:20 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/06 12:32:24 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ char	*str_insert(char *str, int start_insert, int size_insert, char *insert)
 	int		len_str;
 	int		len_insert;
 
-	len_str = strlen(str);
-	len_insert = strlen(insert);
+	len_str = ft_strlen(str);
+	len_insert = ft_strlen(insert);
 	new = (char *)malloc(sizeof(char) * (len_str + len_insert) + 1);
 	if (!new)
 		return (NULL);

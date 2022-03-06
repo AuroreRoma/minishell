@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:14:01 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/05 16:33:20 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/06 12:31:46 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	append_cmd_args(char *str, t_cmd *cmd)
 			return ((printf("Error malloc\n"), 1));
 		ft_memset(cmd->cmd_args + old_buffer, 0, ARG_BUFFER_SIZE);
 	}
-	new = strdup(str);
+	new = ft_strdup(str);
 	if (!new)
 		return ((printf("Error malloc\n"), 1));
 	cmd->cmd_args[i] = new;
