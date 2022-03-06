@@ -27,6 +27,7 @@ SRCS := \
 	parser/handle_redirection.c \
 	parser/parser.c \
 	parser/parser_handler.c \
+	signals/signals.c \
 	utils/cmd_utils.c \
 	utils/cmd_utils_2.c \
 	utils/str_insert.c \

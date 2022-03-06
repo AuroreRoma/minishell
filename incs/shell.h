@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/06 13:54:29 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/06 15:38:46 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,10 @@ void	*ft_calloc(size_t count, size_t size);
 void	ft_lstadd_back(t_env **alst, t_env *new);
 
 int		is_redirection(t_type type);
+
+/*		SIGNALS			*/
+
+void	signal_handler(int num);
 
 /*		EXECUTION		*/
 

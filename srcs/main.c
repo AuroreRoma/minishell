@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/06 13:55:28 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/06 16:00:34 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,12 @@ char	*read_line(void)
 	line_read = readline("$> ");
 	if (line_read && *line_read)
 		add_history(line_read);
+	else if (line_read == NULL)
+	{
+		printf("exit\n");
+		free(line_read);
+		exit(0);
+	}
 	return (line_read);
 }
 
@@ -79,6 +85,8 @@ int	main(int ac, char **av, char **envp)
 	init_shell(&shell);
 	(void)envp;
 	parse_env(envp, &shell);
+	signal(SIGINT, &signal_handler);
+	signal(SIGQUIT, &signal_handler);
 	while (break_flag)
 	{
 		line = read_line();
