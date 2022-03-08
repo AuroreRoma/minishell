@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 14:51:51 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/06 13:35:15 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/08 15:11:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ void	var_expansion_heredoc(t_shell *shell, t_red *current)
 		gnl = get_next_line(old_fd, &line);
 	}
 	free(current->data);
+	free(line);
 	close(old_fd);
 	close(new_fd);
 	// delete(current->data);

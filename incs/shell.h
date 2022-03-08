@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/06 16:56:56 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/08 17:16:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,7 @@ typedef enum e_redt		t_redt;
 
 enum	e_redt
 {
-	redir_nbr = 1,
-	redir_append,
+	redir_append = 1,
 	redir_write,
 	redir_read,
 	redir_heredoc
@@ -147,6 +146,7 @@ struct s_shell
 	t_cmd	*first_cmd;
 	t_env	*env;
 	int		return_status;
+	int		stdio[2];
 };
 
 /********************/
@@ -211,7 +211,8 @@ void	signal_handler(int num);
 /*		EXECUTION		*/
 
 void	executor(t_shell *shell);
-void	cmd_launcher_absolute(t_shell *shell);
-void	cmd_launcher_relative(t_shell *shell);
+void	redirections(t_cmd *cmd);
+void	cmd_launcher_absolute(t_shell *shell, t_cmd *cmd);
+void	cmd_launcher_relative(t_shell *shell, t_cmd *cmd);
 
 #endif

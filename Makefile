@@ -3,7 +3,7 @@ NAME := minishell
 MAKEFLAGS := --no-print-directory
 
 CC = gcc
-FSAN := -fsanitize=address
+#FSAN := -fsanitize=address
 CFLAGS := -Wall -Wextra -Werror $(FSAN) -g
 IFLAGS := -I./incs -MMD -MP
 LFLAGS := -lreadline libft/libft.a
@@ -19,6 +19,7 @@ SRCS := \
 	env/destroy_env.c \
 	env/expand_var.c \
 	executor/executor.c \
+	executor/redirections.c \
 	executor/cmd_launcher_absolute.c \
 	executor/cmd_launcher_relative.c \
 	lexer/lexer.c \

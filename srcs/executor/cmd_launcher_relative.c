@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_launcher_relative.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pblagoje <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/06 16:43:16 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/07 18:16:40 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,14 @@ void	ft_free(char **path)
 	free(path);
 }
 
-void	cmd_launcher_relative(t_shell *shell)
+void	cmd_launcher_relative(t_shell *shell, t_cmd *cmd)
 {
 	int		i;
-	t_cmd	*cmd;
 	char	**path;
 	char	**env;
 	char	*cmd_path;
 
 	i = 0;
-	cmd = shell->first_cmd;
 	path = get_path(shell->env);
 	env = env_to_str(shell);
 	while (path && path[i])

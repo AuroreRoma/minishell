@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/06 16:00:34 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/08 17:18:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	init_shell(t_shell *shell)
 	shell->first_cmd = NULL;
 	shell->env = NULL;
 	shell->return_status = 0;
+	shell->stdio[0] = dup(0);
+	shell->stdio[1] = dup(1);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -83,7 +85,6 @@ int	main(int ac, char **av, char **envp)
 	if (ac != 1)
 		exit(0);
 	init_shell(&shell);
-	(void)envp;
 	parse_env(envp, &shell);
 	signal(SIGINT, &signal_handler);
 	signal(SIGQUIT, &signal_handler);
@@ -97,12 +98,15 @@ int	main(int ac, char **av, char **envp)
 		if (!lexer.error && lexer.index)
 		{
 			parser(&lexer, &shell);
+//			dump_cmds(shell.first_cmd);
 			var_expansion(&shell);
 			executor(&shell);
 			destroy_cmd(shell.first_cmd);
 		}
 		destroy_tokens(&lexer, lexer.tokens);
 	}
+	close(shell.stdio[0]);
+	close(shell.stdio[1]);
 	destroy_env(shell.env);
 	rl_clear_history();
 }

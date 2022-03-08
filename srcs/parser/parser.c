@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:14:56 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/05 19:22:25 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/08 17:17:48 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,9 @@ void	parser(t_lexer *lexer, t_shell *shell)
 	int		nbr_of_cmds;
 
 	shell->first_cmd = NULL;
-//	printf("Number of tokens : %i\n", lexer->index);
 	nbr_of_cmds = get_nbr_cmds(lexer);
 	if (nbr_of_cmds < 0)
 		return ;
-//	printf("Number of commands : %i\n", nbr_of_cmds);
 	while (nbr_of_cmds--)
 		create_cmd(&shell->first_cmd);
 	parse_token(lexer, shell);
