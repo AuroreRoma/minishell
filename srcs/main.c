@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/08 17:18:10 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/09 19:52:13 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ int	main(int ac, char **av, char **envp)
 		exit(0);
 	init_shell(&shell);
 	parse_env(envp, &shell);
-	signal(SIGINT, &signal_handler);
-	signal(SIGQUIT, &signal_handler);
+//	signal(SIGINT, &signal_handler);
+//	signal(SIGQUIT, &signal_handler);
 	while (break_flag)
 	{
 		line = read_line();

@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/08 18:18:18 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/09 19:51:35 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ void	executor(t_shell *shell)
 	t_cmd	*current;
 
 	current = shell->first_cmd;
+	set_builtins(current); // AJOUT PBLAGOJE
+	run_builtin(shell); // AJOUT PBLAGOJE
 	while (current)
 	{
 		if (current != shell->first_cmd)
