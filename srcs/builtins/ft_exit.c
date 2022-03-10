@@ -1,59 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/09 19:19:02 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/10 17:31:06 by pblagoje         ###   ########.fr       */
+/*   Created: 2022/03/10 15:51:32 by pblagoje          #+#    #+#             */
+/*   Updated: 2022/03/10 16:03:00 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-int	check_n(char *flag)
+static int	ft_isalldigit(char *str)
 {
 	int	i;
 
 	i = 0;
-	if (!ft_strcmp(flag, "-n"))
-		return (1);
-	if (flag[0] == '-')
+	if (str[0] == '-')
 		i++;
-	while (flag[i])
+	while (str[i])
 	{
-		if (flag[i] != 'n')
+		if (!ft_isdigit(str[i]))
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-int	ft_echo(t_shell *shell)
+int	ft_exit(t_shell *shell)
 {
-	int		i;
 	t_cmd	*cmd;
 
-	i = 1;
 	cmd = shell->first_cmd;
-	if (!cmd->cmd_args[1])
+	if (cmd->cmd_args[0])
+		printf("exit\n");
+	if (cmd->cmd_args[1] && cmd->cmd_args[2])
 	{
-		printf("\n");
-		return (0);
+		printf("minishell: exit: too many arguments\n");
+		return (1);
 	}
-	while (cmd->cmd_args[i] && cmd->cmd_args[i][0] == '-' && \
-			check_n(cmd->cmd_args[i]))
-		i++;
-	while (cmd->cmd_args[i])
+	if (cmd->cmd_args[1] && ft_isalldigit(cmd->cmd_args[1]))
+		exit(ft_atoi(cmd->cmd_args[1]));
+	else if (cmd->cmd_args[1])
 	{
-		printf("%s", cmd->cmd_args[i]);
-		if (cmd->cmd_args[i + 1] != NULL)
-			printf(" ");
-		i++;
+		printf("minishell: exit: ");
+		printf("%s", cmd->cmd_args[1]);
+		printf(": numeric argument required\n");
 	}
-	if (!check_n(cmd->cmd_args[1]))
-		printf("\n");
-	shell->return_status = 0;
+	else
+		exit(0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/10 17:17:05 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/10 18:49:07 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,5 +239,7 @@ void	set_builtins(t_cmd *cmd);
 int		run_builtin(t_shell *shell, t_cmd *cmd);
 int		ft_pwd(t_shell *shell);
 int		ft_echo(t_shell *shell);
+int		ft_env(t_shell *shell);
+int		ft_exit(t_shell *shell);
 
 #endif

@@ -27,6 +27,8 @@ SRCS := \
 	builtins/run_builtin.c \
 	builtins/ft_pwd.c \
 	builtins/ft_echo.c \
+	builtins/ft_env.c \
+	builtins/ft_exit.c \
 	lexer/lexer.c \
 	lexer/lexer_utils.c \
 	lexer/tokens.c \
