@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/07 18:16:40 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/10 14:53:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,5 @@ void	cmd_launcher_relative(t_shell *shell, t_cmd *cmd)
 	printf("command not found\n");
 	ft_free(path);
 	free(env);
-	exit(0);
+	exit(1);
 }

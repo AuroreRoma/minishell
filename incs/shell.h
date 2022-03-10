@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/08 17:16:34 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/10 15:53:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ struct s_cmd
 	char	*cmd_name;
 	char	**cmd_args;
 	int		buffer_size;
+	int		redirect[2];
 	t_red	*redirection;
 	t_cmd	*next;
 };
@@ -146,6 +147,7 @@ struct s_shell
 	t_cmd	*first_cmd;
 	t_env	*env;
 	int		return_status;
+	int		nbr_cmd;
 	int		stdio[2];
 };
 
@@ -212,7 +214,10 @@ void	signal_handler(int num);
 
 void	executor(t_shell *shell);
 void	redirections(t_cmd *cmd);
+void	cmd_launcher(t_shell *shell, t_cmd *cmd);
 void	cmd_launcher_absolute(t_shell *shell, t_cmd *cmd);
 void	cmd_launcher_relative(t_shell *shell, t_cmd *cmd);
+
+void	pipeline(t_shell *shell);
 
 #endif
