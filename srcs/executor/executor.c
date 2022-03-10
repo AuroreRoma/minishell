@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/10 16:34:02 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/10 17:19:46 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void	cmd_launcher(t_shell *shell, t_cmd *cmd)
 {
 	char	*is_absolute;
 
+	if (cmd->builtin)
+	{
+		run_builtin(shell, cmd);
+		return ;
+	}
 	if (cmd->cmd_name)
 		is_absolute = ft_strchr(cmd->cmd_name, '/');
 	else
@@ -36,7 +41,7 @@ void	execute_cmd(t_shell *shell, t_cmd *cmd)
 	set_builtins(cmd);
 	if (cmd->builtin)
 	{
-		run_builtin(shell); // 
+		run_builtin(shell, cmd);
 		return ;
 	}
 	pid = fork();
