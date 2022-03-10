@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/10 15:53:09 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/10 16:32:05 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_cmd	t_cmd;
 
 typedef enum e_type		t_type;
 typedef enum e_error	t_error;
+typedef enum e_builtin	t_builtin;
 typedef struct s_token	t_token;
 typedef struct s_lexer	t_lexer;
 
@@ -65,6 +66,18 @@ enum e_error
 	error_quote,
 	error_redirection,
 	error_pipe
+};
+
+enum e_builtin
+{
+	not_builtin = 0,
+	builtin_echo,
+	builtin_cd,
+	builtin_pwd,
+	builtin_export,
+	builtin_unset,
+	builtin_env,
+	builtin_exit
 };
 
 struct s_token
@@ -118,6 +131,7 @@ struct s_cmd
 	char	**cmd_args;
 	int		buffer_size;
 	int		redirect[2];
+	int		builtin;
 	t_red	*redirection;
 	t_cmd	*next;
 };
@@ -219,5 +233,11 @@ void	cmd_launcher_absolute(t_shell *shell, t_cmd *cmd);
 void	cmd_launcher_relative(t_shell *shell, t_cmd *cmd);
 
 void	pipeline(t_shell *shell);
+/*		BUILTINS		*/
+
+void	set_builtins(t_cmd *cmd);
+int		run_builtin(t_shell *shell);
+int		ft_pwd(t_shell *shell);
+int		ft_echo(t_shell *shell);
 
 #endif

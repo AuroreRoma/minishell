@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/10 16:23:12 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/10 16:31:34 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,6 @@ void	executor(t_shell *shell)
 		execute_cmd(shell, shell->first_cmd);
 	else
 		pipeline(shell);
+	//set_builtins(current); // AJOUT PBLAGOJE
+	//run_builtin(shell); // 
 }

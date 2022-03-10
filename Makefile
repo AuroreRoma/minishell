@@ -23,6 +23,10 @@ SRCS := \
 	executor/redirections.c \
 	executor/cmd_launcher_absolute.c \
 	executor/cmd_launcher_relative.c \
+	builtins/set_builtins.c \
+	builtins/run_builtin.c \
+	builtins/ft_pwd.c \
+	builtins/ft_echo.c \
 	lexer/lexer.c \
 	lexer/lexer_utils.c \
 	lexer/tokens.c \
@@ -31,7 +35,6 @@ SRCS := \
 	parser/handle_redirection.c \
 	parser/parser.c \
 	parser/parser_handler.c \
-	signals/signals.c \
 	utils/cmd_utils.c \
 	utils/cmd_utils_2.c \
 	utils/str_insert.c \
