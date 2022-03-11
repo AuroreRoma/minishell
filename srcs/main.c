@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/11 01:37:40 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/11 11:49:13 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,5 @@ int	main(int ac, char **av, char **envp)
 	close(shell.stdio[0]);
 	close(shell.stdio[1]);
 	destroy_env(shell.env);
-	rl_clear_history();
+	clear_history();
 }
