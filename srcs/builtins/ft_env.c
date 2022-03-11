@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 17:52:49 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/10 18:01:33 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/10 20:47:16 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ static void	ft_env_error(t_shell *shell, char *str)
 	printf("env: %s: No such file or directory\n", str);
 }
 
-int	ft_env(t_shell *shell)
+int	ft_env(t_shell *shell, t_cmd *cmd)
 {
 	t_env	*env;
 
 	env = shell->env;
 	if (!env)
 		return (1);
-	if (shell->first_cmd->cmd_args[1])
+	if (cmd->cmd_args[1])
 	{
-		ft_env_error(shell, shell->first_cmd->cmd_args[1]);
+		ft_env_error(shell, cmd->cmd_args[1]);
 		return (shell->return_status);
 	}
 	while (env)

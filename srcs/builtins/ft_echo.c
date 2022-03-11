@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 19:19:02 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/10 17:31:06 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/10 20:47:49 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,11 @@ int	check_n(char *flag)
 	return (1);
 }
 
-int	ft_echo(t_shell *shell)
+int	ft_echo(t_shell *shell, t_cmd *cmd)
 {
 	int		i;
-	t_cmd	*cmd;
 
 	i = 1;
-	cmd = shell->first_cmd;
 	if (!cmd->cmd_args[1])
 	{
 		printf("\n");

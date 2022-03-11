@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 15:51:32 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/10 16:03:00 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/10 20:52:40 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,9 @@ static int	ft_isalldigit(char *str)
 	return (1);
 }
 
-int	ft_exit(t_shell *shell)
+int	ft_exit(t_shell *shell, t_cmd *cmd)
 {
-	t_cmd	*cmd;
-
-	cmd = shell->first_cmd;
+	(void)shell;
 	if (cmd->cmd_args[0])
 		printf("exit\n");
 	if (cmd->cmd_args[1] && cmd->cmd_args[2])

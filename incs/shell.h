@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/10 18:49:07 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/10 20:48:56 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,13 +233,15 @@ void	cmd_launcher_absolute(t_shell *shell, t_cmd *cmd);
 void	cmd_launcher_relative(t_shell *shell, t_cmd *cmd);
 
 void	pipeline(t_shell *shell);
+
 /*		BUILTINS		*/
 
 void	set_builtins(t_cmd *cmd);
 int		run_builtin(t_shell *shell, t_cmd *cmd);
 int		ft_pwd(t_shell *shell);
-int		ft_echo(t_shell *shell);
-int		ft_env(t_shell *shell);
-int		ft_exit(t_shell *shell);
+int		ft_echo(t_shell *shell, t_cmd *cmd);
+int		ft_cd(t_shell *shell, t_cmd *cmd);
+int		ft_env(t_shell *shell, t_cmd *cmd);
+int		ft_exit(t_shell *shell, t_cmd *cmd);
 
 #endif
