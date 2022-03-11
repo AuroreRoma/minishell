@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/10 20:48:56 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/11 15:40:20 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 # define SHELL_NAME "minishell"
 
-# define HERE_FILE ".herefile.tmp"
+# define HERE_FILE ".herefile_"
 # define HERE2FILE ".herefile_.tmp"
 
 typedef struct s_shell	t_shell;
@@ -195,6 +195,7 @@ void	handle_quote(t_shell *shell, t_lexer *lexer, \
 int		check_var(char *str);
 int		get_end(char *str);
 
+char	*generate_herefile_name(void);
 void	handle_redirection(t_lexer *lexer, t_cmd *current, int *index);
 void	handle_word(t_lexer *lexer, t_cmd *current, int *index);
 void	handle_pipe(t_cmd **current, int *index);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 14:51:51 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/08 15:11:01 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/11 15:38:40 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,11 @@ void	var_expansion_heredoc(t_shell *shell, t_red *current)
 	int		old_fd;
 	int		new_fd;
 	char	*line;
+	char	*filename;
 
 	old_fd = open(current->data, O_RDONLY);
-	new_fd = open(HERE2FILE, O_CREAT | O_TRUNC | O_WRONLY | O_APPEND, 0777);
+	filename = generate_herefile_name();
+	new_fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY | O_APPEND, 0777);
 	gnl = get_next_line(old_fd, &line);
 	while (gnl == 1)
 	{
@@ -136,12 +138,12 @@ void	var_expansion_heredoc(t_shell *shell, t_red *current)
 		free(line);
 		gnl = get_next_line(old_fd, &line);
 	}
+	unlink(current->data);
 	free(current->data);
 	free(line);
 	close(old_fd);
 	close(new_fd);
-	// delete(current->data);
-	current->data = ft_strdup(HERE2FILE);
+	current->data = filename;
 }
 
 void	var_expansion_redirection(t_shell *shell, t_red *current)

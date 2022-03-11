@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:51:52 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/05 19:32:25 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/11 15:37:39 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,33 @@ int	check_heredoc_end(char *word, char *buf)
 	return (0);
 }
 
+char	*generate_herefile_name(void)
+{
+	char		*str;
+	char		*ret;
+	static int	n_file = 0;
+
+	n_file++;
+	if ((n_file) == 32)
+		n_file = 0;
+	ret = ft_itoa(n_file);
+	str = ft_strjoin(".herefile_", ret);
+	free(ret);
+	ret = ft_strjoin(str, ".tmp");
+	free(str);
+	return (ret);
+
+}
+
 void	do_heredoc(char *word, t_red *new)
 {
-	int		fd;
-	int		gnl;
-	char	*buf;
+	int			fd;
+	int			gnl;
+	char		*buf;
+	char		*filename;
 
-	fd = open(HERE_FILE, O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	filename = generate_herefile_name();
+	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	write(1, "> ", ft_strlen("> "));
 	gnl = get_next_line(0, &buf);
 	while (gnl == 1)
@@ -52,7 +72,7 @@ void	do_heredoc(char *word, t_red *new)
 		printf("error\n");
 	free(buf);
 	close(fd);
-	new->data = ft_strdup(HERE_FILE);
+	new->data = filename;
 }
 
 void	__ft_lstadd_back(t_red **alst, t_red *new)

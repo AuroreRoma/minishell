@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:13:50 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/06 12:30:34 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/11 15:54:23 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	__ft_lstclear(t_red **lst)
 	{
 		rem = next;
 		next = next->next;
+		unlink(rem->data);
 		free(rem->data);
 		free(rem);
 	}

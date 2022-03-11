@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:43:29 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/08 16:40:37 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/11 15:53:36 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static int	check_redirection(t_lexer *lexer, int i)
 
 static int	check_pipe(t_lexer *lexer, int i)
 {
-	if (i + 1 == lexer->index || lexer->tokens[i + 1].type == PIPE)
+	if (i + 1 == lexer->index || lexer->tokens[i + 1].type == PIPE \
+		|| (lexer->tokens[0].type == PIPE))
 	{
 		lexer->error = error_pipe;
 		printf("%s: %s `%s'\n", SHELL_NAME, SYNTAX_ERROR, \
