@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/11 13:08:19 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/13 21:54:19 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	init_shell(t_shell *shell)
 {
 	shell->first_cmd = NULL;
 	shell->env = NULL;
+	shell->env_str = NULL;
 	shell->return_status = 0;
 	shell->nbr_cmd = 0;
 	shell->stdio[0] = dup(0);
@@ -103,6 +104,7 @@ int	main(int ac, char **av, char **envp)
 			destroy_cmd(shell.first_cmd);
 		}
 		destroy_tokens(&lexer, lexer.tokens);
+		destroy_env_str(shell.env_str);
 	}
 	close(shell.stdio[0]);
 	close(shell.stdio[1]);

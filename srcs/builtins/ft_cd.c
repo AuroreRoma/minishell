@@ -6,19 +6,19 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 20:50:11 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/11 12:50:03 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/13 19:57:57 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	cd_update_env(t_shell *shell)
+void	cd_update_env(t_shell **shell)
 {
 	t_env	*tmp_pwd;
 	t_env	*tmp_oldpwd;
 
-	tmp_pwd = shell->env;
-	tmp_oldpwd = shell->env;
+	tmp_pwd = (*shell)->env;
+	tmp_oldpwd = (*shell)->env;
 	while (tmp_pwd && ft_strcmp(tmp_pwd->env_key, "PWD"))
 		tmp_pwd = tmp_pwd->next;
 	while (tmp_oldpwd && ft_strcmp(tmp_oldpwd->env_key, "OLDPWD"))
@@ -34,11 +34,12 @@ void	cd_update_env(t_shell *shell)
 
 void	cd_error(t_shell *shell, char *str, int flag)
 {
-	printf("cd: %s: ", str);
+	ft_putstr_fd("minishell: cd: ", 2);
+	ft_putstr_fd(str, 2);
 	if (flag == 1)
-		printf("No such file or directory\n");
+		ft_putstr_fd(": No such file or directory\n", 2);
 	else if (flag == 2)
-		printf("Not a directory\n");
+		ft_putstr_fd(": Not a directory\n", 2);
 	shell->return_status = 1;
 }
 
@@ -83,7 +84,7 @@ int	ft_cd(t_shell *shell, t_cmd *cmd)
 		cd = get_cd(cmd, shell->env);
 	if (!cd)
 	{
-		printf("cd: HOME not set\n");
+		ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 		return (1);
 	}
 	if (access(cd, F_OK) == 0)
@@ -91,7 +92,7 @@ int	ft_cd(t_shell *shell, t_cmd *cmd)
 		if (chdir(cd) != 0)
 			cd_error(shell, cmd->cmd_args[1], 2);
 		else
-			cd_update_env(shell);
+			cd_update_env(&shell);
 	}
 	else
 		cd_error(shell, cmd->cmd_args[1], 1);

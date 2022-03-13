@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/11 15:40:20 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/13 20:39:16 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ struct s_shell
 {
 	t_cmd	*first_cmd;
 	t_env	*env;
+	char	**env_str;
 	int		return_status;
 	int		nbr_cmd;
 	int		stdio[2];
@@ -172,6 +173,7 @@ struct s_shell
 void	parse_env(char **envp, t_shell *shell);
 char	**env_to_str(t_shell *shell);
 void	destroy_env(t_env *head);
+void	destroy_env_str(char **env);
 char	*get_env_var(t_shell *shell, char *str);
 void	var_expansion(t_shell *shell);
 
@@ -243,6 +245,7 @@ int		ft_pwd(t_shell *shell);
 int		ft_echo(t_shell *shell, t_cmd *cmd);
 int		ft_cd(t_shell *shell, t_cmd *cmd);
 int		ft_env(t_shell *shell, t_cmd *cmd);
+int		ft_unset(t_shell *shell, t_cmd *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
 
 #endif

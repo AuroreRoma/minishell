@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/10 14:53:53 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/13 20:40:12 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,22 @@ void	cmd_launcher_relative(t_shell *shell, t_cmd *cmd)
 {
 	int		i;
 	char	**path;
-	char	**env;
 	char	*cmd_path;
 
 	i = 0;
 	path = get_path(shell->env);
-	env = env_to_str(shell);
 	while (path && path[i])
 	{
 		cmd_path = join_path(path[i], cmd->cmd_name);
-		if (execve(cmd_path, cmd->cmd_args, env) == -1)
+		if (execve(cmd_path, cmd->cmd_args, shell->env_str) == -1)
 		{
 			free(cmd_path);
 			i++;
 		}
 	}
-	printf("command not found\n");
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd->cmd_args[0], 2);
+	ft_putstr_fd(": command not found\n", 2);
 	ft_free(path);
-	free(env);
 	exit(1);
 }

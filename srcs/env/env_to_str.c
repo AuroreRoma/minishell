@@ -6,7 +6,7 @@
 /*   By: pblagoje <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 17:58:17 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/06 13:52:57 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/13 21:32:41 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**env_to_str(t_shell *shell)
 	str = (char **)ft_calloc(env_number + 1, sizeof(char *));
 	while (i < env_number)
 	{
-		str[i] = tmp->env_full;
+		str[i] = ft_strdup(tmp->env_full);
 		tmp = tmp->next;
 		i++;
 	}

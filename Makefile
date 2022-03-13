@@ -29,6 +29,7 @@ SRCS := \
 	builtins/ft_echo.c \
 	builtins/ft_cd.c \
 	builtins/ft_env.c \
+	builtins/ft_unset.c \
 	builtins/ft_exit.c \
 	lexer/lexer.c \
 	lexer/lexer_utils.c \

@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/10 17:19:46 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/13 20:34:24 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	execute_cmd(t_shell *shell, t_cmd *cmd)
 
 void	executor(t_shell *shell)
 {
+	shell->env_str = env_to_str(shell);
 	if (shell->nbr_cmd == 1)
 		execute_cmd(shell, shell->first_cmd);
 	else

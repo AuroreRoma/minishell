@@ -6,11 +6,25 @@
 /*   By: marvin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 18:05:36 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/06 14:04:45 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/13 20:38:49 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+
+void	destroy_env_str(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		free(env[i]);
+		i++;
+	}
+	free(env);
+	env = NULL;
+}
 
 void	destroy_env(t_env *head)
 {

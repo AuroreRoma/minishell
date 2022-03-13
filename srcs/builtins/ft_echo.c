@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 19:19:02 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/10 20:47:49 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/13 20:16:29 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_echo(t_shell *shell, t_cmd *cmd)
 	i = 1;
 	if (!cmd->cmd_args[1])
 	{
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 		return (0);
 	}
 	while (cmd->cmd_args[i] && cmd->cmd_args[i][0] == '-' && \
@@ -45,13 +45,13 @@ int	ft_echo(t_shell *shell, t_cmd *cmd)
 		i++;
 	while (cmd->cmd_args[i])
 	{
-		printf("%s", cmd->cmd_args[i]);
+		ft_putstr_fd(cmd->cmd_args[i], 1);
 		if (cmd->cmd_args[i + 1] != NULL)
-			printf(" ");
+			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (!check_n(cmd->cmd_args[1]))
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 	shell->return_status = 0;
 	return (0);
 }
