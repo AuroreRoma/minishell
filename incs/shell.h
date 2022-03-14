@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/14 15:18:53 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/13 20:39:16 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,5 @@ int		ft_cd(t_shell *shell, t_cmd *cmd);
 int		ft_env(t_shell *shell, t_cmd *cmd);
 int		ft_unset(t_shell *shell, t_cmd *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
-
-int		is_reading_line(int flag);
 
 #endif

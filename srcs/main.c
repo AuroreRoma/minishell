@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/14 15:16:57 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/13 21:54:19 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,10 @@ void	*tokenizer(t_lexer *lexer, char *str)
 	return (NULL);
 }
 
-int	is_reading_line(int flag)
-{
-	static int	n = 0;
-
-	if (flag >= 0)
-		n = flag;
-	return (n);
-}
-
 char	*read_line(void)
 {
 	static char	*line_read = NULL;
 
-	is_reading_line(1);
 	if (line_read)
 	{
 		free(line_read);
@@ -71,7 +61,6 @@ char	*read_line(void)
 		free(line_read);
 		exit(0);
 	}
-	is_reading_line(0);
 	return (line_read);
 }
 
@@ -99,8 +88,8 @@ int	main(int ac, char **av, char **envp)
 		exit(0);
 	init_shell(&shell);
 	parse_env(envp, &shell);
-	signal(SIGINT, &signal_handler);
-	signal(SIGQUIT, &signal_handler);
+//	signal(SIGINT, &signal_handler);
+//	signal(SIGQUIT, &signal_handler);
 	while (break_flag)
 	{
 		line = read_line();
