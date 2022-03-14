@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:43:29 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/11 15:53:36 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/14 17:39:47 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	check_redirection(t_lexer *lexer, int i)
 {
 	if (i + 1 == lexer->index)
 	{
-		printf("%s: %s `%s'\n", SHELL_NAME, SYNTAX_ERROR, NL);
+		print_error_message_lexer(SYNTAX_ERROR, NL);
 		lexer->error = error_redirection;
 		return (1);
 	}
@@ -25,8 +25,7 @@ static int	check_redirection(t_lexer *lexer, int i)
 			is_redirection(lexer->tokens[i + 1].type))
 	{
 		lexer->error = error_redirection;
-		printf("%s: %s `%s'\n", SHELL_NAME, SYNTAX_ERROR, \
-				lexer->tokens[i + 1].data);
+		print_error_message_lexer(SYNTAX_ERROR, lexer->tokens[i + 1].data);
 		return (1);
 	}
 	return (0);
@@ -38,8 +37,7 @@ static int	check_pipe(t_lexer *lexer, int i)
 		|| (lexer->tokens[0].type == PIPE))
 	{
 		lexer->error = error_pipe;
-		printf("%s: %s `%s'\n", SHELL_NAME, SYNTAX_ERROR, \
-				lexer->tokens[i].data);
+		print_error_message_lexer(SYNTAX_ERROR, lexer->tokens[i].data);
 		return (1);
 	}
 	return (0);
@@ -54,8 +52,7 @@ void	error_lexer(t_lexer	*lexer)
 	{
 		if (lexer->tokens[i].type == ERROR)
 		{
-			printf("%s: %s `%s'\n", SHELL_NAME, SYNTAX_ERROR, \
-				lexer->tokens[i].data);
+			print_error_message_lexer(SYNTAX_ERROR, lexer->tokens[i].data);
 			return ;
 		}
 		if (is_redirection(lexer->tokens[i].type))

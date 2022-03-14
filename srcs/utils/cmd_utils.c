@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:13:50 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/11 15:54:23 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/14 18:34:33 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	__ft_lstclear(t_red **lst)
 	{
 		rem = next;
 		next = next->next;
-		unlink(rem->data);
+		if (rem->type == redir_heredoc)
+			unlink(rem->data);
 		free(rem->data);
 		free(rem);
 	}
@@ -100,6 +101,35 @@ int	get_nbr_cmds(t_lexer *lexer)
 		return (-1);
 	}
 	return (ret);
+}
+
+int	append_cmd_args(char *str, t_cmd *cmd)
+{
+	int		i;
+	int		old_buffer;
+	char	*new;
+
+	i = 0;
+	if (!cmd->cmd_args)
+		cmd->cmd_args = (char **)ft_calloc(cmd->buffer_size, sizeof(char *));
+	if (!cmd->cmd_args)
+		return ((printf("Error malloc\n"), 1));
+	while (cmd->cmd_args[i])
+		i++;
+	if (i >= cmd->buffer_size)
+	{
+		old_buffer = cmd->buffer_size;
+		cmd->buffer_size += ARG_BUFFER_SIZE;
+		cmd->cmd_args = (char **)ft_calloc(cmd->buffer_size, sizeof(char *));
+		if (!cmd->cmd_args)
+			return ((printf("Error malloc\n"), 1));
+		ft_memset(cmd->cmd_args + old_buffer, 0, ARG_BUFFER_SIZE);
+	}
+	new = ft_strdup(str);
+	if (!new)
+		return ((printf("Error malloc\n"), 1));
+	cmd->cmd_args[i] = new;
+	return (0);
 }
 
 void	dump_cmds(t_cmd *cmd)

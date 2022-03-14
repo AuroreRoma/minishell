@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/13 20:34:24 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/14 18:30:35 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ void	execute_cmd(t_shell *shell, t_cmd *cmd)
 	set_builtins(cmd);
 	if (cmd->builtin)
 	{
+		redirections(cmd);
 		run_builtin(shell, cmd);
+		dup2(shell->stdio[0], 0);
+		dup2(shell->stdio[1], 1);
 		return ;
 	}
 	pid = fork();

@@ -3,45 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/13 21:54:19 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/14 17:56:39 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "error.h"
-
-void	destroy_tokens(t_lexer *lexer, t_token *tokens)
-{
-	int	i;
-
-	i = -1;
-	while (++i != lexer->index)
-		free(tokens[i].data);
-	free(tokens);
-}
-
-void	*tokenizer(t_lexer *lexer, char *str)
-{
-	lexer->error = no_error;
-	lexer->index = 0;
-	lexer->buf_size = TOK_BUFFER_SIZE;
-	lexer->tokens = (t_token *)ft_calloc(TOK_BUFFER_SIZE, sizeof(t_token));
-	if (!lexer->tokens)
-		return (NULL);
-	while (str && *str && !lexer->error)
-	{
-		str += quote(str, lexer);
-		str += dollar(str, lexer, VAR);
-		str += operator(str, lexer);
-		str += skip_space(str, lexer);
-		str += word(str, lexer);
-		str += comment(str, lexer);
-	}
-	return (NULL);
-}
 
 char	*read_line(void)
 {
@@ -75,11 +45,18 @@ void	init_shell(t_shell *shell)
 	shell->stdio[1] = dup(1);
 }
 
+void	clean(t_shell *shell)
+{
+	close(shell->stdio[0]);
+	close(shell->stdio[1]);
+	destroy_env(shell->env);
+	rl_clear_history();
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	bool	break_flag;
 	char	*line;
-	t_lexer	lexer;
 	t_shell	shell;
 
 	(void)av;
@@ -93,21 +70,12 @@ int	main(int ac, char **av, char **envp)
 	while (break_flag)
 	{
 		line = read_line();
-		tokenizer(&lexer, line);
-		error_lexer(&lexer);
-		if (!lexer.error && lexer.index)
-		{
-			parser(&lexer, &shell);
-//			dump_cmds(shell.first_cmd);
-			var_expansion(&shell);
-			executor(&shell);
-			destroy_cmd(shell.first_cmd);
-		}
-		destroy_tokens(&lexer, lexer.tokens);
+		if (parser(&shell, line))
+			continue ;
+		var_expansion(&shell);
+		executor(&shell);
+		destroy_cmd(shell.first_cmd);
 		destroy_env_str(shell.env_str);
 	}
-	close(shell.stdio[0]);
-	close(shell.stdio[1]);
-	destroy_env(shell.env);
-	rl_clear_history();
+	clean(&shell);
 }

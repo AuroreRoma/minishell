@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/04 14:04:48 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/14 18:02:07 by wind             ###   ########.fr       */
+/*   Created: 2022/03/14 17:21:33 by wind              #+#    #+#             */
+/*   Updated: 2022/03/14 17:39:24 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+#include "shell.h"
+#include "error.h"
 
-# define SYNTAX_ERROR "syntax error near unexpected token"
-# define NL "newline"
-
-void	error_lexer(t_lexer *lexer);
-void	print_error_message_lexer(char *string, char *token);
-void	print_error_message(char *cmd_name, char *string);
-
-#endif
+void	print_error_message_lexer(char *string, char *token)
+{
+	ft_putstr_fd(SHELL_NAME, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(string, 2);
+	ft_putstr_fd(" '", 2);
+	ft_putstr_fd(token, 2);
+	ft_putstr_fd("'\n", 2);
+}

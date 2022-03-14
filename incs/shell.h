@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/13 20:39:16 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/14 17:55:41 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SHELL_H
 
 # include <fcntl.h>
+# include <errno.h>
 # include <string.h>
 # include <stdbool.h>
 # include <stdlib.h>
@@ -179,7 +180,7 @@ void	var_expansion(t_shell *shell);
 
 /********************/
 
-void	parser(t_lexer *lexer, t_shell *shell);
+int		parser(t_shell *shell, char *str);
 
 int		quote(char *str, t_lexer *lexer);
 int		dollar(char *str, t_lexer *lexer, t_type type);
@@ -211,6 +212,8 @@ int		append_cmd_args(char *str, t_cmd *cmd);
 
 void	create_token(char *str, int len, t_type type, t_lexer *lexer);
 void	dump_tokens(t_lexer *lexer);
+void	destroy_tokens(t_lexer *lexer, t_token *tokens);
+void	*tokenizer(t_lexer *lexer, char *str);
 
 /*		UTILS		*/
 

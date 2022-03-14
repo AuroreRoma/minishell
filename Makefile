@@ -40,7 +40,7 @@ SRCS := \
 	parser/parser.c \
 	parser/parser_handler.c \
 	utils/cmd_utils.c \
-	utils/cmd_utils_2.c \
+	utils/error.c \
 	utils/str_insert.c \
 	utils/gnl.c
 

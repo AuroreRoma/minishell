@@ -42,3 +42,33 @@ void	dump_tokens(t_lexer *lexer)
 		i++;
 	}
 }
+
+void	destroy_tokens(t_lexer *lexer, t_token *tokens)
+{
+	int	i;
+
+	i = -1;
+	while (++i != lexer->index)
+		free(tokens[i].data);
+	free(tokens);
+}
+
+void	*tokenizer(t_lexer *lexer, char *str)
+{
+	lexer->error = no_error;
+	lexer->index = 0;
+	lexer->buf_size = TOK_BUFFER_SIZE;
+	lexer->tokens = (t_token *)ft_calloc(TOK_BUFFER_SIZE, sizeof(t_token));
+	if (!lexer->tokens)
+		return (NULL);
+	while (str && *str && !lexer->error)
+	{
+		str += quote(str, lexer);
+		str += dollar(str, lexer, VAR);
+		str += operator(str, lexer);
+		str += skip_space(str, lexer);
+		str += word(str, lexer);
+		str += comment(str, lexer);
+	}
+	return (NULL);
+}

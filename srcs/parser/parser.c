@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:14:56 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/09 16:38:50 by marvin           ###   ########.fr       */
+/*   Updated: 2022/03/14 17:29:45 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "error.h"
 
 int	is_redirection(t_type type)
 {
@@ -48,16 +49,27 @@ void	parse_token(t_lexer *lexer, t_shell *shell)
 	}
 }
 
-void	parser(t_lexer *lexer, t_shell *shell)
+int	parser(t_shell *shell, char *line)
 {
+	int		ret;
 	int		nbr_of_cmds;
+	t_lexer	lexer;
 
-	shell->first_cmd = NULL;
-	nbr_of_cmds = get_nbr_cmds(lexer);
-	shell->nbr_cmd = nbr_of_cmds;
-	if (nbr_of_cmds < 0)
-		return ;
-	while (nbr_of_cmds--)
-		create_cmd(&shell->first_cmd);
-	parse_token(lexer, shell);
+	ret = 1;
+	tokenizer(&lexer, line);
+	error_lexer(&lexer);
+	if (!lexer.error && lexer.index)
+	{
+		ret = 0;
+		shell->first_cmd = NULL;
+		nbr_of_cmds = get_nbr_cmds(&lexer);
+		shell->nbr_cmd = nbr_of_cmds;
+		if (nbr_of_cmds < 0)
+			ret = 1;
+		while (nbr_of_cmds--)
+			create_cmd(&shell->first_cmd);
+		parse_token(&lexer, shell);
+	}
+	destroy_tokens(&lexer, lexer.tokens);
+	return (ret);
 }
