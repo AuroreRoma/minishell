@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 14:51:51 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/11 15:38:40 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/14 19:15:48 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	*get_env_var(t_shell *shell, char *str)
 	char	*var;
 	t_env	*current;
 
+	if (!ft_strcmp(str, "$?"))
+		return (ft_itoa(shell->return_status));
 	if (!((*str) + 1 == '{'))
 		var = ft_strdup(str + 1);
 	else
@@ -61,7 +63,7 @@ char	*get_env_var(t_shell *shell, char *str)
 	return (ft_strdup(""));
 }
 
-void	placeholder_function_name(t_shell *shell, char **ptr)
+void	replace_var(t_shell *shell, char **ptr)
 {
 	char	*old;
 
@@ -86,7 +88,7 @@ void	var_expansion_cmd_args(t_shell *shell, t_cmd *cmd, char **cmd_args)
 	i = 0;
 	while (cmd_args[i])
 	{
-		placeholder_function_name(shell, &cmd_args[i]);
+		replace_var(shell, &cmd_args[i]);
 		if (!i)
 		{
 			free(cmd->cmd_name);
@@ -150,7 +152,7 @@ void	var_expansion_redirection(t_shell *shell, t_red *current)
 {
 	while (current)
 	{
-		placeholder_function_name(shell, &current->data);
+		replace_var(shell, &current->data);
 		if (current->type == redir_heredoc && !current->flag)
 			var_expansion_heredoc(shell, current);
 		current = current->next;

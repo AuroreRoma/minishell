@@ -6,7 +6,7 @@
 /*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/14 17:55:41 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/14 18:43:41 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,7 @@ void	signal_handler(int num);
 /*		EXECUTION		*/
 
 void	executor(t_shell *shell);
-void	redirections(t_cmd *cmd);
+int		redirections(t_cmd *cmd);
 void	cmd_launcher(t_shell *shell, t_cmd *cmd);
 void	cmd_launcher_absolute(t_shell *shell, t_cmd *cmd);
 void	cmd_launcher_relative(t_shell *shell, t_cmd *cmd);

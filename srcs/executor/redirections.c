@@ -6,7 +6,7 @@
 /*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:12:10 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/14 18:38:25 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/14 19:07:22 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	open_fd(t_red *red)
 	return (fd);
 }
 
-void	redirections(t_cmd *cmd)
+int	redirections(t_cmd *cmd)
 {
 	int		fd;
 	t_red	*current;
@@ -35,7 +35,7 @@ void	redirections(t_cmd *cmd)
 	{
 		fd = open_fd(current);
 		if (fd == -1)
-			exit(1);
+			return(1);
 		if (current->type == redir_append || current->type == redir_write)
 			dup2(fd, current->fd_out);
 		if (current->type == redir_read || current->type == redir_heredoc)
@@ -43,4 +43,5 @@ void	redirections(t_cmd *cmd)
 		close(fd);
 		current = current->next;
 	}
+	return(0);
 }

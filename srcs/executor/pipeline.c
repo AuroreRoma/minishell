@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:43 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/10 17:15:05 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/14 19:06:27 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,7 @@ static void	wait_for_child(t_shell *shell, int pid)
 			waitpid(pid, &wstatus, 0);
 		current = current->next;
 	}
-	if (WIFEXITED(wstatus))
-		shell->return_status = WEXITSTATUS(wstatus);
-	if (WIFSTOPPED(wstatus))
-		shell->return_status = WSTOPSIG(wstatus);
+	shell->return_status = wstatus;
 }
 
 static int	exec_pipeline(t_shell *shell, int **pipe_array)
@@ -66,7 +63,8 @@ static int	exec_pipeline(t_shell *shell, int **pipe_array)
 			{
 				dup2(current->redirect[1], STDOUT_FILENO);
 			}
-			redirections(current);
+			if (redirections(current))
+				exit (1);
 			close_all_the_pipes(shell->nbr_cmd - 1, pipe_array);
 			cmd_launcher(shell, current);
 			exit(0);

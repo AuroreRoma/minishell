@@ -6,11 +6,12 @@
 /*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/14 18:30:35 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/14 19:07:29 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "error.h"
 #include "libft.h"
 
 void	cmd_launcher(t_shell *shell, t_cmd *cmd)
@@ -41,7 +42,12 @@ void	execute_cmd(t_shell *shell, t_cmd *cmd)
 	set_builtins(cmd);
 	if (cmd->builtin)
 	{
-		redirections(cmd);
+		if (redirections(cmd))
+		{
+			perror("Placeholder redirection error:");
+			shell->return_status = 1;
+			return ;
+		}
 		run_builtin(shell, cmd);
 		dup2(shell->stdio[0], 0);
 		dup2(shell->stdio[1], 1);
@@ -50,16 +56,14 @@ void	execute_cmd(t_shell *shell, t_cmd *cmd)
 	pid = fork();
 	if (!pid)
 	{
-		redirections(cmd);
+		if (redirections(cmd))
+			exit(1);
 		cmd_launcher(shell, cmd);
 		exit(1);
 	}
 	else
 		waitpid(pid, &wstatus, 0);
-	if (WIFEXITED(wstatus))
-		shell->return_status = WEXITSTATUS(wstatus);
-	if (WIFSTOPPED(wstatus))
-		shell->return_status = WSTOPSIG(wstatus);
+	shell->return_status = wstatus;
 }
 
 void	executor(t_shell *shell)
@@ -69,4 +73,5 @@ void	executor(t_shell *shell)
 		execute_cmd(shell, shell->first_cmd);
 	else
 		pipeline(shell);
+	shell->return_status = return_status_handler(shell->return_status);
 }
