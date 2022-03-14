@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/13 20:34:24 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/14 15:18:43 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	execute_cmd(t_shell *shell, t_cmd *cmd)
 	pid = fork();
 	if (!pid)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		redirections(cmd);
 		cmd_launcher(shell, cmd);
 		exit(1);
