@@ -6,7 +6,7 @@
 /*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/14 19:07:29 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/15 18:28:41 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ void	cmd_launcher(t_shell *shell, t_cmd *cmd)
 		cmd_launcher_relative(shell, cmd);
 }
 
+static void	handle_child(t_shell *shell, t_cmd *cmd)
+{
+	if (redirections(cmd))
+		exit(1);
+	cmd_launcher(shell, cmd);
+	exit(1);
+}
+
 void	execute_cmd(t_shell *shell, t_cmd *cmd)
 {
 	int	pid;
@@ -55,12 +63,7 @@ void	execute_cmd(t_shell *shell, t_cmd *cmd)
 	}
 	pid = fork();
 	if (!pid)
-	{
-		if (redirections(cmd))
-			exit(1);
-		cmd_launcher(shell, cmd);
-		exit(1);
-	}
+		handle_child(shell, cmd);
 	else
 		waitpid(pid, &wstatus, 0);
 	shell->return_status = wstatus;

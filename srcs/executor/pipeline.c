@@ -6,7 +6,7 @@
 /*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:43 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/14 19:06:27 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/15 18:14:13 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,9 @@ static int	exec_pipeline(t_shell *shell, int **pipe_array)
 		if (!pid)
 		{
 			if (current != shell->first_cmd)
-			{
 				dup2(current->redirect[0], STDIN_FILENO);
-			}
 			if (current->next)
-			{
 				dup2(current->redirect[1], STDOUT_FILENO);
-			}
 			if (redirections(current))
 				exit (1);
 			close_all_the_pipes(shell->nbr_cmd - 1, pipe_array);

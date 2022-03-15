@@ -6,7 +6,7 @@
 /*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:43:29 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/14 17:39:47 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/15 18:49:53 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	check_pipe(t_lexer *lexer, int i)
 	return (0);
 }
 
-void	error_lexer(t_lexer	*lexer)
+int	error_lexer(t_lexer	*lexer)
 {
 	int	i;
 
@@ -53,16 +53,17 @@ void	error_lexer(t_lexer	*lexer)
 		if (lexer->tokens[i].type == ERROR)
 		{
 			print_error_message_lexer(SYNTAX_ERROR, lexer->tokens[i].data);
-			return ;
+			return (2);
 		}
 		if (is_redirection(lexer->tokens[i].type))
 		{
 			if (check_redirection(lexer, i))
-				return ;
+				return (2);
 		}
 		if (lexer->tokens[i].type == PIPE)
 			if (check_pipe(lexer, i))
-				return ;
+				return (2);
 		i++;
 	}
+	return (0);
 }

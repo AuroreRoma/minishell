@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_launcher_relative.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/13 20:40:12 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/15 17:50:24 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "error.h"
 
 char	*join_path(char const *s1, char const *s2)
 {
@@ -76,23 +77,36 @@ void	ft_free(char **path)
 void	cmd_launcher_relative(t_shell *shell, t_cmd *cmd)
 {
 	int		i;
+	int		e;
 	char	**path;
 	char	*cmd_path;
 
 	i = 0;
+	e = 0;
 	path = get_path(shell->env);
 	while (path && path[i])
 	{
 		cmd_path = join_path(path[i], cmd->cmd_name);
 		if (execve(cmd_path, cmd->cmd_args, shell->env_str) == -1)
 		{
-			free(cmd_path);
 			i++;
+			if ((errno == EACCES && !is_directory(cmd_path)))
+				e = errno;
+			free(cmd_path);
 		}
 	}
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(cmd->cmd_args[0], 2);
-	ft_putstr_fd(": command not found\n", 2);
+	if (e == EACCES)
+		print_error_message_exec(cmd->cmd_name, strerror(e));
+	else
+		print_error_message_exec(cmd->cmd_name, NO_COMMAND);
 	ft_free(path);
-	exit(1);
+	exit(126 + (e != EACCES));
 }
+
+	// dont care if the file is a directory
+	// permision issue 126
+	// bash: ./README.md: Permission denied
+	// keep first error incase command not found
+
+	// if command not found else 127
+	// bash: foo: command not found

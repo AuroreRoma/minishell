@@ -6,7 +6,7 @@
 /*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:14:56 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/14 17:29:45 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/15 19:20:31 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int	parser(t_shell *shell, char *line)
 
 	ret = 1;
 	tokenizer(&lexer, line);
-	error_lexer(&lexer);
+	if (error_lexer(&lexer))
+		shell->return_status = 2;
 	if (!lexer.error && lexer.index)
 	{
 		ret = 0;
@@ -65,7 +66,10 @@ int	parser(t_shell *shell, char *line)
 		nbr_of_cmds = get_nbr_cmds(&lexer);
 		shell->nbr_cmd = nbr_of_cmds;
 		if (nbr_of_cmds < 0)
-			ret = 1;
+		{
+			destroy_tokens(&lexer, lexer.tokens);
+			return (1);
+		}
 		while (nbr_of_cmds--)
 			create_cmd(&shell->first_cmd);
 		parse_token(&lexer, shell);

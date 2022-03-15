@@ -6,7 +6,7 @@
 /*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/14 18:43:41 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/15 18:22:00 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 
 # include "../libft/libft.h"
 
@@ -177,6 +178,10 @@ void	destroy_env(t_env *head);
 void	destroy_env_str(char **env);
 char	*get_env_var(t_shell *shell, char *str);
 void	var_expansion(t_shell *shell);
+void	var_expansion_heredoc(t_shell *shell, t_red *current);
+void	var_expansion_redirection(t_shell *shell, t_red *current);
+void	replace_var(t_shell *shell, char **ptr);
+void	search_and_replace_var(t_shell *shell, char **line);
 
 /********************/
 
@@ -225,6 +230,8 @@ void	*ft_calloc(size_t count, size_t size);
 void	ft_lstadd_back(t_env **alst, t_env *new);
 
 int		is_redirection(t_type type);
+
+char	*generate_herefile_name(void);
 
 /*		SIGNALS			*/
 

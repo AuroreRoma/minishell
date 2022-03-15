@@ -18,6 +18,7 @@ SRCS := \
 	env/env_to_str.c \
 	env/destroy_env.c \
 	env/expand_var.c \
+	env/expand_var_redirec.c \
 	executor/executor.c \
 	executor/pipeline.c \
 	executor/redirections.c \
@@ -42,6 +43,7 @@ SRCS := \
 	utils/cmd_utils.c \
 	utils/error.c \
 	utils/str_insert.c \
+	utils/parser_utils.c \
 	utils/gnl.c
 
 _SRC =	$(addprefix $(SRCS_DIR)/, $(SRCS))

@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_launcher_absolute.c                            :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/15 18:28:54 by wind             ###   ########.fr       */
+/*   Created: 2022/03/15 18:16:16 by wind              #+#    #+#             */
+/*   Updated: 2022/03/15 18:23:28 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-#include "error.h"
 
-void	cmd_launcher_absolute(t_shell *shell, t_cmd *cmd)
+char	*generate_herefile_name(void)
 {
-	execve(cmd->cmd_name, cmd->cmd_args, shell->env_str);
-	if (errno == EACCES && is_directory(cmd->cmd_name))
-		print_error_message_exec(cmd->cmd_name, DIRECTORY);
-	else
-		print_error_message_exec(cmd->cmd_name, strerror(errno));
-	exit(126 + (errno != EACCES));
+	char		*str;
+	char		*ret;
+	static int	n_file = 0;
+
+	n_file++;
+	if ((n_file) == 32)
+		n_file = 0;
+	ret = ft_itoa(n_file);
+	str = ft_strjoin(".herefile_", ret);
+	free(ret);
+	ret = ft_strjoin(str, ".tmp");
+	free(str);
+	return (ret);
 }
