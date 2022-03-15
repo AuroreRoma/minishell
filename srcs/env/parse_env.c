@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
+/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 21:42:33 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/06 13:36:09 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/15 20:04:39 by wind             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	add_env(char *var_line, t_shell *shell)
 	new->env_key = key;
 	if (!ft_strcmp(value, ""))
 		new->env_value = NULL;
+	if (!ft_strcmp(value, ""))
+		free(value);
 	else
 		new->env_value = value;
 	new->next = NULL;
