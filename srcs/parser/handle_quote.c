@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:14:49 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/06 13:53:45 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/16 18:55:27 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ void	handle_quote(t_shell *shell, t_lexer *lexer, t_cmd *current, int *index)
 	{
 		current->cmd_name = ft_strdup(tmp);
 		if (!current->cmd_name)
-			printf("Error malloc\n");
+		{
+			ft_putendl_fd("Error malloc", 2);
+			lexer->error = error_malloc;
+		}
 	}
 	if (append_cmd_args(tmp, current))
 		exit(1);
