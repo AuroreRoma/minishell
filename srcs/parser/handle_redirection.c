@@ -3,61 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirection.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:51:52 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/15 18:15:43 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/16 18:42:42 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "libft.h"
-#include "gnl.h"
+#include "error.h"
 
-int	check_heredoc_end(char *word, char *buf)
-{
-	int	offset;
-
-	offset = 0;
-	if ((*word) == '\'' || (*word) == '\"')
-	{
-		offset = 1;
-		word++;
-	}
-	if (!ft_strncmp(word, buf, ft_strlen(word) - offset) && \
-			((ft_strlen(buf) - 1) == ft_strlen(word) - offset))
-		return (1);
-	return (0);
-}
-
-void	do_heredoc(char *word, t_red *new)
-{
-	int			fd;
-	int			gnl;
-	char		*buf;
-	char		*filename;
-
-	filename = generate_herefile_name();
-	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0777);
-	write(1, "> ", ft_strlen("> "));
-	gnl = get_next_line(0, &buf);
-	while (gnl == 1)
-	{
-		if (check_heredoc_end(word, buf))
-			break ;
-		write(fd, buf, ft_strlen(buf));
-		free(buf);
-		write(1, "> ", ft_strlen("> "));
-		gnl = get_next_line(0, &buf);
-	}
-	if (!gnl)
-		printf("error\n");
-	free(buf);
-	close(fd);
-	new->data = filename;
-}
-
-void	__ft_lstadd_back(t_red **alst, t_red *new)
+static void	__ft_lstadd_back(t_red **alst, t_red *new)
 {
 	t_red	*current;
 
@@ -90,31 +47,40 @@ static void	redirection_nbr(t_lexer *lexer, t_red *new, int *index, int type)
 	}
 }
 
-void	handle_redirection(t_lexer *lexer, t_cmd *current, int *index)
+static int	__return_status_handler(t_lexer *lexer, int wstatus)
+{
+	int	ret;
+
+	ret = return_status_handler(wstatus);
+	if (ret)
+		lexer->error = error_redirection;
+	if (ret == 2)
+		ret = 0;
+	return (ret);
+}
+
+void	handle_redirection(\
+			t_shell *shell, t_lexer *lexer, t_cmd *current, int *index)
 {
 	t_red	*new;
 	t_type	type;
+	int		wstatus;
 
+	wstatus = 0;
 	new = ft_calloc(1, sizeof(t_red));
 	type = lexer->tokens[*index].type;
 	redirection_nbr(lexer, new, index, type);
 	if (type == LESS)
 		new->type = redir_read;
 	if (type == DLESS)
-	{
-		new->type = redir_heredoc;
-		do_heredoc(lexer->tokens[*index + 1].data, new);
-		if (lexer->tokens[*index + 1].type == QUOTE || \
-				lexer->tokens[*index + 1].type == DQUOTE)
-			new->flag = 1;
-	}
+		handle_heredoc(lexer, new, index, &wstatus);
 	if (type == GREAT)
 		new->type = redir_write;
 	if (type == DGREAT)
 		new->type = redir_append;
-	(*index)++;
 	if (!new->data)
-		new->data = ft_strdup(lexer->tokens[*index].data);
+		new->data = ft_strdup(lexer->tokens[(*index) + 1].data);
 	__ft_lstadd_back(&current->redirection, new);
-	(*index)++;
+	(*index) += 2;
+	shell->return_status = __return_status_handler(lexer, wstatus);
 }

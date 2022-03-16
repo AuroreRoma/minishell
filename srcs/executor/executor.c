@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/15 18:28:41 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/16 18:42:41 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	cmd_launcher(t_shell *shell, t_cmd *cmd)
 
 static void	handle_child(t_shell *shell, t_cmd *cmd)
 {
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
 	if (redirections(cmd))
 		exit(1);
 	cmd_launcher(shell, cmd);
@@ -71,10 +73,14 @@ void	execute_cmd(t_shell *shell, t_cmd *cmd)
 
 void	executor(t_shell *shell)
 {
+	signal(SIGINT, &signal_handler_exec);
+	signal(SIGQUIT, &signal_handler_exec);
 	shell->env_str = env_to_str(shell);
 	if (shell->nbr_cmd == 1)
 		execute_cmd(shell, shell->first_cmd);
 	else
 		pipeline(shell);
+	signal(SIGINT, &signal_handler);
+	signal(SIGQUIT, SIG_IGN);
 	shell->return_status = return_status_handler(shell->return_status);
 }

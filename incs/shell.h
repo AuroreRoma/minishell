@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/15 18:22:00 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/16 18:43:41 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <fcntl.h>
 # include <errno.h>
+# include <signal.h>
 # include <string.h>
 # include <stdbool.h>
 # include <stdlib.h>
@@ -32,6 +33,7 @@
 # define RED_BUFFER_SIZE 16
 
 # define SHELL_NAME "minishell"
+# define HEREDOC_PROMPT "> "
 
 # define HERE_FILE ".herefile_"
 # define HERE2FILE ".herefile_.tmp"
@@ -185,7 +187,7 @@ void	search_and_replace_var(t_shell *shell, char **line);
 
 /********************/
 
-int		parser(t_shell *shell, char *str);
+int		parser_lexer(t_shell *shell, char *str);
 
 int		quote(char *str, t_lexer *lexer);
 int		dollar(char *str, t_lexer *lexer, t_type type);
@@ -204,9 +206,11 @@ int		check_var(char *str);
 int		get_end(char *str);
 
 char	*generate_herefile_name(void);
-void	handle_redirection(t_lexer *lexer, t_cmd *current, int *index);
+void	handle_redirection(\
+			t_shell *shell, t_lexer *lexer, t_cmd *current, int *index);
 void	handle_word(t_lexer *lexer, t_cmd *current, int *index);
 void	handle_pipe(t_cmd **current, int *index);
+void	handle_heredoc(t_lexer *lexer, t_red *new, int *index, int *wstatus);
 
 void	destroy_cmd(t_cmd *cmd);
 void	create_cmd(t_cmd **cmd);
@@ -236,6 +240,8 @@ char	*generate_herefile_name(void);
 /*		SIGNALS			*/
 
 void	signal_handler(int num);
+void	signal_handler_heredoc(int num);
+void	signal_handler_exec(int num);
 
 /*		EXECUTION		*/
 

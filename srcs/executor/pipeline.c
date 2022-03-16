@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:43 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/15 18:14:13 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/16 18:42:47 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static int	exec_pipeline(t_shell *shell, int **pipe_array)
 			if (redirections(current))
 				exit (1);
 			close_all_the_pipes(shell->nbr_cmd - 1, pipe_array);
+			signal(SIGQUIT, SIG_DFL);
+			signal(SIGINT, SIG_DFL);
 			cmd_launcher(shell, current);
 			exit(0);
 		}

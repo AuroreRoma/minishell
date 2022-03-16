@@ -3,7 +3,7 @@ NAME := minishell
 MAKEFLAGS := --no-print-directory
 
 CC = gcc
-#FSAN := -fsanitize=leak
+FSAN := -fsanitize=leak
 CFLAGS := -Wall -Wextra -Werror $(FSAN) -g
 IFLAGS := -I./incs -MMD -MP
 LFLAGS := -lreadline libft/libft.a
@@ -37,9 +37,11 @@ SRCS := \
 	lexer/tokens.c \
 	lexer/check_error.c \
 	parser/handle_quote.c \
+	parser/handle_pipe_word.c \
+	parser/handle_heredoc.c \
 	parser/handle_redirection.c \
 	parser/parser.c \
-	parser/parser_handler.c \
+	signals/signals.c \
 	utils/cmd_utils.c \
 	utils/error.c \
 	utils/str_insert.c \
