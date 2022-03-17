@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 14:04:48 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/16 18:27:22 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/17 21:00:58 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define DIRECTORY "Is a directory"
 # define NO_COMMAND "command not found"
+# define NOT_FOUND "No such file or directory"
 # define CORE_DUMP "Quit (core dumped)"
 # define HERE_EOF1 ": warning: here-document at line "
 # define HERE_EOF2 " delimited by end-of-file (wanted `"

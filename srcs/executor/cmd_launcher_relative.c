@@ -6,7 +6,7 @@
 /*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/15 17:50:24 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/17 21:59:11 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,24 @@ char	*join_path(char const *s1, char const *s2)
 
 char	**get_path(t_env *env)
 {
-	t_env	*tmp;
 	char	**str;
 
-	tmp = env;
 	str = NULL;
-	while (tmp->next != NULL)
+	while (env)
 	{
-		if (!ft_strcmp(tmp->env_key, "PATH"))
+		if (!ft_strcmp(env->env_key, "PATH"))
 		{
-			str = ft_split(tmp->env_value, ':');
+			if (!ft_strchr(env->env_value, ':'))
+			{
+				str = (char **)ft_calloc(2, sizeof(char *));
+				str[0] = ft_strdup(env->env_value);
+				str[1] = NULL;
+			}
+			else
+				str = ft_split(env->env_value, ':');
 			break ;
 		}
-		tmp = tmp->next;
+		env = env->next;
 	}
 	return (str);
 }
@@ -66,12 +71,25 @@ void	ft_free(char **path)
 	int	i;
 
 	i = 0;
+	if (path == NULL)
+		return ;
 	while (path[i])
 	{
 		free(path[i]);
 		i++;
 	}
 	free(path);
+}
+
+void	cmd_print_error(char **path, char *cmd_name, int e)
+{
+	(void)path;
+	if (e == EACCES)
+		print_error_message_exec(cmd_name, strerror(e));
+	else if (!path)
+		print_error_message_exec(cmd_name, NOT_FOUND);
+	else
+		print_error_message_exec(cmd_name, NO_COMMAND);
 }
 
 void	cmd_launcher_relative(t_shell *shell, t_cmd *cmd)
@@ -95,10 +113,7 @@ void	cmd_launcher_relative(t_shell *shell, t_cmd *cmd)
 			free(cmd_path);
 		}
 	}
-	if (e == EACCES)
-		print_error_message_exec(cmd->cmd_name, strerror(e));
-	else
-		print_error_message_exec(cmd->cmd_name, NO_COMMAND);
+	cmd_print_error(path, cmd->cmd_name, e);
 	ft_free(path);
 	exit(126 + (e != EACCES));
 }
