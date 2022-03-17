@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/17 01:18:21 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/17 17:52:53 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,10 @@ int		is_redirection(t_type type);
 
 char	*generate_herefile_name(void);
 
+int		export_check_args(t_shell *shell, char *str);
+int		export_no_args(t_shell *shell);
+char	*ft_join_env(char const *s1, char const *s2);
+
 /*		SIGNALS			*/
 
 void	signal_handler(int num);
@@ -267,7 +271,6 @@ int		ft_echo(t_shell *shell, t_cmd *cmd);
 int		ft_cd(t_shell *shell, t_cmd *cmd);
 int		ft_env(t_shell *shell, t_cmd *cmd);
 int		ft_export(t_shell *shell, t_cmd *cmd);
-int		export_check_args(t_shell *shell, char *str);
 int		ft_unset(t_shell *shell, t_cmd *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
 
