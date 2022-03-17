@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 17:28:18 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/13 17:54:42 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/16 19:34:29 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	run_builtin(t_shell *shell, t_cmd *cmd)
 		return (ft_cd(shell, cmd));
 	else if (cmd->builtin == builtin_env)
 		return (ft_env(shell, cmd));
+	else if (cmd->builtin == builtin_export)
+		return (ft_export(shell, cmd));
 	else if (cmd->builtin == builtin_unset)
 		return (ft_unset(shell, cmd));
 	else if (cmd->builtin == builtin_exit)

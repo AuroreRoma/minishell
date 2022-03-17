@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 17:12:25 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/13 19:28:07 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/16 20:29:30 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	ft_unset(t_shell *shell, t_cmd *cmd)
 	while (cmd->cmd_args[i])
 	{
 		if (unset_check_error(shell, cmd->cmd_args[i]) || !shell->env)
-			return (1);
+			return (shell->return_status);
 		if (unset_del_first(&shell->env, cmd->cmd_args[i]))
 			continue ;
 		tmp1 = shell->env;

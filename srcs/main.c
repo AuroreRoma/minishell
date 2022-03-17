@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/16 18:42:34 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/17 01:23:56 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	init_shell(t_shell *shell)
 {
 	shell->first_cmd = NULL;
 	shell->env = NULL;
+	shell->env_sorted = NULL;
 	shell->env_str = NULL;
 	shell->return_status = 0;
 	shell->nbr_cmd = 0;

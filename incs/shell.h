@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/16 18:55:17 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/17 01:18:21 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ struct s_env
 	char	*env_key;
 	char	*env_value;
 	t_env	*next;
+	t_env	*sorted_next;
 };
 
 /********************/
@@ -165,6 +166,7 @@ struct s_shell
 {
 	t_cmd	*first_cmd;
 	t_env	*env;
+	t_env	*env_sorted;
 	char	**env_str;
 	int		return_status;
 	int		nbr_cmd;
@@ -176,6 +178,8 @@ struct s_shell
 /*		ENV VAR		*/
 
 void	parse_env(char **envp, t_shell *shell);
+void	sort_env(t_shell *shell);
+void	add_env(char *var_line, t_shell *shell);
 char	**env_to_str(t_shell *shell);
 void	destroy_env(t_env *head);
 void	destroy_env_str(char **env);
@@ -262,6 +266,8 @@ int		ft_pwd(t_shell *shell);
 int		ft_echo(t_shell *shell, t_cmd *cmd);
 int		ft_cd(t_shell *shell, t_cmd *cmd);
 int		ft_env(t_shell *shell, t_cmd *cmd);
+int		ft_export(t_shell *shell, t_cmd *cmd);
+int		export_check_args(t_shell *shell, char *str);
 int		ft_unset(t_shell *shell, t_cmd *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
 

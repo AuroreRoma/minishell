@@ -15,6 +15,7 @@ BUILD_DIR := build
 SRCS := \
 	main.c \
 	env/parse_env.c \
+	env/sort_env.c \
 	env/env_to_str.c \
 	env/destroy_env.c \
 	env/expand_var.c \
@@ -30,6 +31,8 @@ SRCS := \
 	builtins/ft_echo.c \
 	builtins/ft_cd.c \
 	builtins/ft_env.c \
+	builtins/ft_export.c \
+	builtins/ft_export_error.c \
 	builtins/ft_unset.c \
 	builtins/ft_exit.c \
 	lexer/lexer.c \
