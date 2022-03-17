@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 17:22:57 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/13 21:51:10 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/17 22:31:24 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int	ft_pwd(t_shell *shell)
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		return (1);
-	ft_putstr_fd(pwd, 1);
-	ft_putstr_fd("\n", 1);
+	ft_putendl_fd(pwd, 1);
 	free(pwd);
 	shell->return_status = 0;
 	return (0);

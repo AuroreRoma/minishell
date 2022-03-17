@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 17:12:25 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/16 20:29:30 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/17 22:39:26 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,22 @@ static int	unset_check_error(t_shell *shell, char *str)
 	if (str[0] == '-' && str[1] != '\0')
 	{
 		unset_error(shell, str, 2);
-		return (2);
+		shell->return_status = 2;
+		return (shell->return_status);
 	}
 	if (!ft_isalpha(str[0]) && str[0] != '_')
 	{
 		unset_error(shell, str, 1);
-		return (1);
+		shell->return_status = 1;
+		return (shell->return_status);
 	}
 	while (str[++i])
 	{
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 		{
 			unset_error(shell, str, 1);
-			return (1);
+			shell->return_status = 1;
+			return (shell->return_status);
 		}
 	}
 	return (0);
