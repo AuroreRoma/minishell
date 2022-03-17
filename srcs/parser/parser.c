@@ -6,18 +6,37 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:14:56 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/16 18:42:36 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/17 22:15:08 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "error.h"
 
-int	is_redirection(t_type type)
+void	join_token(t_lexer *lexer, int *index)
 {
-	if (type == LESS || type == DLESS || type == GREAT || type == DGREAT)
-		return (1);
-	return (0);
+	int		i;
+	char	*ptr;
+	char	*str;
+
+	i = *index;
+	if (lexer->tokens[i].type == _SPACE)
+		i++;
+	ptr = NULL;
+	str = ft_strdup(lexer->tokens[i].data);
+	i++;
+	while (i < lexer->index && lexer->tokens[i].type != _SPACE && \
+		lexer->tokens[i].type != PIPE && !is_redirection(lexer->tokens[i].type))
+	{
+		ptr = ft_strjoin(str, lexer->tokens[i].data);
+		free(str);
+		str = ptr;
+		i++;
+	}
+	(*index) = i - 1;
+	free(lexer->tokens[i - 1].data);
+	lexer->tokens[i - 1].data = str;
+	lexer->tokens[i - 1].type = WORD;
 }
 
 void	parse_token(t_lexer *lexer, t_shell *shell)
@@ -29,25 +48,22 @@ void	parse_token(t_lexer *lexer, t_shell *shell)
 	current = shell->first_cmd;
 	while (i < lexer->index)
 	{
-		if (lexer->tokens[i].type == WORD)
-			handle_word(lexer, current, &i);
-		if (lexer->tokens[i].type == NBR)
-		{
-			if (is_redirection(lexer->tokens[i + 1].type))
-				handle_redirection(shell, lexer, current, &i);
-			else
-				handle_word(lexer, current, &i);
-		}
+		if (lexer->tokens[i].type == NBR && \
+				is_redirection(lexer->tokens[i + 1].type))
+			handle_redirection(shell, lexer, current, &i);
+		if (is_arg(lexer->tokens[i].type))
+			join_token(lexer, &i);
+		if (lexer->tokens[i].type == NBR || lexer->tokens[i].type == WORD)
+			handle_word(lexer, current, ft_strdup(lexer->tokens[i].data), &i);
 		if (is_redirection(lexer->tokens[i].type))
 			handle_redirection(shell, lexer, current, &i);
-		if (lexer->tokens[i].type == QUOTE || lexer->tokens[i].type == DQUOTE)
-			handle_quote(shell, lexer, current, &i);
-		if (lexer->tokens[i].type == VAR)
-			handle_word(lexer, current, &i);
 		if (lexer->tokens[i].type == PIPE)
 			handle_pipe(&current, &i);
+		if (lexer->tokens[i].type == _SPACE)
+			i++;
 	}
 }
+// [WORD || QUOTE || DQUOTE || VAR] [PIPE || _SPACE || REDIRECTIONS] [...]
 
 static int	parser(t_shell *shell, t_lexer *lexer)
 {

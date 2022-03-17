@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 18:16:16 by wind              #+#    #+#             */
-/*   Updated: 2022/03/15 18:23:28 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/17 22:15:31 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,19 @@ char	*generate_herefile_name(void)
 	ret = ft_strjoin(str, ".tmp");
 	free(str);
 	return (ret);
+}
+
+int	is_redirection(t_type type)
+{
+	if (type == LESS || type == DLESS || type == GREAT || type == DGREAT)
+		return (1);
+	return (0);
+}
+
+int	is_arg(t_type type)
+{
+	if (type == WORD || type == QUOTE || type == DQUOTE \
+		|| type == VAR || type == NBR)
+		return (1);
+	return (0);
 }

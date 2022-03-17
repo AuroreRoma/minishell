@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:51:52 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/16 18:42:42 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/17 16:06:23 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,9 @@ void	handle_redirection(\
 	new = ft_calloc(1, sizeof(t_red));
 	type = lexer->tokens[*index].type;
 	redirection_nbr(lexer, new, index, type);
+	(*index)++;
+	join_token(lexer, index);
+	(*index)--;
 	if (type == LESS)
 		new->type = redir_read;
 	if (type == DLESS)

@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:13:21 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/05 17:38:58 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/17 18:21:57 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	quote_helper(char **start, char **str, char *quote, int *len)
 	*start = *str;
 	*quote = **str;
 	*len = 1;
+	while ((*str)[*len] && (*str)[*len] != *quote)
+		(*len)++;
 }
 
 int	quote(char *str, t_lexer *lexer)
@@ -28,11 +30,11 @@ int	quote(char *str, t_lexer *lexer)
 	if (!(*str == '\'' || *str == '\"'))
 		return (0);
 	quote_helper(&start, &str, &quote, &len);
-	while (str[len] && str[len] != quote)
-		len++;
 	if (len && str[len] == quote)
 	{
 		len++;
+		if (is_number(str + 1, len - 1))
+			create_token(str, len, NBR, lexer);
 		if (quote == '\'')
 			create_token(str, len, QUOTE, lexer);
 		else

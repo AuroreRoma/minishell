@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:13:29 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/02/24 20:13:30 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/17 14:46:21 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,6 @@ int	skip_space(char *str, t_lexer *lexer)
 		return (0);
 	while (str[ret] && str[ret] == ' ')
 		ret++;
+	create_token(" ", 1, _SPACE, lexer);
 	return (ret);
 }

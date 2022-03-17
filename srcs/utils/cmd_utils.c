@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:13:50 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/15 18:23:00 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/17 16:37:36 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int	append_cmd_args(char *str, t_cmd *cmd)
 	cmd->cmd_args[i] = new;
 	return (0);
 }
-/*
+
 void	dump_cmds(t_cmd *cmd)
 {
 	int		i;
@@ -164,4 +164,3 @@ void	dump_cmds(t_cmd *cmd)
 	}
 	printf("----------------------------------------------\n");
 }
-*/

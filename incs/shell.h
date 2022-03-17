@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/17 01:18:21 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/17 22:14:41 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ enum e_type
 	QUOTE,
 	DQUOTE,
 	VAR,
-	VAR_QUOTE
+	VAR_QUOTE,
+	_SPACE
 };
 
 enum e_error
@@ -189,6 +190,8 @@ void	var_expansion_heredoc(t_shell *shell, t_red *current);
 void	var_expansion_redirection(t_shell *shell, t_red *current);
 void	replace_var(t_shell *shell, char **ptr);
 void	search_and_replace_var(t_shell *shell, char **line);
+void	var_replace_line(t_shell *shell, char **line);
+void	var_expansion_cmd_args(t_shell *shell, t_cmd *cmd, char **cmd_args);
 
 /********************/
 
@@ -213,9 +216,12 @@ int		get_end(char *str);
 char	*generate_herefile_name(void);
 void	handle_redirection(\
 			t_shell *shell, t_lexer *lexer, t_cmd *current, int *index);
-void	handle_word(t_lexer *lexer, t_cmd *current, int *index);
+void	handle_word(t_lexer *lexer, t_cmd *current, char *str, int *index);
+void	handle_space(t_lexer *lexer, t_cmd *current, int *index);
 void	handle_pipe(t_cmd **current, int *index);
 void	handle_heredoc(t_lexer *lexer, t_red *new, int *index, int *wstatus);
+
+void	join_token(t_lexer *lexer, int *index);
 
 void	destroy_cmd(t_cmd *cmd);
 void	create_cmd(t_cmd **cmd);
@@ -238,7 +244,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	*ft_calloc(size_t count, size_t size);
 void	ft_lstadd_back(t_env **alst, t_env *new);
 
+char	*remove_quote(char *string);
+char	*remove_quote_2_le_retour(char *string);
+
 int		is_redirection(t_type type);
+int		is_arg(t_type type);
 
 char	*generate_herefile_name(void);
 

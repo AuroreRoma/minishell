@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/17 01:23:56 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:12:31 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	clean(t_shell *shell)
 	close(shell->stdio[0]);
 	close(shell->stdio[1]);
 	destroy_env(shell->env);
+	destroy_env(shell->env_sorted);
 	rl_clear_history();
 }
 

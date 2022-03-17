@@ -3,7 +3,7 @@ NAME := minishell
 MAKEFLAGS := --no-print-directory
 
 CC = gcc
-FSAN := -fsanitize=leak
+FSAN := -fsanitize=address
 CFLAGS := -Wall -Wextra -Werror $(FSAN) -g
 IFLAGS := -I./incs -MMD -MP
 LFLAGS := -lreadline libft/libft.a
@@ -19,6 +19,7 @@ SRCS := \
 	env/env_to_str.c \
 	env/destroy_env.c \
 	env/expand_var.c \
+	env/expand_var_2.c \
 	env/expand_var_redirec.c \
 	executor/executor.c \
 	executor/pipeline.c \
@@ -49,6 +50,7 @@ SRCS := \
 	utils/error.c \
 	utils/str_insert.c \
 	utils/parser_utils.c \
+	utils/quote_utils.c \
 	utils/gnl.c
 
 _SRC =	$(addprefix $(SRCS_DIR)/, $(SRCS))

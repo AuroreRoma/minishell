@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var_redirec.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 18:19:50 by wind              #+#    #+#             */
-/*   Updated: 2022/03/15 18:29:09 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/17 22:07:43 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	var_expansion_redirection(t_shell *shell, t_red *current)
 {
 	while (current)
 	{
-		replace_var(shell, &current->data);
+		var_replace_line(shell, &current->data);
 		if (current->type == redir_heredoc && !current->flag)
 			var_expansion_heredoc(shell, current);
 		current = current->next;

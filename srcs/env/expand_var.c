@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 14:51:51 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/15 18:19:36 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/17 22:07:04 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_env_var(t_shell *shell, char *str)
 
 	if (!ft_strcmp(str, "$?"))
 		return (ft_itoa(shell->return_status));
-	if (!((*str) + 1 == '{'))
+	if (*(str + 1) != '{')
 		var = ft_strdup(str + 1);
 	else
 		var = ft_substr(str + 2, 0, ft_strlen(str) - 3);
@@ -72,29 +72,6 @@ void	replace_var(t_shell *shell, char **ptr)
 		old = *ptr;
 		*ptr = get_env_var(shell, old);
 		free(old);
-	}
-	else if (**ptr == '\'' || **ptr == '\"')
-	{
-		old = *ptr;
-		*ptr = ft_substr(old + 1, 0, ft_strlen(old) - 2);
-		free(old);
-	}
-}
-
-void	var_expansion_cmd_args(t_shell *shell, t_cmd *cmd, char **cmd_args)
-{
-	int		i;
-
-	i = 0;
-	while (cmd_args[i])
-	{
-		replace_var(shell, &cmd_args[i]);
-		if (!i)
-		{
-			free(cmd->cmd_name);
-			cmd->cmd_name = ft_strdup(cmd_args[i]);
-		}
-		i++;
 	}
 }
 

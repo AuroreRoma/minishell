@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 23:04:34 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/17 01:21:58 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/17 13:12:02 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,16 @@ int	export_add(char *str, t_shell *shell)
 
 int	export_update(char *str, t_env *env)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	while (str[i] && (str[i] == '_' || ft_isalnum(str[i])))
 		i++;
 	while (env)
 	{
-		if (!ft_strcmp(env->env_key, ft_substr(str, 0, i)))
+		tmp = ft_substr(str, 0, i);
+		if (!ft_strcmp(env->env_key, tmp))
 		{
 			if (env->env_value)
 				env->env_value = NULL;
@@ -49,6 +51,7 @@ int	export_update(char *str, t_env *env)
 			env->env_full = ft_strdup(str);
 			return (1);
 		}
+		free(tmp);
 		env = env->next;
 	}
 	return (0);

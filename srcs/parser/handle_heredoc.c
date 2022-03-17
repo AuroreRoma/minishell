@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:50:04 by aroma             #+#    #+#             */
-/*   Updated: 2022/03/16 18:43:34 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/17 17:27:40 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,23 @@ void	get_heredoc(char *word, t_red *new)
 void	handle_heredoc(t_lexer *lexer, t_red *new, int *index, int *wstatus)
 {
 	int		pid;
+	char	*ptr;
 	char	*filename;
 
 	filename = generate_herefile_name();
 	new->data = filename;
 	new->type = redir_heredoc;
-	if (lexer->tokens[*index + 1].type == QUOTE || \
-			lexer->tokens[*index + 1].type == DQUOTE)
+	if (ft_strchr(lexer->tokens[*index + 1].data, '\'') || \
+		ft_strchr(lexer->tokens[*index + 1].data, '\"'))
 		new->flag = 1;
 	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (!pid)
 	{
 		signal(SIGINT, &signal_handler_heredoc);
+		ptr = remove_quote(lexer->tokens[*index + 1].data);
+		free(lexer->tokens[*index + 1].data);
+		lexer->tokens[*index + 1].data = ptr;
 		get_heredoc(lexer->tokens[*index + 1].data, new);
 		exit(0);
 	}
