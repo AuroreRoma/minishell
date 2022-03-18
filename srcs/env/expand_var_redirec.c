@@ -6,13 +6,22 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 18:19:50 by wind              #+#    #+#             */
-/*   Updated: 2022/03/17 22:07:43 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 16:03:21 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "libft.h"
 #include "gnl.h"
+
+static void	clean_func(char *str, char *line, int fd1, int fd2)
+{
+	unlink(str);
+	free(str);
+	free(line);
+	close(fd1);
+	close(fd2);
+}
 
 void	var_expansion_heredoc(t_shell *shell, t_red *current)
 {
@@ -33,11 +42,7 @@ void	var_expansion_heredoc(t_shell *shell, t_red *current)
 		free(line);
 		gnl = get_next_line(old_fd, &line);
 	}
-	unlink(current->data);
-	free(current->data);
-	free(line);
-	close(old_fd);
-	close(new_fd);
+	clean_func(current->data, line, old_fd, new_fd);
 	current->data = filename;
 }
 

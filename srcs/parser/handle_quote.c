@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:14:49 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 10:22:39 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 15:55:02 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	get_end(char *str)
 	return (i);
 }
 
+/*
 static	void	handle_quote_helper(\
 		t_shell *shell, t_lexer *lexer, int *index, char **tmp)
 {
@@ -89,3 +90,4 @@ void	handle_quote(t_shell *shell, t_lexer *lexer, t_cmd *current, int *index)
 	(*index)++;
 	return ;
 }
+*/

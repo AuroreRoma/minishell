@@ -3,7 +3,7 @@ NAME := minishell
 MAKEFLAGS := --no-print-directory
 
 CC = gcc
-FSAN := -fsanitize=address
+#FSAN := -fsanitize=address
 CFLAGS := -Wall -Wextra -Werror $(FSAN) -g
 IFLAGS := -I./incs -MMD -MP
 LFLAGS := -lreadline libft/libft.a
@@ -48,6 +48,7 @@ SRCS := \
 	signals/signals.c \
 	utils/cmd_utils.c \
 	utils/error.c \
+	utils/ft_realloc.c \
 	utils/str_insert.c \
 	utils/parser_utils.c \
 	utils/quote_utils.c \

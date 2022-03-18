@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 18:16:16 by wind              #+#    #+#             */
-/*   Updated: 2022/03/17 22:15:31 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 15:55:25 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	is_redirection(t_type type)
 
 int	is_arg(t_type type)
 {
-	if (type == WORD || type == QUOTE || type == DQUOTE \
-		|| type == VAR || type == NBR)
+	if (type == WORD || type == QUOTE || type == DQUOTE || \
+	type == VAR || type == NBR)
 		return (1);
 	return (0);
 }

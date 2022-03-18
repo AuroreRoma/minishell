@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 12:44:00 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 15:56:15 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 # include "../libft/libft.h"
 
-# define TOK_BUFFER_SIZE 64
+# define TOK_BUFFER_SIZE 4
 # define ARG_BUFFER_SIZE 32
 # define RED_BUFFER_SIZE 16
 
@@ -208,8 +208,6 @@ int		is_number(char *str, int len);
 int		size_var(char *str, char tmp);
 int		is_operator(char c);
 
-void	handle_quote(t_shell *shell, t_lexer *lexer, \
-		t_cmd *current, int *index);
 int		check_var(char *str);
 int		get_end(char *str);
 
@@ -233,7 +231,7 @@ int		append_cmd_args(char *str, t_cmd *cmd);
 void	create_token(char *str, int len, t_type type, t_lexer *lexer);
 void	dump_tokens(t_lexer *lexer);
 void	destroy_tokens(t_lexer *lexer, t_token *tokens);
-void	*tokenizer(t_lexer *lexer, char *str);
+void	tokenizer(t_lexer *lexer, char *str);
 
 /*		UTILS		*/
 
@@ -243,6 +241,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	*ft_calloc(size_t count, size_t size);
 void	ft_lstadd_back(t_env **alst, t_env *new);
+void	*ft_realloc(void *ptr, size_t old, size_t new, size_t size);
 
 char	*remove_quote(char *string);
 char	*remove_quote_2_le_retour(char *string);

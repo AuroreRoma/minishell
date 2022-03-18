@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 15:12:10 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/15 18:23:58 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/18 16:06:13 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "error.h"
 
 int	open_fd(t_red *red)
 {
@@ -35,7 +36,10 @@ int	redirections(t_cmd *cmd)
 	{
 		fd = open_fd(current);
 		if (fd == -1)
+		{
+			print_error_message_exec(current->data, strerror(errno));
 			return (1);
+		}
 		if (current->type == redir_append || current->type == redir_write)
 			dup2(fd, current->fd_out);
 		if (current->type == redir_read || current->type == redir_heredoc)

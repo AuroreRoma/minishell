@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:13:21 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/17 18:21:57 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 15:36:46 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	quote(char *str, t_lexer *lexer)
 	char	quote;
 	char	*start;
 
-	if (!(*str == '\'' || *str == '\"'))
+	if (!(*str == '\'' || *str == '\"') || lexer->error)
 		return (0);
 	quote_helper(&start, &str, &quote, &len);
 	if (len && str[len] == quote)
@@ -55,7 +55,7 @@ int	dollar(char *str, t_lexer *lexer, t_type type)
 	char	*start;
 
 	start = str;
-	if ((*str) != '$')
+	if ((*str) != '$' || lexer->error)
 		return (0);
 	if (*str == '{' && str++)
 	{
@@ -79,7 +79,7 @@ int	operator(char *str, t_lexer *lexer)
 	int	ret;
 
 	ret = 1;
-	if (!is_operator(*str))
+	if (!is_operator(*str) || lexer->error)
 		return (0);
 	if (*str == '|' && *(str + 1) != '|')
 		create_token(str, 1, PIPE, lexer);
@@ -104,7 +104,7 @@ int	word(char *str, t_lexer *lexer)
 	int		len;
 
 	len = 0;
-	if (str[len] == '#')
+	if (str[len] == '#' || lexer->error)
 		return (0);
 	while (str[len] && !is_operator(str[len]) && str[len] != '\'' && \
 			str[len] != '\"' && str[len] != ' ' && str[len] != '$')

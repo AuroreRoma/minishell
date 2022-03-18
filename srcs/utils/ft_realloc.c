@@ -1,34 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_pipe_word.c                                 :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/24 20:15:04 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 15:56:41 by aroma            ###   ########.fr       */
+/*   Created: 2022/03/18 12:49:53 by aroma             #+#    #+#             */
+/*   Updated: 2022/03/18 15:38:33 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
 #include "libft.h"
 
-void	handle_pipe(t_cmd **current, int *index)
+void	*ft_realloc(void *ptr, size_t old_len, size_t new_len, size_t size)
 {
-	(*current) = (*current)->next;
-	(*index)++;
-}
+	void	*ret;
 
-void	handle_word(t_lexer *lexer, t_cmd *current, char *str, int *index)
-{
-	if (!current->cmd_name)
+	if (!ptr)
+		return (malloc(new_len * size));
+	else if (new_len <= old_len)
+		return (ptr);
+	else
 	{
-		current->cmd_name = ft_strdup(str);
-		if (!current->cmd_name)
-			lexer->error = error_malloc;
+		if (!ptr || new_len < old_len)
+			return (NULL);
+		ret = malloc(new_len * size);
+		if (ret)
+		{
+			ft_memcpy(ret, ptr, old_len * size);
+			free(ptr);
+		}
+		return (ret);
 	}
-	if (append_cmd_args(str, current))
-		lexer->error = error_malloc;
-	free(str);
-	(*index)++;
 }

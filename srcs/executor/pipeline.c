@@ -6,12 +6,13 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:43 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/16 18:42:47 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 16:08:58 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "libft.h"
+#include "error.h"
 
 static void	close_all_the_pipes(int n_pipes, int **pipes)
 {
@@ -107,7 +108,7 @@ void	pipeline(t_shell *shell)
 	pipe_array = init_pipe(shell);
 	if (!pipe_array)
 	{
-		printf("Error malloc in executor\n");
+		print_error_message_exec("malloc", strerror(errno));
 		return ;
 	}
 	pid = exec_pipeline(shell, pipe_array);

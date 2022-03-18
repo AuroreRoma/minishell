@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:51:52 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/17 16:06:23 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 15:54:31 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ static void	redirection_nbr(t_lexer *lexer, t_red *new, int *index, int type)
 		new->fd_out = 1;
 		new->fd_in = 0;
 	}
+	(*index)++;
+	join_token(lexer, index);
+	(*index)--;
 }
 
 static int	__return_status_handler(t_lexer *lexer, int wstatus)
@@ -68,11 +71,12 @@ void	handle_redirection(\
 
 	wstatus = 0;
 	new = ft_calloc(1, sizeof(t_red));
+	if (!new)
+		lexer->error = error_malloc;
+	if (!new)
+		return ;
 	type = lexer->tokens[*index].type;
 	redirection_nbr(lexer, new, index, type);
-	(*index)++;
-	join_token(lexer, index);
-	(*index)--;
 	if (type == LESS)
 		new->type = redir_read;
 	if (type == DLESS)

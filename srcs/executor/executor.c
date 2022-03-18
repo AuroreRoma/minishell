@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/16 18:42:41 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 16:04:54 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	execute_cmd(t_shell *shell, t_cmd *cmd)
 	{
 		if (redirections(cmd))
 		{
-			perror("Placeholder redirection error:");
 			shell->return_status = 1;
 			return ;
 		}

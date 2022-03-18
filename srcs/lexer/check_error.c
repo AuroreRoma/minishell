@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:43:29 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/15 18:49:53 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/18 15:42:48 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ int	error_lexer(t_lexer	*lexer)
 	int	i;
 
 	i = 0;
+	if (lexer->error == error_malloc)
+		ft_putstr_fd("Error malloc : Exit program promptly\n", 2);
+	if (lexer->error == error_malloc)
+		exit(2);
 	while (i < lexer->index)
 	{
 		if (lexer->tokens[i].type == ERROR)

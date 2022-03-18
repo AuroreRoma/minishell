@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:13:29 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/17 14:46:21 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 15:46:45 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ int	comment(char *str, t_lexer *lexer)
 	int	ret;
 
 	ret = 1;
-	(void)lexer;
-	if (str[0] != '#')
+	if (str[0] != '#' || lexer->error)
 		return (0);
 	while (str[ret] && str[ret] != '\n')
 		ret++;
@@ -62,8 +61,7 @@ int	skip_space(char *str, t_lexer *lexer)
 	int	ret;
 
 	ret = 1;
-	(void)lexer;
-	if (str[0] != ' ')
+	if (str[0] != ' ' || lexer->error)
 		return (0);
 	while (str[ret] && str[ret] == ' ')
 		ret++;
