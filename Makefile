@@ -24,6 +24,7 @@ SRCS := \
 	executor/executor.c \
 	executor/pipeline.c \
 	executor/redirections.c \
+	executor/destroy.c \
 	executor/cmd_launcher_absolute.c \
 	executor/cmd_launcher_relative.c \
 	builtins/set_builtins.c \

@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 16:03:37 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 17:50:26 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,8 @@ int	main(int ac, char **av, char **envp)
 	char	*line;
 	t_shell	shell;
 
+	(void)ac;
 	(void)av;
-	if (ac != 1)
-		exit(0);
 	init_shell(&shell);
 	parse_env(envp, &shell);
 	signal(SIGINT, &signal_handler);

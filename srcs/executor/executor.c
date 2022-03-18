@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 16:04:54 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 17:44:58 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	handle_child(t_shell *shell, t_cmd *cmd)
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
 	if (redirections(cmd))
-		exit(1);
+		destroy_child_exec(shell, 1);
 	cmd_launcher(shell, cmd);
 	exit(1);
 }

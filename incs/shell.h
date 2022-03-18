@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 16:11:31 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 17:48:58 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,6 +270,11 @@ int		redirections(t_cmd *cmd);
 void	cmd_launcher(t_shell *shell, t_cmd *cmd);
 void	cmd_launcher_absolute(t_shell *shell, t_cmd *cmd);
 void	cmd_launcher_relative(t_shell *shell, t_cmd *cmd);
+
+void	destroy_child_pipeline(t_shell *shell, int **pipe_array, \
+		int exit_status, int flag);
+void	destroy_child_exec(t_shell *shell, int exit_status);
+void	close_all_the_pipes(int n_pipes, int **pipes);
 
 void	pipeline(t_shell *shell);
 
