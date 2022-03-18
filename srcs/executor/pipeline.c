@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:43 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/18 16:08:58 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 16:46:20 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ static int	exec_pipeline(t_shell *shell, int **pipe_array)
 				dup2(current->redirect[1], STDOUT_FILENO);
 			if (redirections(current))
 				exit (1);
-			close_all_the_pipes(shell->nbr_cmd - 1, pipe_array);
 			signal(SIGQUIT, SIG_DFL);
 			signal(SIGINT, SIG_DFL);
+			close_all_the_pipes(shell->nbr_cmd - 1, pipe_array);
 			cmd_launcher(shell, current);
 			exit(0);
 		}
@@ -81,7 +81,7 @@ static int	**init_pipe(t_shell *shell)
 
 	i = 1;
 	current = shell->first_cmd;
-	pipe_array = ft_calloc(shell->nbr_cmd - 1, sizeof(int *));
+	pipe_array = ft_calloc(shell->nbr_cmd, sizeof(int *));
 	if (!pipe_array)
 		return (NULL);
 	while (i < shell->nbr_cmd)
@@ -114,8 +114,8 @@ void	pipeline(t_shell *shell)
 	pid = exec_pipeline(shell, pipe_array);
 	close_all_the_pipes(shell->nbr_cmd - 1, pipe_array);
 	wait_for_child(shell, pid);
-	i = -1;
-	while (++i < shell->nbr_cmd - 1)
-		free(pipe_array[i]);
+	i = 0;
+	while (++i < shell->nbr_cmd)
+		free(pipe_array[i - 1]);
 	free(pipe_array);
 }
