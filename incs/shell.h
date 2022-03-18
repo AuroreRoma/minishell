@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 15:56:15 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 16:11:31 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 # include "../libft/libft.h"
 
-# define TOK_BUFFER_SIZE 4
+# define TOK_BUFFER_SIZE 64
 # define ARG_BUFFER_SIZE 32
 # define RED_BUFFER_SIZE 16
 
