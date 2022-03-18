@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 15:51:32 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 14:59:13 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/18 18:53:02 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ static void	exit_error(t_shell *shell, char *str, int code)
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(str, 2);
 		ft_putendl_fd(": numeric argument required", 2);
-		clean(shell);
-		exit(2);
+		destroy_child_exec(shell, 2);
 	}
 }
 
@@ -56,16 +55,10 @@ int	ft_exit(t_shell *shell, t_cmd *cmd)
 		return (1);
 	}
 	if (cmd->cmd_args[1] && ft_isalldigit(cmd->cmd_args[1]))
-	{
-		clean(shell);
-		exit(ft_atoi(cmd->cmd_args[1]));
-	}
+		destroy_child_exec(shell, ft_atoi(cmd->cmd_args[1]));
 	else if (cmd->cmd_args[1])
 		exit_error(shell, cmd->cmd_args[1], 2);
 	else
-	{
-		clean(shell);
-		exit(0);
-	}
+		destroy_child_exec(shell, 0);
 	return (0);
 }
