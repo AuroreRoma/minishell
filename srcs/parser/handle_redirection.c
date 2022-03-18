@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:51:52 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/18 17:59:42 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 21:58:36 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,22 @@ static void	redirection_nbr(t_lexer *lexer, t_red *new, int *index, int type)
 	(*index)--;
 }
 
-static int	__return_status_handler(t_lexer *lexer, int wstatus)
+static int	__return_status_handler(t_lexer *lexer, int *wstatus)
 {
 	int	ret;
 
-	if (WIFEXITED(wstatus))
-		ret = WEXITSTATUS(wstatus);
-	if (WIFSIGNALED(wstatus))
+	if (WIFEXITED(*wstatus))
+		ret = WEXITSTATUS(*wstatus);
+	if (WIFSIGNALED(*wstatus))
 	{
 		ret = 128;
-		ret += WTERMSIG(wstatus);
+		ret += WTERMSIG(*wstatus);
 	}
 	if (ret)
 		lexer->error = error_redirection;
 	if (ret == 2)
 		ret = 0;
+	(*wstatus) = 0;
 	return (ret);
 }
 
@@ -73,9 +74,8 @@ void	handle_redirection(\
 {
 	t_red	*new;
 	t_type	type;
-	int		wstatus;
 
-	wstatus = 0;
+	shell->wstatus = 0;
 	new = ft_calloc(1, sizeof(t_red));
 	if (!new)
 		lexer->error = error_malloc;
@@ -86,7 +86,7 @@ void	handle_redirection(\
 	if (type == LESS)
 		new->type = redir_read;
 	if (type == DLESS)
-		handle_heredoc(lexer, new, index, &wstatus);
+		handle_heredoc(shell, lexer, new, index);
 	if (type == GREAT)
 		new->type = redir_write;
 	if (type == DGREAT)
@@ -95,5 +95,5 @@ void	handle_redirection(\
 		new->data = ft_strdup(lexer->tokens[(*index) + 1].data);
 	__ft_lstadd_back(&current->redirection, new);
 	(*index) += 2;
-	shell->return_status = __return_status_handler(lexer, wstatus);
+	shell->return_status = __return_status_handler(lexer, &shell->wstatus);
 }

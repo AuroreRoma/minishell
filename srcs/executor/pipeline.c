@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:43 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/18 17:53:52 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 20:39:16 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,50 +27,52 @@ void	close_all_the_pipes(int n_pipes, int **pipes)
 	}
 }
 
-static void	wait_for_child(t_shell *shell, int pid)
+static void	wait_for_child(t_shell *shell, int *pid)
 {
 	int		wstatus;
+	int		i;
 	t_cmd	*current;
 
+	(void)pid;
 	wstatus = 0;
+	i = 0;
 	current = shell->first_cmd;
 	while (current)
 	{
-		if (current->next)
-			wait(NULL);
-		else
-			waitpid(pid, &wstatus, 0);
+		waitpid(pid[i], &wstatus, 0);
+		if (i == shell->nbr_cmd - 1)
+			shell->wstatus = wstatus;
+		i++;
 		current = current->next;
 	}
-	shell->wstatus = wstatus;
 }
 
-static int	exec_pipeline(t_shell *shell, int **pipe_array)
+static void	exec_pipeline(t_shell *shell, int **pipe_array, int *pid)
 {
-	int		pid;
+	int		i;
 	t_cmd	*current;
 
+	i = 0;
 	current = shell->first_cmd;
-	while (current)
+	while (current && ++i)
 	{
-		pid = fork();
-		if (!pid)
+		pid[i - 1] = fork();
+		if (!pid[i - 1])
 		{
 			if (current != shell->first_cmd)
 				dup2(current->redirect[0], STDIN_FILENO);
 			if (current->next)
 				dup2(current->redirect[1], STDOUT_FILENO);
 			if (redirections(current))
-				destroy_child_pipeline(shell, pipe_array, 1, 1);
+				destroy_child_pipeline(shell, pipe_array, 1, pid);
 			signal(SIGQUIT, SIG_DFL);
 			signal(SIGINT, SIG_DFL);
 			close_all_the_pipes(shell->nbr_cmd - 1, pipe_array);
 			cmd_launcher(shell, current);
-			destroy_child_pipeline(shell, pipe_array, 0, 0);
+			destroy_child_pipeline(shell, pipe_array, 0, pid);
 		}
 		current = current->next;
 	}
-	return (pid);
 }
 
 static int	**init_pipe(t_shell *shell)
@@ -101,7 +103,7 @@ static int	**init_pipe(t_shell *shell)
 void	pipeline(t_shell *shell)
 {
 	int	i;
-	int	pid;
+	int	*pid;
 	int	**pipe_array;
 
 	set_builtins(shell->first_cmd);
@@ -111,9 +113,11 @@ void	pipeline(t_shell *shell)
 		print_error_message_exec("malloc", strerror(errno));
 		return ;
 	}
-	pid = exec_pipeline(shell, pipe_array);
+	pid = calloc(shell->nbr_cmd, sizeof(int));
+	exec_pipeline(shell, pipe_array, pid);
 	close_all_the_pipes(shell->nbr_cmd - 1, pipe_array);
 	wait_for_child(shell, pid);
+	free(pid);
 	i = 0;
 	while (++i < shell->nbr_cmd)
 		free(pipe_array[i - 1]);

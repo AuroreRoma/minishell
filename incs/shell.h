@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 17:53:30 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 22:16:23 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,10 @@ void	handle_redirection(\
 void	handle_word(t_lexer *lexer, t_cmd *current, char *str, int *index);
 void	handle_space(t_lexer *lexer, t_cmd *current, int *index);
 void	handle_pipe(t_cmd **current, int *index);
-void	handle_heredoc(t_lexer *lexer, t_red *new, int *index, int *wstatus);
+void	handle_heredoc(t_shell *shell, t_lexer *lexer, t_red *new, int *index);
+void	free_heredoc(t_shell *shell, t_lexer *lexer, t_red *new, int flag);
+
+
 
 void	join_token(t_lexer *lexer, int *index);
 
@@ -273,7 +276,7 @@ void	cmd_launcher_absolute(t_shell *shell, t_cmd *cmd);
 void	cmd_launcher_relative(t_shell *shell, t_cmd *cmd);
 
 void	destroy_child_pipeline(t_shell *shell, int **pipe_array, \
-		int exit_status, int flag);
+		int flag, int *pid);
 void	destroy_child_exec(t_shell *shell, int exit_status);
 void	close_all_the_pipes(int n_pipes, int **pipes);
 

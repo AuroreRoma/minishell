@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:31:22 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/17 01:23:41 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/18 22:17:03 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	signal_handler_heredoc(int num)
 	if (num == SIGINT)
 	{
 		ft_putchar_fd('\n', 1);
-		exit (130);
+		free_heredoc(NULL, NULL, NULL, 130);
 	}
 }
 

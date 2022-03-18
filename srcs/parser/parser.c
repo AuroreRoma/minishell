@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:14:56 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 15:53:57 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 21:56:38 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int	parser_lexer(t_shell *shell, char *line)
 
 	ret = 1;
 	tokenizer(&lexer, line);
+	if (lexer.tokens[0].type == _SPACE && lexer.index == 1)
+		return (ret);
 	if (error_lexer(&lexer))
 		shell->return_status = 2;
 	if (!lexer.error && lexer.index)

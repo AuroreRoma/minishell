@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:50:04 by aroma             #+#    #+#             */
-/*   Updated: 2022/03/18 15:53:07 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 22:18:53 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*_read_line(char *word)
 	{
 		print_error_message_heredoc(word, line);
 		free(line_read);
-		exit(2);
+		free_heredoc(NULL, NULL, NULL, 2);
 	}
 	return (line_read);
 }
@@ -68,7 +68,28 @@ void	get_heredoc(char *word, t_red *new)
 	close(fd);
 }
 
-void	handle_heredoc(t_lexer *lexer, t_red *new, int *index, int *wstatus)
+void	free_heredoc(t_shell *shell, t_lexer *lexer, t_red *new, int flag)
+{
+	static t_shell	*sh = NULL;
+	static t_lexer	*le = NULL;
+	static t_red	*re = NULL;
+
+	if (flag == -1)
+	{
+		sh = shell;
+		le = lexer;
+		re = new;
+		return ;
+	}
+	destroy_cmd(sh->first_cmd);
+	destroy_tokens(le, le->tokens);
+	clean(sh);
+	free(re->data);
+	free(re);
+	exit(flag);
+}
+
+void	handle_heredoc(t_shell *shell, t_lexer *lexer, t_red *new, int *index)
 {
 	int		pid;
 	char	*ptr;
@@ -84,13 +105,14 @@ void	handle_heredoc(t_lexer *lexer, t_red *new, int *index, int *wstatus)
 	pid = fork();
 	if (!pid)
 	{
+		free_heredoc(shell, lexer, new, -1);
 		signal(SIGINT, &signal_handler_heredoc);
 		ptr = remove_quote(lexer->tokens[*index + 1].data);
 		free(lexer->tokens[*index + 1].data);
 		lexer->tokens[*index + 1].data = ptr;
 		get_heredoc(lexer->tokens[*index + 1].data, new);
-		exit(0);
+		free_heredoc(shell, lexer, new, 0);
 	}
-	wait(wstatus);
+	wait(&shell->wstatus);
 	signal(SIGINT, &signal_handler);
 }

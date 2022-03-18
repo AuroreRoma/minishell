@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 17:45:32 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 20:50:20 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	cmd_launcher_relative(t_shell *shell, t_cmd *cmd)
 	}
 	cmd_print_error(path, cmd->cmd_name, e);
 	ft_free(path);
-	destroy_child_exec(shell, 126 + (errno != EACCES));
+	destroy_child_exec(shell, 126 + (e != EACCES));
 }
 
 	// dont care if the file is a directory
