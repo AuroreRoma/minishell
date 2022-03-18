@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 20:50:11 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 12:36:14 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 13:10:44 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	cd_update_env(t_shell **shell)
 		value = "";
 	else
 		value = tmp_pwd->env_value;
-	update_env(*shell, "OLD_PWD", value);
+	update_env(*shell, "OLDPWD", value);
 	value = getcwd(NULL, 0);
 	update_env(*shell, "PWD", value);
 	free(value);
