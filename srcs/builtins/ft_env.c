@@ -6,19 +6,12 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 17:52:49 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/13 19:31:10 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/17 22:13:21 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-static void	ft_env_error(t_shell *shell, char *str)
-{
-	shell->return_status = 127;
-	ft_putstr_fd("minishell: env: ", 2);
-	ft_putstr_fd(str, 2);
-	ft_putstr_fd(": No such file or directory\n", 2);
-}
+#include "error.h"
 
 int	ft_env(t_shell *shell, t_cmd *cmd)
 {
@@ -29,13 +22,13 @@ int	ft_env(t_shell *shell, t_cmd *cmd)
 		return (1);
 	if (cmd->cmd_args[1])
 	{
-		ft_env_error(shell, cmd->cmd_args[1]);
+		print_error_message_exec(cmd->cmd_args[1], NOT_FOUND);
+		shell->return_status = 127;
 		return (shell->return_status);
 	}
 	while (tmp)
 	{
-		ft_putstr_fd(tmp->env_full, 1);
-		ft_putstr_fd("\n", 1);
+		ft_putendl_fd(tmp->env_full, 1);
 		tmp = tmp->next;
 	}
 	return (0);

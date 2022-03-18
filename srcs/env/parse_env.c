@@ -6,7 +6,7 @@
 /*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 21:42:33 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/15 20:04:39 by wind             ###   ########.fr       */
+/*   Updated: 2022/03/17 16:37:38 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	add_env(char *var_line, t_shell *shell)
 	i = 0;
 	j = 0;
 	new = (t_env *)ft_calloc(1, sizeof(t_env));
-	while (var_line[i] != '=')
+	while (var_line[i] && var_line[i] != '=')
 		i++;
 	key = ft_substr(var_line, 0, i);
 	j = ft_strlen(var_line) - (i + 1);
@@ -48,11 +48,11 @@ void	add_env(char *var_line, t_shell *shell)
 	new->env_key = key;
 	if (!ft_strcmp(value, ""))
 		new->env_value = NULL;
-	if (!ft_strcmp(value, ""))
-		free(value);
-	else
-		new->env_value = value;
+	if (new->env_value != NULL)
+		free(new->env_value);
+	new->env_value = value;
 	new->next = NULL;
+	new->sorted_next = NULL;
 	lstadd_back(&shell->env, new);
 }
 

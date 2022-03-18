@@ -33,7 +33,7 @@ SRCS := \
 	builtins/ft_cd.c \
 	builtins/ft_env.c \
 	builtins/ft_export.c \
-	builtins/ft_export_error.c \
+	builtins/ft_export_utils.c \
 	builtins/ft_unset.c \
 	builtins/ft_exit.c \
 	lexer/lexer.c \

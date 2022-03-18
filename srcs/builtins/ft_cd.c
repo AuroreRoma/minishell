@@ -6,11 +6,12 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 20:50:11 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/13 19:57:57 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/17 22:43:13 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "error.h"
 
 void	cd_update_env(t_shell **shell)
 {
@@ -30,17 +31,6 @@ void	cd_update_env(t_shell **shell)
 		free(tmp_pwd->env_value);
 		tmp_pwd->env_value = getcwd(NULL, 0);
 	}
-}
-
-void	cd_error(t_shell *shell, char *str, int flag)
-{
-	ft_putstr_fd("minishell: cd: ", 2);
-	ft_putstr_fd(str, 2);
-	if (flag == 1)
-		ft_putstr_fd(": No such file or directory\n", 2);
-	else if (flag == 2)
-		ft_putstr_fd(": Not a directory\n", 2);
-	shell->return_status = 1;
 }
 
 char	*get_cd(t_cmd *cmd, t_env *env)
@@ -75,7 +65,6 @@ int	ft_cd(t_shell *shell, t_cmd *cmd)
 {
 	char	*cd;
 
-	cd = NULL;
 	if (!cmd->cmd_args[1])
 		cmd->cmd_args[1] = ft_strdup("~");
 	if (cmd->cmd_args[1][0] == '/' || cmd->cmd_args[1][0] == '.')
@@ -90,12 +79,13 @@ int	ft_cd(t_shell *shell, t_cmd *cmd)
 	if (access(cd, F_OK) == 0)
 	{
 		if (chdir(cd) != 0)
-			cd_error(shell, cmd->cmd_args[1], 2);
+			print_error_message_exec(cmd->cmd_args[1], NOT_DIRECTORY);
 		else
 			cd_update_env(&shell);
 	}
 	else
-		cd_error(shell, cmd->cmd_args[1], 1);
+		print_error_message_exec(cmd->cmd_args[1], NOT_FOUND);
 	free(cd);
+	shell->return_status = 1;
 	return (shell->return_status);
 }
