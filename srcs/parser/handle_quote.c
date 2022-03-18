@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:14:49 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/17 18:16:21 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 10:22:39 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ int	get_end(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && str[i] != ' ' && str[i] != '\"' && str[i] != '\n')
+	if (str[i] == '$')
+		i++;
+	while (str[i] && str[i] != ' ' && str[i] != '\'' && \
+		str[i] != '\"' && str[i] != '\n' && str[i] != '$')
 		i++;
 	return (i);
 }
