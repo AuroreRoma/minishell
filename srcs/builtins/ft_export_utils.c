@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 01:15:24 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 12:10:29 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 19:57:00 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	export_no_args(t_shell *shell)
 	tmp = shell->env_sorted;
 	while (tmp)
 	{
-		printf("declare -x %s\n", tmp->env_full);
+		if (ft_strcmp(tmp->env_key, "_"))
+			printf("declare -x %s\n", tmp->env_full);
 		tmp = tmp->sorted_next;
 	}
 	return (0);

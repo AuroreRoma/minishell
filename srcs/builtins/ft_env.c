@@ -6,7 +6,7 @@
 /*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 17:52:49 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/17 22:13:21 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/18 19:16:10 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	ft_env(t_shell *shell, t_cmd *cmd)
 	}
 	while (tmp)
 	{
-		ft_putendl_fd(tmp->env_full, 1);
+		if (ft_strchr(tmp->env_full, '='))
+			ft_putendl_fd(tmp->env_full, 1);
 		tmp = tmp->next;
 	}
 	return (0);
