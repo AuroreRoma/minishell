@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 11:01:00 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 12:44:00 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,5 +285,7 @@ int		ft_env(t_shell *shell, t_cmd *cmd);
 int		ft_export(t_shell *shell, t_cmd *cmd);
 int		ft_unset(t_shell *shell, t_cmd *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
+
+void	update_env(t_shell *shell, char *key, char *value);
 
 #endif

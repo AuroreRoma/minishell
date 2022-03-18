@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 10:59:55 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 12:45:19 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,22 @@ void	clean(t_shell *shell)
 	close(shell->stdio[0]);
 	close(shell->stdio[1]);
 	destroy_env(shell->env);
-	destroy_env(shell->env_sorted);
 	rl_clear_history();
 }
 
 int	main(int ac, char **av, char **envp)
 {
-	bool	break_flag;
 	char	*line;
 	t_shell	shell;
 
 	(void)av;
-	break_flag = true;
 	if (ac != 1)
 		exit(0);
 	init_shell(&shell);
 	parse_env(envp, &shell);
 	signal(SIGINT, &signal_handler);
 	signal(SIGQUIT, SIG_IGN);
-	while (break_flag)
+	while (42)
 	{
 		line = read_line(&shell);
 		if (parser_lexer(&shell, line))

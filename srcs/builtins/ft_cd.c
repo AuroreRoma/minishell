@@ -3,34 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 20:50:11 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/17 22:43:13 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/18 12:36:14 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "error.h"
 
+void	update_env(t_shell *shell, char *key, char *value)
+{
+	char	*str;
+	t_env	*current;
+
+	current = shell->env;
+	while (current && ft_strcmp(current->env_key, key))
+		current = current->next;
+	if (!current)
+	{
+		str = ft_strjoin(key, "=");
+		add_env(str, shell);
+		free(str);
+		current = shell->env;
+		while (current && ft_strcmp(current->env_key, key))
+			current = current->next;
+	}
+	if (current->env_value)
+		free(current->env_value);
+	if (current->env_full)
+		free(current->env_full);
+	current->env_value = ft_strdup(value);
+	current->env_full = ft_join_env(key, value);
+}
+
 void	cd_update_env(t_shell **shell)
 {
+	char	*value;
 	t_env	*tmp_pwd;
-	t_env	*tmp_oldpwd;
 
 	tmp_pwd = (*shell)->env;
-	tmp_oldpwd = (*shell)->env;
 	while (tmp_pwd && ft_strcmp(tmp_pwd->env_key, "PWD"))
 		tmp_pwd = tmp_pwd->next;
-	while (tmp_oldpwd && ft_strcmp(tmp_oldpwd->env_key, "OLDPWD"))
-		tmp_oldpwd = tmp_oldpwd->next;
-	if (tmp_pwd && tmp_oldpwd)
-	{
-		free(tmp_oldpwd->env_value);
-		tmp_oldpwd->env_value = ft_strdup(tmp_pwd->env_value);
-		free(tmp_pwd->env_value);
-		tmp_pwd->env_value = getcwd(NULL, 0);
-	}
+	if (!tmp_pwd)
+		value = "";
+	else
+		value = tmp_pwd->env_value;
+	update_env(*shell, "OLD_PWD", value);
+	value = getcwd(NULL, 0);
+	update_env(*shell, "PWD", value);
+	free(value);
 }
 
 char	*get_cd(t_cmd *cmd, t_env *env)

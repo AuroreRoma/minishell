@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wind <wind@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 21:42:33 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/17 16:37:38 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/18 12:44:01 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	add_env(char *var_line, t_shell *shell)
 void	parse_env(char **envp, t_shell *shell)
 {
 	int		i;
+	char	*value;
 
 	i = 0;
 	while (envp[i])
@@ -66,4 +67,7 @@ void	parse_env(char **envp, t_shell *shell)
 		add_env(envp[i], shell);
 		i++;
 	}
+	value = getcwd(NULL, 0);
+	update_env(shell, "PWD", value);
+	free(value);
 }

@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:49:22 by aroma             #+#    #+#             */
-/*   Updated: 2022/03/18 10:44:25 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 12:37:55 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,7 @@ void	var_replace_line(t_shell *shell, char **line)
 		else if (c == ptr[i])
 			la_norme_est_une_chose_magnifique(&c, &ptr[i++], 0, -1);
 		else if (c != '\'' && ptr[i] == '$')
-		{
 			ptr = replace_var_(shell, ptr, &i);
-//			i++;
-		}
 		else
 			i++;
 	}

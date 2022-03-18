@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 23:04:34 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 10:53:58 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 11:39:46 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,20 @@ int	export_update(char *str, t_env *env)
 	return (0);
 }
 
-void	export_join2(t_env **env, char *key, char *value, char *str)
+void	export_join2(t_env *env, char *key, char *value, char *str)
 {
-	if ((*env)->env_value != NULL)
+	if (env->env_value != NULL)
 	{
-		value = ft_strdup((*env)->env_value);
-		free((*env)->env_value);
-		(*env)->env_value = ft_strjoin(value, str);
+		value = ft_strdup(env->env_value);
+		free(env->env_value);
+		env->env_value = ft_strjoin(value, str);
 		free(value);
 	}
 	else
-		(*env)->env_value = ft_strdup(str);
-	if ((*env)->env_full != NULL)
-		free((*env)->env_full);
-	(*env)->env_full = ft_join_env(key, (*env)->env_value);
+		env->env_value = ft_strdup(str);
+	if (env->env_full != NULL)
+		free(env->env_full);
+	env->env_full = ft_join_env(key, env->env_value);
 	free(key);
 }
 
@@ -91,7 +91,7 @@ int	export_join(char *str, t_env *env)
 	{
 		if (!ft_strcmp(env->env_key, key))
 		{
-			export_join2(&env, key, value, &str[i + 2]);
+			export_join2(env, key, value, &str[i + 2]);
 			return (1);
 		}
 		env = env->next;
