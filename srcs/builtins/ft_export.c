@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 23:04:34 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 10:50:07 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 10:53:58 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	export_update(char *str, t_env *env)
 			free(key);
 			return (1);
 		}
-		free(tmp);
 		env = env->next;
 	}
 	free(key);

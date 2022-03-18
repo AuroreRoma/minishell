@@ -6,14 +6,14 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/17 18:12:31 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 10:59:55 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "error.h"
 
-char	*read_line(void)
+char	*read_line(t_shell *shell)
 {
 	static char	*line_read = NULL;
 
@@ -29,6 +29,7 @@ char	*read_line(void)
 	{
 		printf("exit\n");
 		free(line_read);
+		clean(shell);
 		exit(0);
 	}
 	return (line_read);
@@ -71,7 +72,7 @@ int	main(int ac, char **av, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	while (break_flag)
 	{
-		line = read_line();
+		line = read_line(&shell);
 		if (parser_lexer(&shell, line))
 			continue ;
 		var_expansion(&shell);
