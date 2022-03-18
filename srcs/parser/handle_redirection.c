@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 17:51:52 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/18 15:54:31 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 17:59:42 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,13 @@ static int	__return_status_handler(t_lexer *lexer, int wstatus)
 {
 	int	ret;
 
-	ret = return_status_handler(wstatus);
+	if (WIFEXITED(wstatus))
+		ret = WEXITSTATUS(wstatus);
+	if (WIFSIGNALED(wstatus))
+	{
+		ret = 128;
+		ret += WTERMSIG(wstatus);
+	}
 	if (ret)
 		lexer->error = error_redirection;
 	if (ret == 2)

@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 17:21:33 by wind              #+#    #+#             */
-/*   Updated: 2022/03/16 18:36:59 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 17:57:23 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,15 @@ void	print_error_message_lexer(char *string, char *token)
 	ft_putendl_fd("'", 2);
 }
 
-int	return_status_handler(int wstatus)
+void	return_status_handler(t_shell *shell)
 {
-	int	ret;
-
-	ret = 0;
-	if (WIFEXITED(wstatus))
-		ret = WEXITSTATUS(wstatus);
-	if (WIFSIGNALED(wstatus))
+	if (shell->return_status)
+		return ;
+	if (WIFEXITED(shell->wstatus))
+		shell->return_status = WEXITSTATUS(shell->wstatus);
+	if (WIFSIGNALED(shell->wstatus))
 	{
-		ret = 128;
-		ret += WTERMSIG(wstatus);
+		shell->return_status = 128;
+		shell->return_status += WTERMSIG(shell->wstatus);
 	}
-	return (ret);
 }

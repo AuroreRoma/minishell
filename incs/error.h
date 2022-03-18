@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 14:04:48 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/17 22:22:27 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/18 17:58:04 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		error_lexer(t_lexer *lexer);
 void	print_error_message_exec(char *name, char *string);
 void	print_error_message_lexer(char *string, char *token);
 void	print_error_message_heredoc(char *word, int line);
-int		return_status_handler(int wstatus);
+void	return_status_handler(t_shell *shell);
 
 int		is_directory(char *filename);
 

@@ -3,7 +3,7 @@ NAME := minishell
 MAKEFLAGS := --no-print-directory
 
 CC = gcc
-#FSAN := -fsanitize=address
+FSAN := -fsanitize=address
 CFLAGS := -Wall -Wextra -Werror $(FSAN) -g
 IFLAGS := -I./incs -MMD -MP
 LFLAGS := -lreadline libft/libft.a

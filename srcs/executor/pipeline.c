@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/10 12:07:43 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/18 17:46:51 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 17:53:52 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	wait_for_child(t_shell *shell, int pid)
 			waitpid(pid, &wstatus, 0);
 		current = current->next;
 	}
-	shell->return_status = wstatus;
+	shell->wstatus = wstatus;
 }
 
 static int	exec_pipeline(t_shell *shell, int **pipe_array)

@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 17:44:58 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/18 18:08:22 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,13 @@ void	execute_cmd(t_shell *shell, t_cmd *cmd)
 		handle_child(shell, cmd);
 	else
 		waitpid(pid, &wstatus, 0);
-	shell->return_status = wstatus;
+	shell->wstatus = wstatus;
 }
 
 void	executor(t_shell *shell)
 {
+	shell->return_status = 0;
+	shell->wstatus = 0;
 	signal(SIGINT, &signal_handler_exec);
 	signal(SIGQUIT, &signal_handler_exec);
 	shell->env_str = env_to_str(shell);
@@ -81,5 +83,5 @@ void	executor(t_shell *shell)
 		pipeline(shell);
 	signal(SIGINT, &signal_handler);
 	signal(SIGQUIT, SIG_IGN);
-	shell->return_status = return_status_handler(shell->return_status);
+	return_status_handler(shell);
 }
