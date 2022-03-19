@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 21:42:33 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 23:07:37 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/19 12:58:31 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	lstadd_back(t_env **alst, t_env *new)
 }
 
 // ah get it, free
-/*
+
 static void	free_stuff(t_env *new, char *value)
 {
 	if (!ft_strcmp(value, ""))
@@ -39,7 +39,7 @@ static void	free_stuff(t_env *new, char *value)
 	new->next = NULL;
 	new->sorted_next = NULL;
 }
-*/
+
 void	add_env(char *var_line, t_shell *shell)
 {
 	int		i;
@@ -61,14 +61,7 @@ void	add_env(char *var_line, t_shell *shell)
 		value = ft_strdup("");
 	new->env_full = ft_strdup(var_line);
 	new->env_key = key;
-//	free_stuff(new, value);
-	if (!ft_strcmp(value, ""))
-		new->env_value = NULL;
-	if (new->env_value != NULL)
-		free(new->env_value);
-	new->env_value = value;
-	new->next = NULL;
-	new->sorted_next = NULL;
+	free_stuff(new, value);
 	lstadd_back(&shell->env, new);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pblagoje <pblagoje@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 19:19:02 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/13 20:16:29 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/19 12:55:59 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	check_n(char *flag)
 	i = 0;
 	if (!ft_strcmp(flag, "-n"))
 		return (1);
+	if (!flag[0])
+		return (0);
 	if (flag[0] == '-')
 		i++;
 	while (flag[i])

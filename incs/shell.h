@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 22:16:23 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/19 12:58:50 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,8 +220,6 @@ void	handle_space(t_lexer *lexer, t_cmd *current, int *index);
 void	handle_pipe(t_cmd **current, int *index);
 void	handle_heredoc(t_shell *shell, t_lexer *lexer, t_red *new, int *index);
 void	free_heredoc(t_shell *shell, t_lexer *lexer, t_red *new, int flag);
-
-
 
 void	join_token(t_lexer *lexer, int *index);
 

@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:49:22 by aroma             #+#    #+#             */
-/*   Updated: 2022/03/18 23:07:38 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/19 12:47:12 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*replace_var_(t_shell *shell, char *ptr, int *i)
 	char	*var_value;
 
 	size_var = get_end(ptr + *i);
-	var = ft_substr(ptr, *i, size_var);
+	var = ft_substr(ptr, (*i), size_var);
 	var_value = get_env_var(shell, var);
 	old = ptr;
 	ptr = str_insert(old, *i, size_var, var_value);
