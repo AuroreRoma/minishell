@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 17:58:17 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 15:58:06 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/19 15:14:49 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	count_env(t_shell *shell)
 
 	i = 0;
 	tmp = shell->env;
-	while (tmp->next != NULL)
+	while (tmp)
 	{
 		i++;
 		tmp = tmp->next;
@@ -38,7 +38,7 @@ char	**env_to_str(t_shell *shell)
 	tmp = shell->env;
 	env_number = count_env(shell);
 	str = (char **)ft_calloc(env_number + 1, sizeof(char *));
-	while (i < env_number)
+	while (tmp)
 	{
 		str[i] = ft_strdup(tmp->env_full);
 		tmp = tmp->next;
