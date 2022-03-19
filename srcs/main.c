@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:12:12 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 23:07:34 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/19 14:23:09 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 
 char	*read_line(t_shell *shell)
 {
+	int			i;
 	static char	*line_read = NULL;
 
+	i = update_return_status(-1);
 	if (line_read)
 	{
 		free(line_read);
@@ -32,6 +34,9 @@ char	*read_line(t_shell *shell)
 		clean(shell);
 		exit(0);
 	}
+	i = update_return_status(0);
+	if (i)
+		shell->return_status = i;
 	return (line_read);
 }
 

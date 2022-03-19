@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 18:19:50 by wind              #+#    #+#             */
-/*   Updated: 2022/03/18 16:03:21 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/19 14:51:02 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,13 @@
 
 static void	clean_func(char *str, char *line, int fd1, int fd2)
 {
-	unlink(str);
-	free(str);
-	free(line);
+	if (str)
+	{
+		unlink(str);
+		free(str);
+	}
+	if (line)
+		free(line);
 	close(fd1);
 	close(fd2);
 }
@@ -31,6 +35,7 @@ void	var_expansion_heredoc(t_shell *shell, t_red *current)
 	char	*line;
 	char	*filename;
 
+	line = NULL;
 	old_fd = open(current->data, O_RDONLY);
 	filename = generate_herefile_name();
 	new_fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY | O_APPEND, 0777);

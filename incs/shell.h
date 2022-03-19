@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 20:11:30 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/19 12:58:50 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/19 14:19:24 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,6 +264,7 @@ void	clean(t_shell *shell);
 void	signal_handler(int num);
 void	signal_handler_heredoc(int num);
 void	signal_handler_exec(int num);
+int		update_return_status(int num);
 
 /*		EXECUTION		*/
 

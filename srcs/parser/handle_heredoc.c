@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:50:04 by aroma             #+#    #+#             */
-/*   Updated: 2022/03/18 22:18:53 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/19 14:43:43 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "error.h"
 #include "libft.h"
 
-static char	*_read_line(char *word)
+static char	*_read_line(char *word, int fd)
 {
 	static int	line = 0;
 	static char	*line_read = NULL;
@@ -30,6 +30,7 @@ static char	*_read_line(char *word)
 	{
 		print_error_message_heredoc(word, line);
 		free(line_read);
+		close(fd);
 		free_heredoc(NULL, NULL, NULL, 2);
 	}
 	return (line_read);
@@ -57,13 +58,13 @@ void	get_heredoc(char *word, t_red *new)
 	char		*buf;
 
 	fd = open(new->data, O_CREAT | O_WRONLY | O_TRUNC, 0777);
-	buf = _read_line(word);
+	buf = _read_line(word, fd);
 	while (1)
 	{
 		if (check_heredoc_end(word, buf))
 			break ;
 		ft_putendl_fd(buf, fd);
-		buf = _read_line(word);
+		buf = _read_line(word, fd);
 	}
 	close(fd);
 }
