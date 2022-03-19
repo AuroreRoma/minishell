@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:31:22 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/19 14:25:10 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/19 15:16:36 by aroma            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	signal_handler_exec(int num)
 		ft_putendl_fd(CORE_DUMP, 2);
 }
 
-int		update_return_status(int num)
+int	update_return_status(int num)
 {
-	static int i = 0;
+	static int	i = 0;
 
 	if (num < 0)
 		i = 0;
