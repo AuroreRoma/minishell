@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 18:05:36 by marvin            #+#    #+#             */
-/*   Updated: 2022/03/18 11:45:21 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/19 14:27:11 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	destroy_env_str(char **env)
 	int	i;
 
 	i = 0;
+	if (!env)
+		return ;
 	while (env[i])
 	{
 		free(env[i]);

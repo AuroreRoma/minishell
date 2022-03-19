@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:12:41 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 18:49:40 by aroma            ###   ########.fr       */
+/*   Updated: 2022/03/19 14:25:10 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,10 @@ void	executor(t_shell *shell)
 	shell->wstatus = 0;
 	signal(SIGINT, &signal_handler_exec);
 	signal(SIGQUIT, &signal_handler_exec);
-	shell->env_str = env_to_str(shell);
+	if (shell->env == NULL)
+		shell->env_str = NULL;
+	else
+		shell->env_str = env_to_str(shell);
 	if (shell->nbr_cmd == 1)
 		execute_cmd(shell, shell->first_cmd);
 	else

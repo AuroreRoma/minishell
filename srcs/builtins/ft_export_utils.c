@@ -6,7 +6,7 @@
 /*   By: aroma <aroma@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 01:15:24 by pblagoje          #+#    #+#             */
-/*   Updated: 2022/03/18 19:57:00 by pblagoje         ###   ########.fr       */
+/*   Updated: 2022/03/19 14:37:54 by pblagoje         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	export_no_args(t_shell *shell)
 {
 	t_env	*tmp;
 
+	if (!shell->env)
+		return (1);
 	sort_env(shell);
 	tmp = shell->env_sorted;
 	while (tmp)
