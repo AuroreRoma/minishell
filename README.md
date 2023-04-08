@@ -24,20 +24,6 @@ Minishell depends on the following libraries:
 
 ## Usage
 
-1. Clone the repository:
-
    ```bash
-   git clone https://github.com/AuroreRoma/minishell.git
+   make && ./minishell
    ```
-
-2. Build the executable:
-
-	```bash
-	make
-	```
-
-3. Run minishell:
-
-	```bash
-	./minishell
-	```
